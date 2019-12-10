@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/tools"
-    android:background="@android:color/white">
+    android:background="?android:attr/windowBackground">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -171,6 +171,17 @@
 
 
         </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_boat"
+            android:layout_below="@+id/line1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:clipToPadding="false"
+            card_view:listitem="@layout/item_list"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+          />
 
 
     </RelativeLayout>
