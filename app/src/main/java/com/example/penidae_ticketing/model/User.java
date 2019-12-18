@@ -19,6 +19,17 @@ public class User{
 	@SerializedName("username")
 	private String username;
 
+	@SerializedName("password")
+	private String password;
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -67,7 +78,8 @@ public class User{
 			"phone = '" + phone + '\'' +
 			",name = '" + name + '\'' + 
 			",email = '" + email + '\'' + 
-			",username = '" + username + '\'' + 
+			",username = '" + username + '\'' +
+			",password = '" + password + '\'' +
 			"}";
 		}
 }

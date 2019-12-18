@@ -36,7 +36,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="30dp"
-            android:hint="Email"/>
+            android:hint="Username"/>
 
         <EditText
             android:id="@+id/et_password"
@@ -45,6 +45,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="30dp"
+            android:inputType="textPassword"
             android:hint="Password"/>
 
         <Button

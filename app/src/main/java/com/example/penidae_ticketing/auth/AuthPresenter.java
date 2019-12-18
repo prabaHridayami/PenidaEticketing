@@ -42,11 +42,11 @@ public class AuthPresenter {
         });
     }
 
-    public void register(String name, String username, String phone, String email, String password){
+    public void register(String name, String username,String email,String password, String phone){
         view.showLoading();
-        service.register(name,username,phone,email,password).enqueue(new Callback<User>() {
+        service.register(name,username,email,password,phone).enqueue(new Callback<User>() {
             @Override
-            public void onResponse(retrofit2.Call<User> call, Response<User> response) {
+            public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()){
                     view.onSuccess(response.body());
                 }else {
@@ -62,4 +62,5 @@ public class AuthPresenter {
             }
         });
     }
+
 }

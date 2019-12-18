@@ -15,11 +15,13 @@ public interface ApiService {
     Call<User>login(@Field("username") String username, @Field("password") String password);
 
     @FormUrlEncoded
-    @POST("api.php?apicall=register")
+    @POST("api.php?apicall=signup")
     Call<User>register(@Field("name") String name,
                        @Field("username") String username,
-                       @Field("phone") String phone,
                        @Field("email") String email,
-                       @Field("password") String password);
+                       @Field("password") String password,
+                       @Field("phone") String phone);
+
+
 
 }
