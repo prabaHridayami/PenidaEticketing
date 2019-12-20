@@ -52,15 +52,14 @@
 				if(isTheseParametersAvailable(array('username', 'password'))){					
 					$username = $_POST['username'];
 					$password = md5($_POST['password']); 					
-					$stmt = $conn->prepare("SELECT id,`name`,username,email,phone FROM tb_user WHERE username = ? AND `password` = ?");
+					$stmt = $conn->prepare("SELECT `name`,username,email,phone FROM tb_user WHERE username = ? AND `password` = ?");
 					$stmt->bind_param("ss",$username, $password);					
 					$stmt->execute();					
 					$stmt->store_result();					
 					if($stmt->num_rows > 0){						
-						$stmt->bind_result($id,$name, $username, $email, $phone);
+						$stmt->bind_result($name, $username, $email, $phone);
 						$stmt->fetch();						
-						$user = array(
-							'id'=>$id,                            
+						$user = array(                            
                             'name'=>$name, 
 							'username'=>$username, 
 							'email'=>$email,
