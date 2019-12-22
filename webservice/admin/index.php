@@ -1,6 +1,9 @@
 <?php
 session_start();
-if (!isset($_SESSION['email']) && !isset($_SESSION['role'])) {
+if (!isset($_SESSION['id'])) {
+  header("Location:../index.php");
+}
+if ($_SESSION['role'] != "admin" || $_SESSION['role'] == "partner") {
   header("Location:../index.php");
 }
 ?>
@@ -10,7 +13,7 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['role'])) {
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Partner | Dashboard</title>
+  <title>Admin | Dashboard</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->

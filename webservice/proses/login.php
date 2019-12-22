@@ -9,17 +9,17 @@ if (isset($_POST['login'])) {
     if ($cek > 0) {
         $data = mysqli_fetch_assoc($login);
         if ($data['role'] == "partner") {
-            $_SESSION['email'] = $email;
-            $_SESSION['role'] = "admin";
+            $_SESSION['id'] = $data['id'];
+            $_SESSION['role'] = "partner";
             header("location:../partner/");
         } else if ($data['role'] == "admin") {
-            $_SESSION['email'] = $email;
-            $_SESSION['role'] = "pegawai";
+            $_SESSION['id'] = $data['id'];
+            $_SESSION['role'] = "admin";
             header("location:../admin/");
         } else {
-            header("location:index.php?pesan=gagal");
+            header("location:../index.php?pesan=gagal");
         }
     } else {
-        header("location:index.php?pesan=gagal");
+        header("location:../index.php?pesan=gagal");
     }
 }
