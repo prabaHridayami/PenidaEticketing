@@ -305,7 +305,7 @@ if (isset($_GET['apicall'])) {
 			if ($stmt->num_rows > 0) {
 				$stmt->bind_result($id, $id_user, $name, $address, $phone, $image);
 				while ($stmt->fetch()) {
-					$user[] = array(
+					$hotel[] = array(
 						'id' => $id,
 						'id_user' => $id_user,
 						'name' => $name,
@@ -314,9 +314,9 @@ if (isset($_GET['apicall'])) {
 						'image' => $image,
 					);
 				}
-				$response['error'] = false;
-				$response['message'] = 'Successfull';
-				$response['user'] = $user;
+				// $response['error'] = false;
+				// $response['message'] = 'Successfull';
+				$response = $hotel;
 			} else {
 				$response['error'] = false;
 				$response['message'] = 'Invalid !!';
