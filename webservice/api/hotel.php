@@ -320,10 +320,55 @@ if (isset($_GET['apicall'])) {
 					$response['error'] = false;
 					$response['message'] = 'Invalid !!';
 				}
-				break;
 			}
 
 			break;
+		case 'getTransHotel':
+			if (isTheseParametersAvailable(array('id_user'))) {
+				$id_user = $_POST['id_user'];
+				$stmt = $conn->prepare("SELECT tb_hotel.`id`, tb_hotel.`name`,tb_hotel.`address`,tb_hotel.`phone`, tb_hotel.`image`,
+											tb_category_room.`id`,tb_category_room.`name`,tb_category_room.`price`,tb_category_room.`desc`,
+											tb_room.`id`,tb_room.`name`,tb_trans_hotel.`id`,tb_trans_hotel.`check_in`,tb_trans_hotel.`check_out`,tb_trans_hotel.`reserve_date`,
+											tb_trans_hotel.`total_price`,tb_trans_hotel.`status`
+											FROM tb_trans_hotel
+											INNER JOIN tb_room ON tb_trans_hotel.`id_room` = tb_room.`id`
+											INNER JOIN tb_category_room ON tb_room.`id_category`= tb_category_room.`id`
+											INNER JOIN tb_hotel ON tb_category_room.`id_hotel`=tb_hotel.`id`
+											WHERE tb_trans_hotel.`id_user`= ?");
+
+				$stmt->bind_param("s", $id_user);
+				if ($stmt->execute()) {
+					$stmt->bind_result($id, $name, $address, $phone, $image,$id_cat, $cat_name, $cat_price, $cat_desc, $id_room, $room_name, $id_trans, $check_in, $check_out, $reserve_date, $total_price, $status);
+					while ($stmt->fetch()) {
+						$trans_hotel []= array(
+							'id' => $id,
+							'name' => $name,
+							'address' => $address,
+							'phone' => $phone,
+							'image' => $image,
+							'id_cat' => $id_cat,
+							'cat_name' => $cat_name,
+							'cat_price' => $cat_price,
+							'cat_desc' => $cat_desc,
+							'id_trans' => $id_trans,
+							'check_in' => $check_in,
+							'check_out' => $check_out,
+							'reserve_date' => $reserve_date,
+							'total_price' => $total_price,
+							'status' => $status
+						);
+					}
+					$stmt->close();
+					$response['error'] = false;
+					$response['message'] = 'Transaksi Success';
+					$response['trans_hotel'] = $trans_hotel;
+				} else {
+					$response['error'] = false;
+					$response['message'] = 'Invalid !!';
+				}
+			}
+			break;
+
 		default:
 			$response['error'] = true;
 			$response['message'] = 'Invalid Operation Called';
