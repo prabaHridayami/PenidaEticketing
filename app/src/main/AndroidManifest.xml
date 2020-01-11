@@ -1,16 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.penidae_ticketing">
+
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".auth.RegisterActivity"></activity>
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".HotelPayment.HotelPaymentActivity"></activity>
+        <activity
+            android:name=".Room.RoomActivity"
+            android:label="Rooms"
+            android:theme="@style/AppThemeActionBar" />
+        <activity
+            android:name=".Hotel.ListHotelActivity"
+            android:label="@string/hotel"
+            android:theme="@style/AppThemeActionBar" />
+        <activity
+            android:name=".TourDetailActivity.TourDetailActivity"
+            android:label="@string/tour"
+            android:parentActivityName=".Tour.TourMainActivity"
+            android:theme="@style/AppThemeActionBar" />
+        <activity
+            android:name=".Tour.TourMainActivity"
+            android:label="@string/tour"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppThemeActionBar" />
+        <activity
+            android:name=".WatersportDetail.WatersportDetailActivity"
+            android:label="@string/watersport"
+            android:parentActivityName=".Watersport.WatersportMainActicvity"
+            android:theme="@style/AppThemeActionBar" />
+        <activity
+            android:name=".Watersport.WatersportMainActicvity"
+            android:label="@string/watersport"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppThemeActionBar" />
+        <activity
+            android:name=".VehicleDetail.VehicleDetailActivity"
+            android:label="@string/vehicle"
+            android:parentActivityName=".Vehicle.VehicleMainActivity"
+            android:theme="@style/AppThemeActionBar" />
+        <activity
+            android:name=".Vehicle.VehicleMainActivity"
+            android:label="@string/vehicle"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppThemeActionBar" />
+        <activity
+            android:name=".BoatDetail.BoatDetailActivity"
+            android:label="@string/boat"
+            android:parentActivityName=".Boat.BoatMainActivity"
+            android:theme="@style/AppThemeActionBar" />
+        <activity
+            android:name=".Boat.BoatMainActivity"
+            android:label="@string/boat"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppThemeActionBar" />
+        <activity
+            android:name=".Hotel.HotelMainActivity"
+            android:label="@string/hotel"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppThemeActionBar" />
+        <activity
+            android:name=".Hotel.HotelDetailActivity"
+            android:label="@string/hotel"
+            android:theme="@style/AppThemeActionBar" />
+        <activity android:name=".auth.RegisterActivity" />
         <activity
             android:name=".auth.LoginActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
