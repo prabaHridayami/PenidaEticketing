@@ -65,7 +65,7 @@ if (isset($_GET['apicall'])) {
                 }
             }
             break;
-        case 'getTransHotel':
+        case 'getTransBoat':
             if (isTheseParametersAvailable(array('id_user'))) {
                 $id_user = $_POST['id_user'];
                 $stmt = $conn->prepare("SELECT tb_trans_boat.`id`,tb_trans_boat.`depart_date`,tb_trans_boat.`qty`,tb_trans_boat.`reserve_date`,
@@ -97,6 +97,37 @@ if (isset($_GET['apicall'])) {
                     $response['error'] = false;
                     $response['message'] = 'Transaksi Success';
                     $response['trans_hotel'] = $trans_hotel;
+                } else {
+                    $response['error'] = false;
+                    $response['message'] = 'Invalid !!';
+                }
+            }
+            break;
+        case 'getSchedule':
+            if (isTheseParametersAvailable(array('id_boat'))) {
+                $id_boat = $_POST['id_boat'];
+                $stmt = $conn->prepare(" SELECT tb_schedule.id AS 'ID Schedule', tb_det_boat.id AS 'ID Boat', tb_schedule.`dropup_loc`, 
+                                            tb_schedule.`pickup_loc`, tb_schedule.`time`, tb_det_boat.`price`
+                                            FROM tb_schedule JOIN tb_det_boat ON tb_det_boat.`id` = tb_schedule.`id_det_boat`
+                                            JOIN tb_boat ON tb_boat.`id` = tb_det_boat.`id_boat` WHERE tb_boat.`id` = ? ORDER BY tb_det_boat.`id` DESC");
+
+                $stmt->bind_param("s", $id_boat);
+                if ($stmt->execute()) {
+                    $stmt->bind_result($id_schedule, $boat, $dropup_loc, $pickup_loc, $time, $price);
+                    while ($stmt->fetch()) {
+                        $schedule[] = array(
+                            'id_schedule' => $id_schedule,
+                            'id_boat' => $boat,
+                            'pickup_loc' => $pickup_loc,
+                            'dropup_loc' => $dropup_loc,
+                            'time' => $time,
+                            'price' => $price
+                        );
+                    }
+                    $stmt->close();
+                    $response['error'] = false;
+                    $response['message'] = 'Tampil Success';
+                    $response['boat'] = $schedule;
                 } else {
                     $response['error'] = false;
                     $response['message'] = 'Invalid !!';
