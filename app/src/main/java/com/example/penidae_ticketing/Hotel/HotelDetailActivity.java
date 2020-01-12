@@ -19,8 +19,10 @@ public class HotelDetailActivity extends AppCompatActivity {
     HotelItem hotelItem;
 
     ImageView iv_hotel;
-    TextView tv_title, tv_address, tv_desc, header;
+    TextView tv_title, tv_address, tv_desc, header,tv_check_in,tv_check_out;
     Button selectRoom;
+
+    String check_in, check_out, guest, room;
 
 
     @Override
@@ -36,14 +38,16 @@ public class HotelDetailActivity extends AppCompatActivity {
         selectRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = getIntent().getExtras();
-                String check_in = bundle.getString("check_in");
-                String check_out = bundle.getString("check_out");
-
                 Intent intent = new Intent(getApplicationContext(),RoomActivity.class);
                 intent.putExtra("id",hotelItem.getIdHotel());
                 intent.putExtra("check_in", check_in);
                 intent.putExtra("check_out", check_out);
+                intent.putExtra("title",hotelItem.getHotelName());
+                intent.putExtra("address",hotelItem.getHotelAddress());
+                intent.putExtra("checkin_time",hotelItem.getCheckin_time());
+                intent.putExtra("checkout_time",hotelItem.getCheckout_time());
+                intent.putExtra("guest",guest);
+                intent.putExtra("room",room);
                 startActivity(intent);
             }
         });
@@ -58,12 +62,15 @@ public class HotelDetailActivity extends AppCompatActivity {
         tv_desc = findViewById(R.id.tv_desc);
         selectRoom = findViewById(R.id.selectRoom);
         header = findViewById(R.id.header);
+        tv_check_in=findViewById(R.id.tv_check_in);
+        tv_check_out = findViewById(R.id.tv_check_out);
 
-        String check_in, check_out;
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             check_in = bundle.getString("check_in");
             check_out = bundle.getString("check_out");
+            guest = bundle.getString("guest");
+            room= bundle.getString("room");
 
             header.setText("check-in: "+check_in+", check-out :"+check_out+"");
         }
@@ -73,5 +80,7 @@ public class HotelDetailActivity extends AppCompatActivity {
         tv_title.setText(hotelItem.getHotelName());
         tv_address.setText(hotelItem.getHotelAddress());
         tv_desc.setText(hotelItem.getDesc());
+        tv_check_in.setText(hotelItem.getCheckin_time());
+        tv_check_out.setText(hotelItem.getCheckout_time());
     }
 }

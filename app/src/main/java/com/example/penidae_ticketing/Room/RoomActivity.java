@@ -10,6 +10,7 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.penidae_ticketing.Hotel.HotelDetailActivity;
 import com.example.penidae_ticketing.HotelPayment.HotelPaymentActivity;
 import com.example.penidae_ticketing.R;
 import com.example.penidae_ticketing.api.ApiClient;
@@ -27,6 +28,8 @@ public class RoomActivity extends AppCompatActivity implements RoomView, RoomAda
     List<RoomItem> roomItems;
 
     TextView header;
+    String check_in, check_out, title, address, checkin_time,checkout_time;
+    Integer id;
 
 
     @Override
@@ -42,9 +45,9 @@ public class RoomActivity extends AppCompatActivity implements RoomView, RoomAda
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            String check_in = bundle.getString("check_in");
-            String check_out = bundle.getString("check_out");
-            Integer id = bundle.getInt("id");
+            check_in = bundle.getString("check_in");
+            check_out = bundle.getString("check_out");
+            id = bundle.getInt("id");
 
             header.setText("check-in: "+check_in+", check-out :"+check_out+"");
             roomPresenter.getRoom(check_in,check_out,id);
@@ -89,8 +92,8 @@ public class RoomActivity extends AppCompatActivity implements RoomView, RoomAda
     @Override
     public void onClick(int position) {
         RoomItem roomItem=roomItems.get(position);
-        Bundle bundle=new Bundle();
-//        bundle.putParcelable(HotelDetailActivity.KEY_HOTEL,hotelItem);
+        Bundle bundle = getIntent().getExtras();
+        bundle.putParcelable(HotelDetailActivity.KEY_HOTEL,roomItem);
         Intent intent=new Intent(this, HotelPaymentActivity.class);
         intent.putExtras(bundle);
         startActivity(intent);

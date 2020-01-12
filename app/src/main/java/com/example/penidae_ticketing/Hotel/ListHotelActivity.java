@@ -25,6 +25,7 @@ public class ListHotelActivity extends AppCompatActivity implements HotelAdapter
     List<HotelItem> hotelItems;
     private HotelPresenter hotelPresenter;
     TextView header;
+    String check_in, check_out, guest,room;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +37,7 @@ public class ListHotelActivity extends AppCompatActivity implements HotelAdapter
         recyclerView = findViewById(R.id.rv_hotel);
         hotelPresenter = new HotelPresenter(this, ApiClient.getService());
 
-        String check_in, check_out, guest,room;
+
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             check_in = bundle.getString("check_in");
@@ -52,15 +53,13 @@ public class ListHotelActivity extends AppCompatActivity implements HotelAdapter
     @Override
     public void onClick(int position) {
         HotelItem hotelItem=hotelItems.get(position);
-        Bundle bundle = getIntent().getExtras();
-        String check_in = bundle.getString("check_in");
-        String check_out = bundle.getString("check_out");
-
-        bundle=new Bundle();
+        Bundle bundle=new Bundle();
         bundle.putParcelable(HotelDetailActivity.KEY_HOTEL,hotelItem);
         Intent intent=new Intent(this, HotelDetailActivity.class);
         intent.putExtra("check_in", check_in);
         intent.putExtra("check_out", check_out);
+        intent.putExtra("guest",guest);
+        intent.putExtra("room",room);
         intent.putExtras(bundle);
         startActivity(intent);
     }

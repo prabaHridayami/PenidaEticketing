@@ -12,7 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".HotelPayment.HotelPaymentActivity"></activity>
+        <activity android:name=".HotelPayment.HotelPaymentActivity"
+            android:label="Payment"
+            android:theme="@style/AppThemeActionBar"></activity>
         <activity
             android:name=".Room.RoomActivity"
             android:label="Rooms"

@@ -90,13 +90,13 @@
 
                     <TextView
                         android:id="@+id/tv_check_in"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="textEnd"
+                        android:layout_width="266dp"
+                        android:layout_height="9dp"
                         android:layout_marginTop="16dp"
+                        android:text="Desc"
+                        android:textAlignment="textEnd"
                         android:textColor="@android:color/black"
-                        android:textSize="16dp"
-                        android:text="Desc"/>
+                        android:textSize="16dp" />
 
                 </LinearLayout>
                 <LinearLayout

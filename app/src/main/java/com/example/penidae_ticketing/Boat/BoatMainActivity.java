@@ -38,42 +38,42 @@ public class BoatMainActivity extends AppCompatActivity implements BoatView, Boa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boat_main);
-        getSupportActionBar().setElevation(0);
+//        getSupportActionBar().setElevation(0);
 
         boatPresenter=new BoatPresenter(this, ApiClient.getService());
         boatPresenter.getBoat();
 
         recyclerBoat = findViewById(R.id.rv_boat);
-        et_departure = findViewById(R.id.et_departure);
+//        et_departure = findViewById(R.id.et_departure);
 
-        et_departure.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                datePickerDialog();
-            }
-        });
+//        et_departure.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                datePickerDialog();
+//            }
+//        });
 
 
     }
 
-    private void datePickerDialog(){
-        final DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                myCalendar.set(Calendar.YEAR,year);
-                myCalendar.set(Calendar.MONTH,month);
-                myCalendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
-                String myFormat = "MM/dd/yy"; //In which you need put here
-                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
-                et_departure.setText(sdf.format(myCalendar.getTime()));
-            }
-        };
-
-        new DatePickerDialog(BoatMainActivity.this, dateSetListener, myCalendar
-                .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-    }
+//    private void datePickerDialog(){
+//        final DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+//            @Override
+//            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+//                myCalendar.set(Calendar.YEAR,year);
+//                myCalendar.set(Calendar.MONTH,month);
+//                myCalendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+//                String myFormat = "MM/dd/yy"; //In which you need put here
+//                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+//
+//                et_departure.setText(sdf.format(myCalendar.getTime()));
+//            }
+//        };
+//
+//        new DatePickerDialog(BoatMainActivity.this, dateSetListener, myCalendar
+//                .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+//                myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+//    }
 
     @Override
     public void showLoading() {
@@ -91,7 +91,7 @@ public class BoatMainActivity extends AppCompatActivity implements BoatView, Boa
         boatAdapter=new BoatAdapter(this,boatItems);
         boatAdapter.setOnClickListener(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerBoat.setLayoutManager(layoutManager);
         recyclerBoat.setAdapter(boatAdapter);
         Toast.makeText(this, "sukses", Toast.LENGTH_SHORT).show();

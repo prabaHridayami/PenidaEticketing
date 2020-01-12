@@ -37,6 +37,12 @@ public class HotelItem implements Parcelable {
 	@SerializedName("desc")
 	private String desc;
 
+	@SerializedName("checkin_time")
+	private String checkin_time;
+
+	@SerializedName("checkout_time")
+	private String checkout_time;
+
 	protected HotelItem(Parcel in) {
 		nameCate = in.readString();
 		hotelPhone = in.readString();
@@ -48,6 +54,8 @@ public class HotelItem implements Parcelable {
 		hotelName = in.readString();
 		idCate = in.readInt();
 		desc = in.readString();
+		checkin_time = in.readString();
+		checkout_time = in.readString();
 	}
 
 	public static final Creator<HotelItem> CREATOR = new Creator<HotelItem>() {
@@ -142,6 +150,22 @@ public class HotelItem implements Parcelable {
 		return desc;
 	}
 
+	public String getCheckin_time() {
+		return checkin_time;
+	}
+
+	public void setCheckin_time(String checkin_time) {
+		this.checkin_time = checkin_time;
+	}
+
+	public String getCheckout_time() {
+		return checkout_time;
+	}
+
+	public void setCheckout_time(String checkout_time) {
+		this.checkout_time = checkout_time;
+	}
+
 	@Override
  	public String toString(){
 		return 
@@ -155,7 +179,9 @@ public class HotelItem implements Parcelable {
 			",num_room = '" + numRoom + '\'' + 
 			",hotel_name = '" + hotelName + '\'' + 
 			",id_cate = '" + idCate + '\'' + 
-			",desc = '" + desc + '\'' + 
+			",desc = '" + desc + '\'' +
+			",checkin_time = '" + checkin_time + '\'' +
+			",checkout_time = '" + checkout_time + '\'' +
 			"}";
 		}
 
@@ -176,5 +202,7 @@ public class HotelItem implements Parcelable {
 		dest.writeString(hotelName);
 		dest.writeInt(idCate);
 		dest.writeString(desc);
+		dest.writeString(checkin_time);
+		dest.writeString(checkout_time);
 	}
 }
