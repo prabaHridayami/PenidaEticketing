@@ -1,8 +1,10 @@
 package com.example.penidae_ticketing.api;
 
 import com.example.penidae_ticketing.model.Attraction;
+import com.example.penidae_ticketing.model.Auth;
 import com.example.penidae_ticketing.model.Boat;
 import com.example.penidae_ticketing.model.Hotel;
+import com.example.penidae_ticketing.model.Payment;
 import com.example.penidae_ticketing.model.Room;
 import com.example.penidae_ticketing.model.TourPack;
 import com.example.penidae_ticketing.model.User;
@@ -17,11 +19,11 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api.php?apicall=login")
-    Call<User>login(@Field("username") String username, @Field("password") String password);
+    Call<Auth>login(@Field("username") String username, @Field("password") String password);
 
     @FormUrlEncoded
     @POST("api.php?apicall=signup")
-    Call<User>register(@Field("name") String name,
+    Call<Auth>register(@Field("name") String name,
                        @Field("username") String username,
                        @Field("email") String email,
                        @Field("password") String password,
@@ -42,6 +44,15 @@ public interface ApiService {
     Call<Room>getRoom(@Field("check_in") String check_in,
                       @Field("check_out") String check_out,
                       @Field("id") Integer id);
+
+    @FormUrlEncoded
+    @POST("hotel.php?apicall=TransHotel")
+    Call<Payment>transHotel(@Field("id_room") Integer id_room,
+                         @Field("check_in") String check_in,
+                         @Field("check_out") String check_out,
+                         @Field("reserve_date") String reserve_date,
+                         @Field("total_price") Integer total_price,
+                         @Field("id_user") Integer id_user);
 
     @POST("boat.php?apicall=allboat")
     Call<Boat>allboat();

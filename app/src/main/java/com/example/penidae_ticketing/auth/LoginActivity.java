@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,7 +14,6 @@ import com.example.penidae_ticketing.Helper.PreferenceHelper;
 import com.example.penidae_ticketing.MainActivity;
 import com.example.penidae_ticketing.R;
 import com.example.penidae_ticketing.api.ApiClient;
-import com.example.penidae_ticketing.api.ApiService;
 import com.example.penidae_ticketing.model.User;
 
 public class LoginActivity extends AppCompatActivity implements AuthView, View.OnClickListener {
@@ -72,11 +70,11 @@ public class LoginActivity extends AppCompatActivity implements AuthView, View.O
     }
 
     private void login(){
-        String email = et_email.getText().toString();
+        String username = et_email.getText().toString();
         String password = et_password.getText().toString();
 
-        if(validate(email,password)){
-            presenter.login(email,password);
+        if(validate(username,password)){
+            presenter.login(username,password);
         }
     }
 
@@ -107,9 +105,10 @@ public class LoginActivity extends AppCompatActivity implements AuthView, View.O
     @Override
     public void onSuccess(User user) {
         preferenceHelper.setUser(user);
+//        Toast.makeText(this, "email:"+user.getEmail(), Toast.LENGTH_SHORT).show();
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
         finish();
-        Toast.makeText(this, "Login Berhasil", Toast.LENGTH_SHORT).show();
+
     }
 
     @Override

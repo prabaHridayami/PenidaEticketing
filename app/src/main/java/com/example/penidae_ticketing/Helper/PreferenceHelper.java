@@ -87,9 +87,9 @@ public class PreferenceHelper {
 
     public void setUser(User user){
         setLogin(true);
+        setId(user.getId());
         setName(user.getName());
         setUsername(user.getUsername());
-        setId(user.getId());
         setEmail(user.getEmail());
         setPhone(user.getPhone());
     }

@@ -3,7 +3,6 @@ package com.example.penidae_ticketing.model;
 import com.google.gson.annotations.SerializedName;
 
 public class User{
-
 	@SerializedName("id")
 	private String id;
 
@@ -19,17 +18,6 @@ public class User{
 	@SerializedName("username")
 	private String username;
 
-	@SerializedName("password")
-	private String password;
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 	public String getId() {
 		return id;
 	}
@@ -37,7 +25,6 @@ public class User{
 	public void setId(String id) {
 		this.id = id;
 	}
-
 	public void setPhone(String phone){
 		this.phone = phone;
 	}
@@ -78,8 +65,7 @@ public class User{
 			"phone = '" + phone + '\'' +
 			",name = '" + name + '\'' + 
 			",email = '" + email + '\'' + 
-			",username = '" + username + '\'' +
-			",password = '" + password + '\'' +
+			",username = '" + username + '\'' + 
 			"}";
 		}
 }

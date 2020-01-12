@@ -2,20 +2,41 @@ package com.example.penidae_ticketing.HotelPayment;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.penidae_ticketing.Helper.PreferenceHelper;
+import com.example.penidae_ticketing.MainActivity;
 import com.example.penidae_ticketing.R;
+import com.example.penidae_ticketing.api.ApiClient;
+import com.example.penidae_ticketing.model.HotelPayment;
+import com.example.penidae_ticketing.model.Payment;
 import com.example.penidae_ticketing.model.RoomItem;
 
-public class HotelPaymentActivity extends AppCompatActivity {
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
+import static java.security.AccessController.getContext;
+
+public class HotelPaymentActivity extends AppCompatActivity implements HotelPayView {
     public static final String KEY_HOTEL="hotelItem";
+    private HotelPayPresenter presenter;
+    private PreferenceHelper preferencesHelper;
+
     RoomItem roomItem;
     TextView tv_title, tv_address, tv_desc,tv_check_in_time,tv_check_out_time,tv_check_in_date,tv_check_out_date;
     TextView tv_price, tv_room, tv_total;
     String check_in, check_out, title, address, checkin_time,checkout_time,room,guest;
-    Integer id;
+    Integer id, total, id_user;
+    Button btn_payment;
 
 
     @Override
@@ -27,10 +48,26 @@ public class HotelPaymentActivity extends AppCompatActivity {
         init();
         setText();
 
+        presenter = new HotelPayPresenter(this,ApiClient.getService());
+        preferencesHelper=new PreferenceHelper(this);
+
+        id_user = Integer.parseInt(preferencesHelper.getId());
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        final String currentDateTime = sdf.format(new Date());
+
+        btn_payment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Integer id_room = roomItem.getIdRoom();
+                presenter.transHotel(id_room,check_in,check_out,currentDateTime,total,id_user);
+//                Toast.makeText(getApplicationContext(), id_user.toString(), Toast.LENGTH_SHORT).show();;
+            }
+        });
+
     }
 
     private void init(){
-
 
         Bundle bundle = getIntent().getExtras();
         title = bundle.getString("title");
@@ -53,6 +90,7 @@ public class HotelPaymentActivity extends AppCompatActivity {
         tv_price = findViewById(R.id.tv_price);
         tv_room = findViewById(R.id.tv_room);
         tv_total = findViewById(R.id.tv_total);
+        btn_payment = findViewById(R.id.btn_payment);
 
     }
 
@@ -71,9 +109,37 @@ public class HotelPaymentActivity extends AppCompatActivity {
 
         Integer price = roomItem.getPrice();
         Integer num_room = Integer.parseInt(room);
-        Integer total = (price * num_room);
+        total = (price * num_room);
 
         tv_total.setText(total.toString());
 
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void onSuccess(String payment) {
+        Toast.makeText(this, payment, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onError() {
+        Toast.makeText(this, "Failure", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onFailure(Throwable t) {
+        Toast.makeText(this, "Error : "+t, Toast.LENGTH_SHORT).show();
     }
 }

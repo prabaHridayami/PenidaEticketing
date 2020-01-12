@@ -23,18 +23,18 @@ public class AuthPresenter {
 
     public void login(String username, String password){
         view.showLoading();
-        service.login(username,password).enqueue(new Callback<User>() {
+        service.login(username,password).enqueue(new Callback<Auth>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<Auth> call, Response<Auth> response) {
                 if (response.isSuccessful()){
-                    view.onSuccess(response.body());
+                    view.onSuccess(response.body().getUser());
                 }else {
-                    view.onError(response.body());
+                    view.onError(response.body().getUser());
                 }
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<Auth> call, Throwable t) {
                 view.onFailure(t);
                 Log.d(TAG, "onFailure: "+t);
                 view.hideLoading();
@@ -44,18 +44,18 @@ public class AuthPresenter {
 
     public void register(String name, String username,String email,String password, String phone){
         view.showLoading();
-        service.register(name,username,email,password,phone).enqueue(new Callback<User>() {
+        service.register(name,username,email,password,phone).enqueue(new Callback<Auth>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<Auth> call, Response<Auth> response) {
                 if (response.isSuccessful()){
-                    view.onSuccess(response.body());
+                    view.onSuccess(response.body().getUser());
                 }else {
-                    view.onError(response.body());
+                    view.onError(response.body().getUser());
                 }
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<Auth> call, Throwable t) {
                 view.onFailure(t);
                 Log.d(TAG, "onFailure: "+t);
                 view.hideLoading();
