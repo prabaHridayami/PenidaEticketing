@@ -22,7 +22,7 @@ public class HotelPresenter {
             @Override
             public void onResponse(Call<Hotel> call, Response<Hotel> response) {
                 if (response.isSuccessful()){
-                    view.onSuccess(response.body().getHotel());
+                    view.onSuccess(response.body().getHotel(),response.body().getMessage());
                 }
                 else {
                     view.onError();
@@ -43,7 +43,7 @@ public class HotelPresenter {
             @Override
             public void onResponse(Call<Hotel> call, Response<Hotel> response) {
                 if (response.isSuccessful()){
-                    view.onSuccess(response.body().getHotel());
+                    view.onSuccess(response.body().getHotel(),response.body().getMessage());
                 }
                 else {
                     view.onError();

@@ -75,15 +75,20 @@ public class ListHotelActivity extends AppCompatActivity implements HotelAdapter
     }
 
     @Override
-    public void onSuccess(List<HotelItem> hotelItems) {
+    public void onSuccess(List<HotelItem> hotelItems,String message) {
         this.hotelItems=hotelItems;
-        hotelAdapter=new HotelAdapter(this,hotelItems);
-        hotelAdapter.setOnClickListener(this);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(RecyclerView.VERTICAL);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(hotelAdapter);
-        Toast.makeText(this, "sukses", Toast.LENGTH_SHORT).show();
+        if(hotelItems !=null){
+            hotelAdapter=new HotelAdapter(this,hotelItems);
+            hotelAdapter.setOnClickListener(this);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+            layoutManager.setOrientation(RecyclerView.VERTICAL);
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.setAdapter(hotelAdapter);
+            Toast.makeText(this, "sukses", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        }
+
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.example.penidae_ticketing.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
@@ -10,6 +11,17 @@ public class Room{
 
 	@SerializedName("message")
 	private String message;
+
+	public ArrayList<Integer> getId_room() {
+		return id_room;
+	}
+
+	public void setId_room(ArrayList<Integer> id_room) {
+		this.id_room = id_room;
+	}
+
+	@SerializedName("id_room")
+	private ArrayList<Integer> id_room;
 
 	@SerializedName("room")
 	private List<RoomItem> room;

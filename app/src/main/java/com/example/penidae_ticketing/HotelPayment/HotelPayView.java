@@ -1,14 +1,12 @@
 package com.example.penidae_ticketing.HotelPayment;
 
-import com.example.penidae_ticketing.model.HotelPayment;
-import com.example.penidae_ticketing.model.Payment;
-
-import java.util.List;
+import java.util.ArrayList;
 
 public interface HotelPayView {
     void showLoading();
     void hideLoading();
     void onSuccess(String payment);
+    void onSuccessId(ArrayList<Integer> roomArray);
     void onError();
     void onFailure(Throwable t);
 }

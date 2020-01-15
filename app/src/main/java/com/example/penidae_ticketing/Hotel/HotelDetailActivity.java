@@ -72,7 +72,7 @@ public class HotelDetailActivity extends AppCompatActivity {
             guest = bundle.getString("guest");
             room= bundle.getString("room");
 
-            header.setText("check-in: "+check_in+", check-out :"+check_out+"");
+            header.setText("check-in: "+check_in+", check-out :"+check_out+", room:"+room);
         }
     }
 

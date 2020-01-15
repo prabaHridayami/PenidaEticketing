@@ -3,9 +3,7 @@ package com.example.penidae_ticketing.HotelPayment;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,16 +13,12 @@ import com.example.penidae_ticketing.Helper.PreferenceHelper;
 import com.example.penidae_ticketing.MainActivity;
 import com.example.penidae_ticketing.R;
 import com.example.penidae_ticketing.api.ApiClient;
-import com.example.penidae_ticketing.model.HotelPayment;
-import com.example.penidae_ticketing.model.Payment;
 import com.example.penidae_ticketing.model.RoomItem;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
-
-import static java.security.AccessController.getContext;
 
 public class HotelPaymentActivity extends AppCompatActivity implements HotelPayView {
     public static final String KEY_HOTEL="hotelItem";
@@ -52,16 +46,16 @@ public class HotelPaymentActivity extends AppCompatActivity implements HotelPayV
         preferencesHelper=new PreferenceHelper(this);
 
         id_user = Integer.parseInt(preferencesHelper.getId());
+        final Integer num_room = Integer.parseInt(room);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        final String currentDateTime = sdf.format(new Date());
 
         btn_payment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Integer id_room = roomItem.getIdRoom();
-                presenter.transHotel(id_room,check_in,check_out,currentDateTime,total,id_user);
-//                Toast.makeText(getApplicationContext(), id_user.toString(), Toast.LENGTH_SHORT).show();;
+                Integer id_cat = roomItem.getIdCat();
+
+                presenter.getRoomId(check_in,check_out,id_cat);
+
             }
         });
 
@@ -128,9 +122,24 @@ public class HotelPaymentActivity extends AppCompatActivity implements HotelPayV
     @Override
     public void onSuccess(String payment) {
         Toast.makeText(this, payment, Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, MainActivity.class);
+    }
+
+    @Override
+    public void onSuccessId(ArrayList<Integer> roomArray) {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        final String currentDateTime = sdf.format(new Date());
+//
+        for (int y =0; y<roomArray.size();y++){
+           presenter.transHotel(roomArray.get(y),check_in,check_out,currentDateTime,total,id_user);
+
+        }
+
+        Toast.makeText(this, "Sukses Transaksi:"+roomArray.toString(),Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
-        finish();
+
+
     }
 
     @Override
@@ -140,6 +149,6 @@ public class HotelPaymentActivity extends AppCompatActivity implements HotelPayV
 
     @Override
     public void onFailure(Throwable t) {
-        Toast.makeText(this, "Error : "+t, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Error GetRoomId: "+t, Toast.LENGTH_SHORT).show();
     }
 }

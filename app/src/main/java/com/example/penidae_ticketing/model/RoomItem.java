@@ -7,8 +7,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class RoomItem implements Parcelable {
 
-	@SerializedName("room_name")
-	private String roomName;
+	@SerializedName("num_room")
+	private int num_room;
 
 	@SerializedName("price")
 	private int price;
@@ -26,11 +26,10 @@ public class RoomItem implements Parcelable {
 	private String desc;
 
 	protected RoomItem(Parcel in) {
-		roomName = in.readString();
+		num_room = in.readInt();
 		price = in.readInt();
 		idCat = in.readInt();
 		category = in.readString();
-		idRoom = in.readInt();
 		desc = in.readString();
 	}
 
@@ -46,12 +45,12 @@ public class RoomItem implements Parcelable {
 		}
 	};
 
-	public void setRoomName(String roomName){
-		this.roomName = roomName;
+	public void setNumRoom(Integer num_room){
+		this.num_room = num_room;
 	}
 
-	public String getRoomName(){
-		return roomName;
+	public Integer getNumRoom(){
+		return num_room;
 	}
 
 	public void setPrice(int price){
@@ -98,11 +97,10 @@ public class RoomItem implements Parcelable {
  	public String toString(){
 		return 
 			"RoomItem{" + 
-			"room_name = '" + roomName + '\'' + 
+			"num_room = '" + num_room + '\'' +
 			",price = '" + price + '\'' + 
 			",id_cat = '" + idCat + '\'' + 
-			",category = '" + category + '\'' + 
-			",id_room = '" + idRoom + '\'' +
+			",category = '" + category + '\'' +
 			",desc = '" + desc + '\'' +
 			"}";
 		}
@@ -115,11 +113,10 @@ public class RoomItem implements Parcelable {
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeString(roomName);
+		dest.writeInt(num_room);
 		dest.writeInt(price);
 		dest.writeInt(idCat);
 		dest.writeString(category);
-		dest.writeInt(idRoom);
 		dest.writeString(desc);
 	}
 }

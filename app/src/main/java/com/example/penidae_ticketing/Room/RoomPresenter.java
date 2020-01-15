@@ -1,5 +1,7 @@
 package com.example.penidae_ticketing.Room;
 
+import android.widget.Toast;
+
 import com.example.penidae_ticketing.api.ApiService;
 import com.example.penidae_ticketing.model.Hotel;
 import com.example.penidae_ticketing.model.Room;
@@ -17,9 +19,9 @@ public class RoomPresenter {
         this.service = service;
     }
 
-    public void getRoom(String checkIn, String checkOut, Integer id){
+    public void getRoom(String checkIn, String checkOut, Integer id, Integer room){
         view.showLoading();
-        service.getRoom(checkIn,checkOut,id).enqueue(new Callback<Room>() {
+        service.getRoom(checkIn,checkOut,room,id).enqueue(new Callback<Room>() {
             @Override
             public void onResponse(Call<Room> call, Response<Room> response) {
                 if (response.isSuccessful()){
@@ -34,6 +36,7 @@ public class RoomPresenter {
             @Override
             public void onFailure(Call<Room> call, Throwable t) {
                 view.onFailure(t);
+
             }
         });
     }

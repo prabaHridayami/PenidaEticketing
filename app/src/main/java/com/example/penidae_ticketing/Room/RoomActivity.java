@@ -28,7 +28,7 @@ public class RoomActivity extends AppCompatActivity implements RoomView, RoomAda
     List<RoomItem> roomItems;
 
     TextView header;
-    String check_in, check_out, title, address, checkin_time,checkout_time;
+    String check_in, check_out, title, address, checkin_time,checkout_time,room;
     Integer id;
 
 
@@ -48,9 +48,10 @@ public class RoomActivity extends AppCompatActivity implements RoomView, RoomAda
             check_in = bundle.getString("check_in");
             check_out = bundle.getString("check_out");
             id = bundle.getInt("id");
+            room = bundle.getString("room");
 
-            header.setText("check-in: "+check_in+", check-out :"+check_out+"");
-            roomPresenter.getRoom(check_in,check_out,id);
+            header.setText("check-in: "+check_in+", check-out :"+check_out+" "+id);
+            roomPresenter.getRoom(check_in,check_out,id,Integer.parseInt(room));
         }
 
 
@@ -93,7 +94,7 @@ public class RoomActivity extends AppCompatActivity implements RoomView, RoomAda
     public void onClick(int position) {
         RoomItem roomItem=roomItems.get(position);
         Bundle bundle = getIntent().getExtras();
-        bundle.putParcelable(HotelDetailActivity.KEY_HOTEL,roomItem);
+        bundle.putParcelable(HotelPaymentActivity.KEY_HOTEL,roomItem);
         Intent intent=new Intent(this, HotelPaymentActivity.class);
         intent.putExtras(bundle);
         startActivity(intent);

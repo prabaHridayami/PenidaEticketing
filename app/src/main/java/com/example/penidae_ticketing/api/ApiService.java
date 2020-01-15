@@ -6,6 +6,8 @@ import com.example.penidae_ticketing.model.Boat;
 import com.example.penidae_ticketing.model.Hotel;
 import com.example.penidae_ticketing.model.Payment;
 import com.example.penidae_ticketing.model.Room;
+import com.example.penidae_ticketing.model.RoomItem;
+import com.example.penidae_ticketing.model.Schedule;
 import com.example.penidae_ticketing.model.TourPack;
 import com.example.penidae_ticketing.model.User;
 import com.example.penidae_ticketing.model.VehicleOwner;
@@ -43,7 +45,14 @@ public interface ApiService {
     @POST("hotel.php?apicall=getRoom")
     Call<Room>getRoom(@Field("check_in") String check_in,
                       @Field("check_out") String check_out,
+                      @Field("tot_room") Integer tot_room,
                       @Field("id") Integer id);
+
+    @FormUrlEncoded
+    @POST("hotel.php?apicall=getRoomId")
+    Call<Room>getRoomId(@Field("check_in") String check_in,
+                            @Field("check_out") String check_out,
+                            @Field("id") Integer id);
 
     @FormUrlEncoded
     @POST("hotel.php?apicall=TransHotel")
@@ -56,6 +65,20 @@ public interface ApiService {
 
     @POST("boat.php?apicall=allboat")
     Call<Boat>allboat();
+
+    @FormUrlEncoded
+    @POST("boat.php?apicall=getSchedule")
+    Call<Schedule>getSchedule(@Field("id_boat") Integer id_boat,
+                              @Field("depart") String depart);
+
+    @FormUrlEncoded
+    @POST("boat.php?apicall=TransHotel")
+    Call<Payment>transBoat(@Field("depart_date") String depart_date,
+                            @Field("schedule") Integer schedule,
+                            @Field("reserve_date") String reserve_date,
+                            @Field("qty") Integer qty,
+                            @Field("total_price") Integer total_price,
+                            @Field("id_user") Integer id_user);
 
     @POST("vehicle.php?apicall=allowner")
     Call<VehicleOwner>allOwner();

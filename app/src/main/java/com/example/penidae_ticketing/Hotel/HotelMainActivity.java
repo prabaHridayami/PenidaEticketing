@@ -205,8 +205,9 @@ public class HotelMainActivity extends AppCompatActivity implements View.OnClick
 
     }
 
+
     @Override
-    public void onSuccess(List<HotelItem> hotelItems) {
+    public void onSuccess(List<HotelItem> hotelItems, String message) {
         this.hotelItems=hotelItems;
         adapter=new HotelAdapter(this,hotelItems);
         adapter.setOnClickListener(this);
