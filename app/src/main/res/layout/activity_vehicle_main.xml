@@ -66,10 +66,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@android:color/black"
-                        android:text="Guests"/>
+                        android:text="Return Date"/>
 
                     <EditText
-                        android:id="@+id/et_guest"
+                        android:id="@+id/et_return"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@android:color/black"
@@ -106,6 +106,7 @@
             </RadioGroup>
 
             <Button
+                android:id="@+id/search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"

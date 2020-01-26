@@ -10,6 +10,7 @@ import com.example.penidae_ticketing.model.RoomItem;
 import com.example.penidae_ticketing.model.Schedule;
 import com.example.penidae_ticketing.model.TourPack;
 import com.example.penidae_ticketing.model.User;
+import com.example.penidae_ticketing.model.Vehicle;
 import com.example.penidae_ticketing.model.VehicleOwner;
 
 import retrofit2.Call;
@@ -82,6 +83,18 @@ public interface ApiService {
 
     @POST("vehicle.php?apicall=allowner")
     Call<VehicleOwner>allOwner();
+
+    @FormUrlEncoded
+    @POST("vehicle.php?apicall=searchRental")
+    Call<VehicleOwner>searchRental(@Field("pick_up") String pick_up,
+                           @Field("return") String re,
+                           @Field("cat") String cat);
+
+    @FormUrlEncoded
+    @POST("vehicle.php?apicall=searchVehicle")
+    Call<Vehicle>searchVehicle(@Field("id_rental") Integer id,
+                               @Field("pick_up") String pickup_date,
+                               @Field("return") String return_date);
 
     @POST("watersport.php?apicall=allatt")
     Call<Attraction>allatt();

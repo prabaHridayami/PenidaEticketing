@@ -12,10 +12,28 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".BoatPayment.BoatPaymentActivity"
+        <activity android:name=".Vehicle.ListRentalActivity"
+            android:label="List Rental"
+            android:parentActivityName=".Vehicle.VehicleMainActivity"
+            android:theme="@style/AppThemeActionBar"></activity>
+        <activity android:name=".WatersportPayment.WatersportPaymentActivity" />
+        <activity android:name=".WatersportDetail.AttractionCartActivity" />
+        <activity
+            android:name=".WatersportDetail.AttqtyActivity"
+            android:label="Ticket Quantity"
+            android:parentActivityName=".WatersportDetail.AttractionListActivity"
+            android:theme="@style/AppThemeActionBar" />
+        <activity android:name=".WatersportDetail.AttractionListActivity" />
+        <activity android:name=".VehiclePayment.VehiclePaymentActivity" />
+        <activity android:name=".Vehicle.VehicleListActivity"
+            android:label="Vehicle List"
+            android:parentActivityName=".Vehicle.VehicleDetailActivity"
+            android:theme="@style/AppThemeActionBar"/>
+        <activity
+            android:name=".BoatPayment.BoatPaymentActivity"
             android:label="Boat Payment"
             android:parentActivityName=".BoatDetail.ScheduleActivity"
-            android:theme="@style/AppThemeActionBar"></activity>
+            android:theme="@style/AppThemeActionBar" />
         <activity
             android:name=".BoatDetail.ScheduleActivity"
             android:label="Schedule"
@@ -54,9 +72,9 @@
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppThemeActionBar" />
         <activity
-            android:name=".VehicleDetail.VehicleDetailActivity"
+            android:name=".Vehicle.VehicleDetailActivity"
             android:label="@string/vehicle"
-            android:parentActivityName=".Vehicle.VehicleMainActivity"
+            android:parentActivityName=".Vehicle.ListRentalActivity"
             android:theme="@style/AppThemeActionBar" />
         <activity
             android:name=".Vehicle.VehicleMainActivity"

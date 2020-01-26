@@ -1,4 +1,4 @@
-package com.example.penidae_ticketing.VehicleDetail;
+package com.example.penidae_ticketing.WatersportDetail;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,11 +6,11 @@ import android.os.Bundle;
 
 import com.example.penidae_ticketing.R;
 
-public class VehicleDetailActivity extends AppCompatActivity {
-    public static final String KEY_VEHICLE="ownerItem";
+public class AttractionListActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vehicle_detail);
+        setContentView(R.layout.activity_attraction_list);
     }
 }

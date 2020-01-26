@@ -9,24 +9,21 @@ import android.widget.TextView;
 
 import com.example.penidae_ticketing.R;
 import com.example.penidae_ticketing.model.OwnerItem;
-import com.example.penidae_ticketing.model.VehicleItem;
-
-import org.xml.sax.Parser;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.ViewHolder> {
+public class RentalListAdapter extends RecyclerView.Adapter<RentalListAdapter.ViewHolder> {
 
     private Context context;
-    private List<VehicleItem> vehicleItems ;
+    private List<OwnerItem> ownerItems ;
     private OnClickListener onClickListener;
 
-    public VehicleAdapter(Context context, List<VehicleItem>  vehicleItems) {
+    public RentalListAdapter(Context context, List<OwnerItem>  ownerItems) {
         this.context = context;
-        this.vehicleItems = vehicleItems;
+        this.ownerItems = ownerItems;
     }
 
     public interface OnClickListener{
@@ -36,18 +33,18 @@ public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.room_list,parent,false));
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_list,parent,false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int i) {
-        VehicleItem vehicleItem= vehicleItems.get(i);
-        holder.bind(vehicleItem);
+        OwnerItem ownerItem= ownerItems.get(i);
+        holder.bind(ownerItem);
     }
 
     @Override
     public int getItemCount() {
-        return vehicleItems.size();
+        return ownerItems.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -58,7 +55,6 @@ public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.ViewHold
             super(itemView);
             tv_title = itemView.findViewById(R.id.item_title);
             iv_Image = itemView.findViewById(R.id.item_image);
-            tv_price = itemView.findViewById(R.id.item_price);
             if (onClickListener!=null){
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -69,10 +65,8 @@ public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.ViewHold
             }
         }
 
-        public void bind(VehicleItem vehicleItem) {
-
-            tv_title.setText(vehicleItem.getName());
-            tv_price.setText(Integer.toString(vehicleItem.getPrice()));
+        public void bind(OwnerItem ownerItem) {
+            tv_title.setText(ownerItem.getName());
         }
     }
     public void setOnClickListener(OnClickListener onClickListener) {
