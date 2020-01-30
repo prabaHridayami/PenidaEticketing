@@ -12,6 +12,7 @@ import com.example.penidae_ticketing.model.TourPack;
 import com.example.penidae_ticketing.model.User;
 import com.example.penidae_ticketing.model.Vehicle;
 import com.example.penidae_ticketing.model.VehicleOwner;
+import com.example.penidae_ticketing.model.Watersport;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -73,7 +74,7 @@ public interface ApiService {
                               @Field("depart") String depart);
 
     @FormUrlEncoded
-    @POST("boat.php?apicall=TransHotel")
+    @POST("boat.php?apicall=TransBoat")
     Call<Payment>transBoat(@Field("depart_date") String depart_date,
                             @Field("schedule") Integer schedule,
                             @Field("reserve_date") String reserve_date,
@@ -96,8 +97,21 @@ public interface ApiService {
                                @Field("pick_up") String pickup_date,
                                @Field("return") String return_date);
 
+    @FormUrlEncoded
+    @POST("vehicle.php?apicall=TransVehicle")
+    Call<Payment>transVehicle(@Field("depart_date") String depart_date,
+                           @Field("schedule") Integer schedule,
+                           @Field("reserve_date") String reserve_date,
+                           @Field("qty") Integer qty,
+                           @Field("total_price") Integer total_price,
+                           @Field("id_user") Integer id_user);
+
+    @FormUrlEncoded
     @POST("watersport.php?apicall=allatt")
-    Call<Attraction>allatt();
+    Call<Attraction>allatt(@Field("id") Integer id);
+
+    @POST("watersport.php?apicall=allwatersport")
+    Call<Watersport>allwatersport();
 
     @POST("tour.php?apicall=alltour")
     Call<TourPack>alltour();

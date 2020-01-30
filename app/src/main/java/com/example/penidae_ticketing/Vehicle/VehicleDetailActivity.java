@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.penidae_ticketing.R;
 import com.example.penidae_ticketing.Vehicle.VehicleListActivity;
 import com.example.penidae_ticketing.model.OwnerItem;
@@ -15,6 +17,7 @@ import com.example.penidae_ticketing.model.OwnerItem;
 public class VehicleDetailActivity extends AppCompatActivity {
     public static final String KEY_VEHICLE="ownerItem";
     TextView tv_title, tv_address, tv_pickup_date, tv_return_date, tv_pickup_time, tv_return_time, tv_desc;
+    ImageView iv_vehicle;
     String title, address, pickup_date, return_date, pickup_time, return_time, desc, image, cate;
 
     Button rent;
@@ -53,6 +56,7 @@ public class VehicleDetailActivity extends AppCompatActivity {
         tv_pickup_time = findViewById(R.id.tv_pickup_time);
         tv_return_time = findViewById(R.id.tv_return_time);
         tv_desc = findViewById(R.id.tv_desc);
+        iv_vehicle = findViewById(R.id.iv_vehicle);
         rent = findViewById(R.id.rent);
 
         Bundle bundle = getIntent().getExtras();
@@ -76,6 +80,7 @@ public class VehicleDetailActivity extends AppCompatActivity {
         tv_desc.setText(desc);
         tv_pickup_date.setText(pickup_date);
         tv_return_date.setText(return_date);
+        Glide.with(this).load(image).centerCrop().into(iv_vehicle);
 
     }
 }

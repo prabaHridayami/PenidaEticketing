@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.penidae_ticketing.Helper.PreferenceHelper;
 import com.example.penidae_ticketing.R;
@@ -17,6 +18,7 @@ import androidx.fragment.app.Fragment;
 public class AccountFragment extends Fragment {
     View v;
     Button btn_logout;
+    TextView desc;
     PreferenceHelper preferenceHelper;
 
     @Nullable
@@ -25,7 +27,10 @@ public class AccountFragment extends Fragment {
         v = inflater.inflate(R.layout.fragment_account,container,false);
 
         btn_logout = v.findViewById(R.id.btn_logout);
+        desc = v.findViewById(R.id.desc);
         preferenceHelper = new PreferenceHelper(getActivity());
+
+        desc.setText(Integer.toString(preferenceHelper.getId()));
 
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,5 +43,7 @@ public class AccountFragment extends Fragment {
         });
 
         return v;
+
+
     }
 }

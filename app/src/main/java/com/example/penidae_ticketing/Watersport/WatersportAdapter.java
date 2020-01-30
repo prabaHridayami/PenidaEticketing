@@ -7,9 +7,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.penidae_ticketing.R;
 import com.example.penidae_ticketing.model.AttractionItem;
 import com.example.penidae_ticketing.model.OwnerItem;
+import com.example.penidae_ticketing.model.WatersportItem;
 
 import java.util.List;
 
@@ -19,12 +21,12 @@ import androidx.recyclerview.widget.RecyclerView;
 public class WatersportAdapter extends RecyclerView.Adapter<WatersportAdapter.ViewHolder> {
 
     private Context context;
-    private List<AttractionItem> attractionItems ;
+    private List<WatersportItem> watersportItems ;
     private OnClickListener onClickListener;
 
-    public WatersportAdapter(Context context, List<AttractionItem>  attractionItems) {
+    public WatersportAdapter(Context context, List<WatersportItem>  watersportItems) {
         this.context = context;
-        this.attractionItems = attractionItems;
+        this.watersportItems = watersportItems;
     }
 
     public interface OnClickListener{
@@ -39,13 +41,13 @@ public class WatersportAdapter extends RecyclerView.Adapter<WatersportAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int i) {
-        AttractionItem attractionItem= attractionItems.get(i);
-        holder.bind(attractionItem);
+        WatersportItem watersportItem= watersportItems.get(i);
+        holder.bind(watersportItem);
     }
 
     @Override
     public int getItemCount() {
-        return attractionItems.size();
+        return watersportItems.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -66,8 +68,9 @@ public class WatersportAdapter extends RecyclerView.Adapter<WatersportAdapter.Vi
             }
         }
 
-        public void bind(AttractionItem attractionItem) {
-            tv_title.setText(attractionItem.getName());
+        public void bind(WatersportItem watersportItem) {
+            tv_title.setText(watersportItem.getName());
+            Glide.with(context).load(watersportItem.getImage()).into(iv_Image);
         }
     }
     public void setOnClickListener(OnClickListener onClickListener) {

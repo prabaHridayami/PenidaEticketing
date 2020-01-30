@@ -24,10 +24,11 @@
             android:parentActivityName=".WatersportDetail.AttractionListActivity"
             android:theme="@style/AppThemeActionBar" />
         <activity android:name=".WatersportDetail.AttractionListActivity" />
-        <activity android:name=".VehiclePayment.VehiclePaymentActivity" />
+        <activity android:name=".VehiclePayment.VehiclePaymentActivity"
+            android:label="Rental Payment"
+            android:theme="@style/AppThemeActionBar"/>
         <activity android:name=".Vehicle.VehicleListActivity"
             android:label="Vehicle List"
-            android:parentActivityName=".Vehicle.VehicleDetailActivity"
             android:theme="@style/AppThemeActionBar"/>
         <activity
             android:name=".BoatPayment.BoatPaymentActivity"
@@ -62,7 +63,7 @@
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppThemeActionBar" />
         <activity
-            android:name=".WatersportDetail.WatersportDetailActivity"
+            android:name=".Watersport.WatersportDetailActivity"
             android:label="@string/watersport"
             android:parentActivityName=".Watersport.WatersportMainActicvity"
             android:theme="@style/AppThemeActionBar" />
@@ -74,7 +75,6 @@
         <activity
             android:name=".Vehicle.VehicleDetailActivity"
             android:label="@string/vehicle"
-            android:parentActivityName=".Vehicle.ListRentalActivity"
             android:theme="@style/AppThemeActionBar" />
         <activity
             android:name=".Vehicle.VehicleMainActivity"

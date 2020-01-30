@@ -105,15 +105,14 @@ public class LoginActivity extends AppCompatActivity implements AuthView, View.O
     @Override
     public void onSuccess(User user) {
         preferenceHelper.setUser(user);
-//        Toast.makeText(this, "email:"+user.getEmail(), Toast.LENGTH_SHORT).show();
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
         finish();
 
     }
 
     @Override
-    public void onError(User user) {
-        Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+    public void onError() {
+        Toast.makeText(this, "Username or Password invalid", Toast.LENGTH_SHORT).show();
     }
 
     @Override

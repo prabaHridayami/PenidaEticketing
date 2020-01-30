@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.penidae_ticketing.R;
 import com.example.penidae_ticketing.Room.RoomActivity;
 import com.example.penidae_ticketing.model.HotelItem;
@@ -22,7 +23,7 @@ public class HotelDetailActivity extends AppCompatActivity {
     TextView tv_title, tv_address, tv_desc, header,tv_check_in,tv_check_out;
     Button selectRoom;
 
-    String check_in, check_out, guest, room;
+    String check_in, check_out, guest, room, image;
 
 
     @Override
@@ -82,5 +83,6 @@ public class HotelDetailActivity extends AppCompatActivity {
         tv_desc.setText(hotelItem.getDesc());
         tv_check_in.setText(hotelItem.getCheckin_time());
         tv_check_out.setText(hotelItem.getCheckout_time());
+        Glide.with(this).load(hotelItem.getHotelImage()).centerCrop().placeholder(R.drawable.nuspen1).into(iv_hotel);
     }
 }

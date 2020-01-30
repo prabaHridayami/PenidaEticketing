@@ -27,9 +27,13 @@ public class AuthPresenter {
             @Override
             public void onResponse(Call<Auth> call, Response<Auth> response) {
                 if (response.isSuccessful()){
-                    view.onSuccess(response.body().getUser());
+                    if (response.body().getMessage().equals("Invalid username or password")){
+                        view.onError();
+                    }else{
+                        view.onSuccess(response.body().getUser());
+                    }
                 }else {
-                    view.onError(response.body().getUser());
+                    view.onError();
                 }
             }
 
@@ -50,7 +54,7 @@ public class AuthPresenter {
                 if (response.isSuccessful()){
                     view.onSuccess(response.body().getUser());
                 }else {
-                    view.onError(response.body().getUser());
+                    view.onError();
                 }
             }
 

@@ -1,4 +1,4 @@
-package com.example.penidae_ticketing.Vehicle;
+package com.example.penidae_ticketing.WatersportDetail;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,22 +9,24 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.penidae_ticketing.R;
-import com.example.penidae_ticketing.model.OwnerItem;
+import com.example.penidae_ticketing.model.Attraction;
+import com.example.penidae_ticketing.model.AttractionItem;
+import com.example.penidae_ticketing.model.WatersportItem;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class RentalListAdapter extends RecyclerView.Adapter<RentalListAdapter.ViewHolder> {
+public class AttAdapter extends RecyclerView.Adapter<AttAdapter.ViewHolder> {
 
     private Context context;
-    private List<OwnerItem> ownerItems ;
+    private List<AttractionItem> attractionItems ;
     private OnClickListener onClickListener;
 
-    public RentalListAdapter(Context context, List<OwnerItem>  ownerItems) {
+    public AttAdapter(Context context, List<AttractionItem>  attractionItems) {
         this.context = context;
-        this.ownerItems = ownerItems;
+        this.attractionItems = attractionItems;
     }
 
     public interface OnClickListener{
@@ -39,13 +41,13 @@ public class RentalListAdapter extends RecyclerView.Adapter<RentalListAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int i) {
-        OwnerItem ownerItem= ownerItems.get(i);
-        holder.bind(ownerItem);
+        AttractionItem attractionItem= attractionItems.get(i);
+        holder.bind(attractionItem);
     }
 
     @Override
     public int getItemCount() {
-        return ownerItems.size();
+        return attractionItems.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -56,6 +58,7 @@ public class RentalListAdapter extends RecyclerView.Adapter<RentalListAdapter.Vi
             super(itemView);
             tv_title = itemView.findViewById(R.id.item_title);
             iv_Image = itemView.findViewById(R.id.item_image);
+            tv_price = itemView.findViewById(R.id.item_price);
             if (onClickListener!=null){
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -66,9 +69,10 @@ public class RentalListAdapter extends RecyclerView.Adapter<RentalListAdapter.Vi
             }
         }
 
-        public void bind(OwnerItem ownerItem) {
-            tv_title.setText(ownerItem.getName());
-            Glide.with(context).load(ownerItem.getImage()).into(iv_Image);
+        public void bind(AttractionItem attractionItem) {
+            tv_title.setText(attractionItem.getName());
+            tv_price.setText(Integer.toString(attractionItem.getPrice()));
+            Glide.with(context).load(attractionItem.getImage()).into(iv_Image);
         }
     }
     public void setOnClickListener(OnClickListener onClickListener) {

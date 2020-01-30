@@ -74,7 +74,7 @@ public class RegisterActivity extends AppCompatActivity implements AuthView {
     }
 
     @Override
-    public void onError(User user) {
+    public void onError() {
         Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
     }
 

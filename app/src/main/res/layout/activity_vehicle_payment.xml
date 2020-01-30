@@ -84,7 +84,7 @@
 
                     <TextView
                         android:id="@+id/tv_day"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAlignment="textStart"
                         android:layout_marginLeft="16dp"
@@ -92,6 +92,16 @@
                         android:textColor="@android:color/black"
                         android:textSize="16dp"
                         android:text="2"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="textStart"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="16dp"
+                        android:textColor="@android:color/black"
+                        android:textSize="16dp"
+                        android:text="day(s)"/>
 
                 </LinearLayout>
 
@@ -197,72 +207,6 @@
                     android:src="@drawable/line"
                     />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:textColor="@android:color/black"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:text="Pick Up/Return Time"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="textStart"
-                        android:layout_marginTop="16dp"
-                        android:textColor="@android:color/black"
-                        android:textSize="16dp"
-                        android:text="Pick Up Time"/>
-
-                    <TextView
-                        android:id="@+id/tv_pickup_time"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="textEnd"
-                        android:layout_marginTop="16dp"
-                        android:textColor="@android:color/black"
-                        android:textSize="16dp"
-                        android:text="Desc"/>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="textStart"
-                        android:layout_marginTop="16dp"
-                        android:textColor="@android:color/black"
-                        android:textSize="16dp"
-                        android:text="Return Time"/>
-
-                    <TextView
-                        android:id="@+id/tv_return_time"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="textEnd"
-                        android:layout_marginTop="16dp"
-                        android:textColor="@android:color/black"
-                        android:textSize="16dp"
-                        android:text="Desc"/>
-
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:src="@drawable/line"
-                    />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -295,7 +239,7 @@
     </ScrollView>
 
     <Button
-        android:id="@+id/btn_payment"
+        android:id="@+id/rental_payment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

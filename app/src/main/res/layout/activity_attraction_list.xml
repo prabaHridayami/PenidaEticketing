@@ -8,25 +8,14 @@
     tools:context=".WatersportDetail.AttractionListActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_room"
+        android:id="@+id/rv_att"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_above="@id/btn_book"
         android:orientation="vertical"
         android:clipToPadding="false"
         card_view:listitem="@layout/att_list"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         />
-
-    <Button
-        android:id="@+id/btn_book"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary"
-        android:text="Book"
-        android:textColor="@color/white"
-        android:textAllCaps="false"/>
 
 </RelativeLayout>

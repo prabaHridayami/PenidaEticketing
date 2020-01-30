@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.penidae_ticketing.R;
 import com.example.penidae_ticketing.model.BoatItem;
 
@@ -67,6 +68,7 @@ public class BoatAdapter extends RecyclerView.Adapter<BoatAdapter.ViewHolder> {
 
         public void bind(BoatItem boatItem) {
             tv_title.setText(boatItem.getName());
+            Glide.with(context).load(boatItem.getImage()).into(iv_Image);
         }
     }
     public void setOnClickListener(OnClickListener onClickListener) {

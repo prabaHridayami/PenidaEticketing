@@ -45,7 +45,8 @@ public class HotelPaymentActivity extends AppCompatActivity implements HotelPayV
         presenter = new HotelPayPresenter(this,ApiClient.getService());
         preferencesHelper=new PreferenceHelper(this);
 
-        id_user = Integer.parseInt(preferencesHelper.getId());
+        id_user = preferencesHelper.getId();
+
         final Integer num_room = Integer.parseInt(room);
 
 
@@ -137,6 +138,7 @@ public class HotelPaymentActivity extends AppCompatActivity implements HotelPayV
 
         Toast.makeText(this, "Sukses Transaksi:"+roomArray.toString(),Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this,MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
 
 

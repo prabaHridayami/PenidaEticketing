@@ -39,8 +39,8 @@ public class BoatPaymentActivity extends AppCompatActivity implements BoatPayVie
         setText();
 
         preferencesHelper=new PreferenceHelper(this);
+        id_user = preferencesHelper.getId();
 
-        id_user = Integer.parseInt(preferencesHelper.getId());
 
         boatPayPresenter = new BoatPayPresenter(this, ApiClient.getService());
         final Bundle bundle = getIntent().getExtras();
@@ -103,6 +103,7 @@ public class BoatPaymentActivity extends AppCompatActivity implements BoatPayVie
     public void onSuccess(Integer payment) {
         Toast.makeText(this,"Payment Succes with ID:"+payment,Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 

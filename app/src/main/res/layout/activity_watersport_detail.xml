@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WatersportDetail.WatersportDetailActivity">
+    tools:context=".Watersport.WatersportDetailActivity">
 
 
     <ScrollView
@@ -20,7 +20,7 @@
             >
 
             <ImageView
-                android:id="@+id/iv_hotel"
+                android:id="@+id/iv_watersport"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"/>
 
@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:orientation="vertical"
-                android:layout_below="@id/iv_hotel">
+                android:layout_below="@id/iv_watersport">
                 <TextView
                     android:id="@+id/tv_title"
                     android:layout_width="match_parent"
@@ -82,32 +82,6 @@
                     android:src="@drawable/line"
                     />
 
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:textColor="@android:color/black"
-                    android:textStyle="bold"
-                    android:textSize="20dp"
-                    android:text="Qty"/>
-
-                <EditText
-                    android:id="@+id/et_qty"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:textColor="@android:color/black"
-                    android:textSize="16dp"
-                    android:inputType="number"
-                    />
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:src="@drawable/line"
-                    />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -157,7 +131,7 @@
 
 
     <Button
-        android:id="@+id/selectRoom"
+        android:id="@+id/selectAtt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

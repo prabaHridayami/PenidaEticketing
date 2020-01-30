@@ -11,4 +11,11 @@
         android:layout_height="wrap_content"
         android:text="Logout"/>
 
+    <TextView
+        android:id="@+id/desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/btn_logout"/>
+
 </RelativeLayout>

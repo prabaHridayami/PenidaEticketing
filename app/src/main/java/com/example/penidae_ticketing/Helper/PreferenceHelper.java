@@ -8,8 +8,7 @@ import com.example.penidae_ticketing.model.User;
 public class PreferenceHelper {
     private SharedPreferences sharedPreferences;
     private final String PREFERENCES_NAME="shared_preferences";
-    private final String LOGIN = "login";
-    private final String ID = "id";
+    private final int id = 0;
     private final String NAME = "name";
     private final String USERNAME = "username";
     private final String PHONE = "phone";
@@ -21,22 +20,22 @@ public class PreferenceHelper {
 
     public void setLogin(boolean login){
         sharedPreferences.edit()
-                .putBoolean(LOGIN,login)
+                .putBoolean("LOGIN",login)
                 .apply();
     }
 
     public boolean getLogin(){
-        return sharedPreferences.getBoolean(LOGIN,false);
+        return sharedPreferences.getBoolean("LOGIN",false);
     }
 
-    public void setId(String id){
+    public void setId(int id){
         sharedPreferences.edit()
-                .putString(ID,id)
+                .putInt("ID",id)
                 .apply();
     }
 
-    public String getId(){
-        return sharedPreferences.getString(ID,"");
+    public int getId(){
+        return sharedPreferences.getInt("ID",id);
     }
 
     public void setName(String name){
@@ -83,6 +82,9 @@ public class PreferenceHelper {
         sharedPreferences.edit()
                 .clear()
                 .apply();
+
+        setLogin(false);
+
     }
 
     public void setUser(User user){

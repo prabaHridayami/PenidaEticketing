@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.penidae_ticketing.R;
+import com.example.penidae_ticketing.VehiclePayment.VehiclePaymentActivity;
 import com.example.penidae_ticketing.api.ApiClient;
 import com.example.penidae_ticketing.model.OwnerItem;
 import com.example.penidae_ticketing.model.VehicleItem;
@@ -53,8 +55,6 @@ public class VehicleListActivity extends AppCompatActivity implements VehicleVie
             cate = bundle.getString("cate");
         }
 
-
-
         presenter=new VehiclePresenter(this, ApiClient.getService());
 
 
@@ -70,7 +70,18 @@ public class VehicleListActivity extends AppCompatActivity implements VehicleVie
 
     @Override
     public void onClick(int position) {
-
+        VehicleItem vehicleItem=vehicleItems.get(position);
+        Bundle bundle=new Bundle();
+        bundle.putParcelable(VehiclePaymentActivity.KEY_VEHICLE,vehicleItem);
+        Bundle owner = new Bundle();
+        owner.putParcelable(VehiclePaymentActivity.KEY_OWNER,ownerItem);
+        Intent intent=new Intent(this,VehiclePaymentActivity.class);
+        intent.putExtras(bundle);
+        intent.putExtras(owner);
+        intent.putExtra("pickup",pickup_date);
+        intent.putExtra("re",return_date);
+        intent.putExtra("cate",cate);
+        startActivity(intent);
     }
 
     @Override
