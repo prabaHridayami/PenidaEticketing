@@ -1,5 +1,6 @@
 package com.example.penidae_ticketing.model;
 
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -7,8 +8,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class ScheduleItem implements Parcelable {
 
-	@SerializedName("id_schedule")
-	private int idSchedule;
+	@SerializedName("image")
+	private String image;
 
 	@SerializedName("price")
 	private int price;
@@ -16,25 +17,33 @@ public class ScheduleItem implements Parcelable {
 	@SerializedName("quota")
 	private int quota;
 
+	@SerializedName("name")
+	private String name;
+
+	@SerializedName("id")
+	private int id;
+
 	@SerializedName("time")
 	private String time;
 
 	@SerializedName("pickup_loc")
 	private String pickupLoc;
 
-	@SerializedName("id_boat")
-	private int idBoat;
+	@SerializedName("desc")
+	private String desc;
 
 	@SerializedName("dropup_loc")
 	private String dropupLoc;
 
 	protected ScheduleItem(Parcel in) {
-		idSchedule = in.readInt();
+		image = in.readString();
 		price = in.readInt();
 		quota = in.readInt();
+		name = in.readString();
+		id = in.readInt();
 		time = in.readString();
 		pickupLoc = in.readString();
-		idBoat = in.readInt();
+		desc = in.readString();
 		dropupLoc = in.readString();
 	}
 
@@ -50,12 +59,12 @@ public class ScheduleItem implements Parcelable {
 		}
 	};
 
-	public void setIdSchedule(int idSchedule){
-		this.idSchedule = idSchedule;
+	public void setImage(String image){
+		this.image = image;
 	}
 
-	public int getIdSchedule(){
-		return idSchedule;
+	public String getImage(){
+		return image;
 	}
 
 	public void setPrice(int price){
@@ -74,6 +83,22 @@ public class ScheduleItem implements Parcelable {
 		return quota;
 	}
 
+	public void setName(String name){
+		this.name = name;
+	}
+
+	public String getName(){
+		return name;
+	}
+
+	public void setId(int id){
+		this.id = id;
+	}
+
+	public int getId(){
+		return id;
+	}
+
 	public void setTime(String time){
 		this.time = time;
 	}
@@ -90,12 +115,12 @@ public class ScheduleItem implements Parcelable {
 		return pickupLoc;
 	}
 
-	public void setIdBoat(int idBoat){
-		this.idBoat = idBoat;
+	public void setDesc(String desc){
+		this.desc = desc;
 	}
 
-	public int getIdBoat(){
-		return idBoat;
+	public String getDesc(){
+		return desc;
 	}
 
 	public void setDropupLoc(String dropupLoc){
@@ -110,12 +135,14 @@ public class ScheduleItem implements Parcelable {
  	public String toString(){
 		return 
 			"ScheduleItem{" + 
-			"id_schedule = '" + idSchedule + '\'' + 
+			"image = '" + image + '\'' + 
 			",price = '" + price + '\'' + 
 			",quota = '" + quota + '\'' + 
+			",name = '" + name + '\'' + 
+			",id = '" + id + '\'' + 
 			",time = '" + time + '\'' + 
 			",pickup_loc = '" + pickupLoc + '\'' + 
-			",id_boat = '" + idBoat + '\'' + 
+			",desc = '" + desc + '\'' + 
 			",dropup_loc = '" + dropupLoc + '\'' + 
 			"}";
 		}
@@ -127,12 +154,14 @@ public class ScheduleItem implements Parcelable {
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeInt(idSchedule);
+		dest.writeString(image);
 		dest.writeInt(price);
 		dest.writeInt(quota);
+		dest.writeString(name);
+		dest.writeInt(id);
 		dest.writeString(time);
 		dest.writeString(pickupLoc);
-		dest.writeInt(idBoat);
+		dest.writeString(desc);
 		dest.writeString(dropupLoc);
 	}
 }

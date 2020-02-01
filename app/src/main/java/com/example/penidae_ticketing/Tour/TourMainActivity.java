@@ -1,77 +1,115 @@
 package com.example.penidae_ticketing.Tour;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.NumberPicker;
 
 import com.example.penidae_ticketing.R;
-import com.example.penidae_ticketing.TourDetailActivity.TourDetailActivity;
-import com.example.penidae_ticketing.api.ApiClient;
-import com.example.penidae_ticketing.model.TourPack;
-import com.example.penidae_ticketing.model.TourPackageItem;
 
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
-public class TourMainActivity extends AppCompatActivity implements TourView, TourAdapter.OnClickListener {
-    private RecyclerView recyclerTour;
-    private TourAdapter tourAdapter;
-    private TourPresenter tourPresenter;
-    List<TourPackageItem> tourPackageItems;
+public class TourMainActivity extends AppCompatActivity implements View.OnClickListener {
+    EditText et_tourdate, et_guest;
+    Button search;
+    String tourdate,guest;
+
+    final Calendar myCalendar = Calendar.getInstance();
+    private SimpleDateFormat dateFormat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tour_main);
+        getSupportActionBar().setElevation(0);
 
-        recyclerTour = findViewById(R.id.rv_tour);
+        et_tourdate = findViewById(R.id.et_tourdate);
+        et_guest = findViewById(R.id.et_guest);
+        search =findViewById(R.id.search);
 
-        tourPresenter=new TourPresenter(this, ApiClient.getService());
-        tourPresenter.getTourPack();
-    }
+        dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 
-    @Override
-    public void showLoading() {
+        et_guest.setText("2");
+        et_tourdate.setText(""+dateFormat.format(myCalendar.getTime()));
 
-    }
+        tourdate = et_tourdate.getText().toString();
+        guest = et_guest.getText().toString();
 
-    @Override
-    public void hideLoading() {
-
-    }
-
-    @Override
-    public void onSuccess(List<TourPackageItem> tourPackageItems) {
-        this.tourPackageItems=tourPackageItems;
-        tourAdapter=new TourAdapter(this,tourPackageItems);
-        tourAdapter.setOnClickListener(this);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(RecyclerView.VERTICAL);
-        recyclerTour.setLayoutManager(layoutManager);
-        recyclerTour.setAdapter(tourAdapter);
-        Toast.makeText(this, "sukses", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onError() {
+        et_tourdate.setOnClickListener(this);
+        et_guest.setOnClickListener(this);
+        search.setOnClickListener(this);
 
     }
 
-    @Override
-    public void onFailure(Throwable t) {
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.et_tourdate:
+                datePickerDialog();
+                break;
+            case R.id.et_guest:
+                guestPickerDialog();
+                break;
+            case R.id.search:
+                Intent intent = new Intent(this, TourListActivity.class);
+                intent.putExtra("tourdate", tourdate);
+                intent.putExtra("guest", guest);
+                startActivity(intent);
+                break;
+        }
     }
 
-    @Override
-    public void onClick(int position) {
-        TourPackageItem tourPackageItem=tourPackageItems.get(position);
-//        Bundle bundle=new Bundle();
-//        bundle.putParcelable(WatersportDetailActivity.KEY_HOTEL,hotelItem);
-        Intent intent=new Intent(this, TourDetailActivity.class);
-//        intent.putExtras(bundle);
-        startActivity(intent);
+    private void datePickerDialog(){
+        final DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                myCalendar.set(Calendar.YEAR,year);
+                myCalendar.set(Calendar.MONTH,month);
+                myCalendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+                String myFormat = "yyyy/MM/dd"; //In which you need put here
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+                et_tourdate.setText(sdf.format(myCalendar.getTime()));
+            }
+        };
+
+        new DatePickerDialog(TourMainActivity.this, dateSetListener, myCalendar
+                .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    private void guestPickerDialog(){
+        NumberPicker numberPicker = new NumberPicker(this);
+        numberPicker.setMaxValue(10);
+        numberPicker.setMinValue(0);
+        NumberPicker.OnValueChangeListener onValueChangeListener = new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                et_guest.setText(newVal+"");
+            }
+        };
+
+        numberPicker.setOnValueChangedListener(onValueChangeListener);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this).setView(numberPicker);
+        builder.setTitle("Guests")
+                .setIcon(R.drawable.ic_person_outline_black_24dp);
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.show();
     }
 }

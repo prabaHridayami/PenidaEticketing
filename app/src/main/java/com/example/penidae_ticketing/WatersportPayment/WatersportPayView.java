@@ -1,8 +1,6 @@
-package com.example.penidae_ticketing.VehiclePayment;
+package com.example.penidae_ticketing.WatersportPayment;
 
-import java.util.ArrayList;
-
-public interface VehiclePayView {
+public interface WatersportPayView {
     void showLoading();
     void hideLoading();
     void onSuccess(Integer payment);

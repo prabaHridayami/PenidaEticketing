@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,13 +14,13 @@ import com.example.penidae_ticketing.BoatPayment.BoatPaymentActivity;
 import com.example.penidae_ticketing.R;
 import com.example.penidae_ticketing.api.ApiClient;
 import com.example.penidae_ticketing.model.BoatItem;
-import com.example.penidae_ticketing.model.RoomItem;
 import com.example.penidae_ticketing.model.ScheduleItem;
 
 import java.util.List;
 
 public class ScheduleActivity extends AppCompatActivity implements ScheduleView, ScheduleAdapter.OnClickListener{
     public static final String KEY_BOAT="boatItem";
+    private static final String TAG = "Schedule" ;
     private SchedulePresenter schedulePresenter;
     private ScheduleAdapter scheduleAdapter;
     List<ScheduleItem> scheduleItems;
@@ -39,7 +40,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
 
         init();
         schedulePresenter = new SchedulePresenter(this, ApiClient.getService());
-        schedulePresenter.getSchedule(id_boat,departure);
+        schedulePresenter.getSchedule(id_boat,departure,Integer.parseInt(guest));
     }
 
     private void init(){
@@ -85,6 +86,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
 
     @Override
     public void onSuccess(List<ScheduleItem> scheduleItems) {
+
         this.scheduleItems=scheduleItems;
         scheduleAdapter=new ScheduleAdapter(this,scheduleItems);
         scheduleAdapter.setOnClickListener(this);
@@ -97,11 +99,11 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleView,
 
     @Override
     public void onError() {
-
+        Toast.makeText(this, "Failure", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onFailure(Throwable t) {
-
+        Toast.makeText(this, "Error : "+t, Toast.LENGTH_SHORT).show();
     }
 }

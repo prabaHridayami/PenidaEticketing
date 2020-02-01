@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.penidae_ticketing.R;
-import com.example.penidae_ticketing.model.RoomItem;
 import com.example.penidae_ticketing.model.ScheduleItem;
 
 import java.util.List;

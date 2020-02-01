@@ -9,6 +9,7 @@
     tools:context=".WatersportDetail.AttqtyActivity">
 
     <LinearLayout
+        android:id="@+id/line1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -33,6 +34,7 @@
                 android:text="Person"/>
 
             <TextView
+                android:id="@+id/tv_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAlignment="textEnd"
@@ -41,6 +43,7 @@
                 android:text="0"/>
 
             <ImageButton
+                android:id="@+id/minus"
                 android:layout_width="30dp"
                 android:layout_height="20dp"
                 android:layout_marginTop="28dp"
@@ -48,6 +51,7 @@
                 android:background="@drawable/minbtn"/>
 
             <ImageButton
+                android:id="@+id/plus"
                 android:layout_width="30dp"
                 android:layout_height="20dp"
                 android:layout_margin="28dp"
@@ -55,7 +59,35 @@
         </LinearLayout>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line1"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:textSize="16dp"
+            android:text="Select Play Date"
+            />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/playdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:clickable="true"
+                />
+        </LinearLayout>
+    </LinearLayout>
 
     <Button
         android:id="@+id/btn_payment"
@@ -64,7 +96,7 @@
         android:layout_gravity="bottom"
         android:layout_alignParentBottom="true"
         android:background="@color/colorPrimary"
-        android:text="Add to Cart"
+        android:text="Payment"
         android:textColor="@color/white"
         android:textAllCaps="false"/>
 

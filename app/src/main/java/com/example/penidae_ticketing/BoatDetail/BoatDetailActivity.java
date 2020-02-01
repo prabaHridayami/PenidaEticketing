@@ -11,9 +11,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.penidae_ticketing.Boat.BoatMainActivity;
 import com.example.penidae_ticketing.R;
 import com.example.penidae_ticketing.model.BoatItem;
@@ -27,6 +29,7 @@ public class BoatDetailActivity extends AppCompatActivity implements View.OnClic
 
     final Calendar myCalendar = Calendar.getInstance();
     private SimpleDateFormat dateFormat;
+    ImageView iv_boat;
     EditText et_departure, et_guest;
     Button btn_search;
     TextView tv_title, tv_desc;
@@ -40,10 +43,6 @@ public class BoatDetailActivity extends AppCompatActivity implements View.OnClic
 
         init();
         setText();
-
-
-
-
 
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +67,7 @@ public class BoatDetailActivity extends AppCompatActivity implements View.OnClic
         btn_search = findViewById(R.id.btn_search);
         tv_title = findViewById(R.id.tv_title);
         tv_desc = findViewById(R.id.tv_desc);
+        iv_boat =findViewById(R.id.iv_boat);
 
         dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         et_departure.setText(""+dateFormat.format(myCalendar.getTime()));
@@ -83,6 +83,7 @@ public class BoatDetailActivity extends AppCompatActivity implements View.OnClic
 
         tv_title.setText(boatItem.getName());
         tv_desc.setText(boatItem.getDesc());
+        Glide.with(this).load(boatItem.getImage()).centerCrop().placeholder(R.drawable.nuspen1).into(iv_boat);
 
     }
 

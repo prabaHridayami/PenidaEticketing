@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.penidae_ticketing.BoatDetail.SchedulePresenter;
 import com.example.penidae_ticketing.Helper.PreferenceHelper;
 import com.example.penidae_ticketing.MainActivity;
 import com.example.penidae_ticketing.R;
@@ -30,6 +29,7 @@ public class BoatPaymentActivity extends AppCompatActivity implements BoatPayVie
     Button btn_payment;
 
     ScheduleItem scheduleItem;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +51,7 @@ public class BoatPaymentActivity extends AppCompatActivity implements BoatPayVie
         btn_payment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boatPayPresenter.transBoat(scheduleItem.getIdSchedule(),depart_date,currentDateTime,guest,total,id_user);
+                boatPayPresenter.transBoat(scheduleItem.getId(),depart_date,currentDateTime,guest,total,id_user);
             }
         });
 

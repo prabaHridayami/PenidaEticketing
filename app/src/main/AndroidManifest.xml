@@ -12,33 +12,40 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Vehicle.ListRentalActivity"
-            android:label="List Rental"
-            android:parentActivityName=".Vehicle.VehicleMainActivity"
+        <activity android:name=".Tour.TourMainActivity"
+            android:label="Tour"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppThemeActionBar"></activity>
-        <activity android:name=".WatersportPayment.WatersportPaymentActivity" />
+        <activity
+            android:name=".Vehicle.ListRentalActivity"
+            android:label="List Rental"
+            android:theme="@style/AppThemeActionBar" />
+        <activity android:name=".WatersportPayment.WatersportPaymentActivity"
+            android:label="Watersport Payment"
+            android:theme="@style/AppThemeActionBar"/>
         <activity android:name=".WatersportDetail.AttractionCartActivity" />
         <activity
             android:name=".WatersportDetail.AttqtyActivity"
             android:label="Ticket Quantity"
-            android:parentActivityName=".WatersportDetail.AttractionListActivity"
             android:theme="@style/AppThemeActionBar" />
-        <activity android:name=".WatersportDetail.AttractionListActivity" />
-        <activity android:name=".VehiclePayment.VehiclePaymentActivity"
+        <activity android:name=".WatersportDetail.AttractionListActivity"
+            android:label="Attraction List"
+            android:theme="@style/AppThemeActionBar"/>
+        <activity
+            android:name=".VehiclePayment.VehiclePaymentActivity"
             android:label="Rental Payment"
-            android:theme="@style/AppThemeActionBar"/>
-        <activity android:name=".Vehicle.VehicleListActivity"
+            android:theme="@style/AppThemeActionBar" />
+        <activity
+            android:name=".Vehicle.VehicleListActivity"
             android:label="Vehicle List"
-            android:theme="@style/AppThemeActionBar"/>
+            android:theme="@style/AppThemeActionBar" />
         <activity
             android:name=".BoatPayment.BoatPaymentActivity"
             android:label="Boat Payment"
-            android:parentActivityName=".BoatDetail.ScheduleActivity"
             android:theme="@style/AppThemeActionBar" />
         <activity
             android:name=".BoatDetail.ScheduleActivity"
             android:label="Schedule"
-            android:parentActivityName=".BoatDetail.BoatDetailActivity"
             android:theme="@style/AppThemeActionBar" />
         <activity
             android:name=".HotelPayment.HotelPaymentActivity"
@@ -53,19 +60,17 @@
             android:label="@string/hotel"
             android:theme="@style/AppThemeActionBar" />
         <activity
-            android:name=".TourDetailActivity.TourDetailActivity"
+            android:name=".Tour.TourDetailActivity"
             android:label="@string/tour"
-            android:parentActivityName=".Tour.TourMainActivity"
             android:theme="@style/AppThemeActionBar" />
         <activity
-            android:name=".Tour.TourMainActivity"
+            android:name=".Tour.TourListActivity"
             android:label="@string/tour"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppThemeActionBar" />
         <activity
             android:name=".Watersport.WatersportDetailActivity"
             android:label="@string/watersport"
-            android:parentActivityName=".Watersport.WatersportMainActicvity"
             android:theme="@style/AppThemeActionBar" />
         <activity
             android:name=".Watersport.WatersportMainActicvity"

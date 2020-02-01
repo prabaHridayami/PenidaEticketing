@@ -1,25 +1,24 @@
-package com.example.penidae_ticketing.VehiclePayment;
+package com.example.penidae_ticketing.WatersportPayment;
 
 import com.example.penidae_ticketing.api.ApiService;
 import com.example.penidae_ticketing.model.Payment;
-import com.example.penidae_ticketing.model.Room;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class VehiclePayPresenter {
-    private VehiclePayView view;
+public class WatersportPayPresenter {
+    private WatersportPayView view;
     private ApiService service;
 
-    public VehiclePayPresenter(VehiclePayView view, ApiService service) {
+    public WatersportPayPresenter(WatersportPayView view, ApiService service) {
         this.view = view;
         this.service = service;
     }
 
-    public void transVehicle(Integer id_user, String take, String re, Integer total_price, Integer id_vehicle, String transdate){
+    public void transWatersport(Integer id_attraction, String reserve_date, Integer qty, String date, Integer total_price, Integer id_user){
         view.showLoading();
-        service.transVehicle(id_user, take, re, total_price, id_vehicle, transdate ).enqueue(new Callback<Payment>() {
+        service.transWatersport(id_attraction, reserve_date, qty, date, total_price, id_user ).enqueue(new Callback<Payment>() {
             @Override
             public void onResponse(Call<Payment> call, Response<Payment> response) {
                 if (response.isSuccessful()){

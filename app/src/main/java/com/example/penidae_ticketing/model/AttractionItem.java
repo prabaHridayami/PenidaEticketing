@@ -1,8 +1,11 @@
 package com.example.penidae_ticketing.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class AttractionItem{
+public class AttractionItem implements Parcelable {
 
 	@SerializedName("id_watersport")
 	private int idWatersport;
@@ -21,6 +24,27 @@ public class AttractionItem{
 
 	@SerializedName("desc")
 	private String desc;
+
+	protected AttractionItem(Parcel in) {
+		idWatersport = in.readInt();
+		image = in.readString();
+		price = in.readInt();
+		name = in.readString();
+		id = in.readInt();
+		desc = in.readString();
+	}
+
+	public static final Creator<AttractionItem> CREATOR = new Creator<AttractionItem>() {
+		@Override
+		public AttractionItem createFromParcel(Parcel in) {
+			return new AttractionItem(in);
+		}
+
+		@Override
+		public AttractionItem[] newArray(int size) {
+			return new AttractionItem[size];
+		}
+	};
 
 	public void setIdWatersport(int idWatersport){
 		this.idWatersport = idWatersport;
@@ -82,4 +106,19 @@ public class AttractionItem{
 			",desc = '" + desc + '\'' + 
 			"}";
 		}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeInt(idWatersport);
+		dest.writeString(image);
+		dest.writeInt(price);
+		dest.writeString(name);
+		dest.writeInt(id);
+		dest.writeString(desc);
+	}
 }

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -77,6 +78,15 @@ public class AttractionListActivity extends AppCompatActivity implements AttView
 
     @Override
     public void onClick(int position) {
+        AttractionItem attractionItem=attractionItems.get(position);
+        Bundle bundle=new Bundle();
+        bundle.putParcelable(AttqtyActivity.KEY_ATT,attractionItem);
+        Bundle watersport = new Bundle();
+        watersport.putParcelable(AttqtyActivity.KEY_WATERSPORT,watersportItem);
+        Intent intent=new Intent(this,AttqtyActivity.class);
+        intent.putExtras(bundle);
+        intent.putExtras(watersport);
+        startActivity(intent);
 
     }
 }

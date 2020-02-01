@@ -1,9 +1,6 @@
 package com.example.penidae_ticketing.BoatDetail;
 
-import android.content.Intent;
-
 import com.example.penidae_ticketing.api.ApiService;
-import com.example.penidae_ticketing.model.Room;
 import com.example.penidae_ticketing.model.Schedule;
 
 import retrofit2.Call;
@@ -19,9 +16,9 @@ public class SchedulePresenter {
         this.service = service;
     }
 
-    public void getSchedule(Integer id_boat, String departure){
+    public void getSchedule(Integer id_boat, String departure,Integer guest){
         view.showLoading();
-        service.getSchedule(id_boat,departure).enqueue(new Callback<Schedule>() {
+        service.getSchedule(id_boat,departure,guest).enqueue(new Callback<Schedule>() {
             @Override
             public void onResponse(Call<Schedule> call, Response<Schedule> response) {
                 if (response.isSuccessful()){

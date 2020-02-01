@@ -19,7 +19,7 @@
             >
 
             <ImageView
-                android:id="@+id/iv_hotel"
+                android:id="@+id/iv_boat"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"/>
 
@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:orientation="vertical"
-                android:layout_below="@id/iv_hotel">
+                android:layout_below="@id/iv_boat">
                 <TextView
                     android:id="@+id/tv_title"
                     android:layout_width="match_parent"

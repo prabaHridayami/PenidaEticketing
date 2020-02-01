@@ -15,6 +15,7 @@ import com.example.penidae_ticketing.Boat.BoatMainActivity;
 import com.example.penidae_ticketing.Hotel.HotelMainActivity;
 import com.example.penidae_ticketing.Hotel.HotelDetailActivity;
 import com.example.penidae_ticketing.R;
+import com.example.penidae_ticketing.Tour.TourListActivity;
 import com.example.penidae_ticketing.Tour.TourMainActivity;
 import com.example.penidae_ticketing.Vehicle.VehicleMainActivity;
 import com.example.penidae_ticketing.Watersport.WatersportMainActicvity;

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.penidae_ticketing.R;
 import com.example.penidae_ticketing.model.AttractionItem;
 import com.example.penidae_ticketing.model.TourPackageItem;
@@ -56,6 +57,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ViewHolder> {
             super(itemView);
             tv_title = itemView.findViewById(R.id.item_title);
             iv_Image = itemView.findViewById(R.id.item_image);
+            tv_price = itemView.findViewById(R.id.item_price);
             if (onClickListener!=null){
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -68,6 +70,8 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.ViewHolder> {
 
         public void bind(TourPackageItem tourPackageItem) {
             tv_title.setText(tourPackageItem.getName());
+            tv_price.setText(Integer.toString(tourPackageItem.getPrice()));
+            Glide.with(context).load(tourPackageItem.getImage()).into(iv_Image);
         }
     }
     public void setOnClickListener(OnClickListener onClickListener) {

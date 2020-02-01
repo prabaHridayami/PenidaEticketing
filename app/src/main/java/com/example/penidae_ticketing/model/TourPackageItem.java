@@ -1,8 +1,11 @@
 package com.example.penidae_ticketing.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class TourPackageItem{
+public class TourPackageItem implements Parcelable {
 
 	@SerializedName("image")
 	private String image;
@@ -16,11 +19,36 @@ public class TourPackageItem{
 	@SerializedName("id_tour")
 	private int idTour;
 
+	@SerializedName("max_qty")
+	private int maxQty;
+
 	@SerializedName("id")
 	private int id;
 
 	@SerializedName("desc")
 	private String desc;
+
+	protected TourPackageItem(Parcel in) {
+		image = in.readString();
+		price = in.readInt();
+		name = in.readString();
+		idTour = in.readInt();
+		maxQty = in.readInt();
+		id = in.readInt();
+		desc = in.readString();
+	}
+
+	public static final Creator<TourPackageItem> CREATOR = new Creator<TourPackageItem>() {
+		@Override
+		public TourPackageItem createFromParcel(Parcel in) {
+			return new TourPackageItem(in);
+		}
+
+		@Override
+		public TourPackageItem[] newArray(int size) {
+			return new TourPackageItem[size];
+		}
+	};
 
 	public void setImage(String image){
 		this.image = image;
@@ -78,8 +106,33 @@ public class TourPackageItem{
 			",price = '" + price + '\'' + 
 			",name = '" + name + '\'' + 
 			",id_tour = '" + idTour + '\'' + 
-			",id = '" + id + '\'' + 
-			",desc = '" + desc + '\'' + 
+			",id = '" + id + '\'' +
+			",maxQty = '" + maxQty + '\'' +
+			",desc = '" + desc + '\'' +
 			"}";
 		}
+
+	public int getMaxQty() {
+		return maxQty;
+	}
+
+	public void setMaxQty(int maxQty) {
+		this.maxQty = maxQty;
+	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(image);
+		dest.writeInt(price);
+		dest.writeString(name);
+		dest.writeInt(idTour);
+		dest.writeInt(maxQty);
+		dest.writeInt(id);
+		dest.writeString(desc);
+	}
 }

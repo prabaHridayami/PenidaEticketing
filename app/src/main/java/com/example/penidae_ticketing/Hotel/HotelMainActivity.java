@@ -56,7 +56,7 @@ public class HotelMainActivity extends AppCompatActivity implements View.OnClick
         dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 
         et_guest.setText("2");
-        et_room.setText("2");
+        et_room.setText("1");
         et_checkin.setText(""+dateFormat.format(myCalendar.getTime()));
         myCalendar.add(Calendar.DAY_OF_MONTH,1);
         et_checkout.setText(""+dateFormat.format(myCalendar.getTime()));
