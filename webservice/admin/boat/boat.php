@@ -9,34 +9,6 @@ if ($_SESSION['role'] != "admin" || $_SESSION['role'] == "partner") {
   header("Location:../index.php");
 }
 
-if (isset($_POST['submit'])) {
-  $name = mysqli_escape_string($conn, $_POST['name']);
-  $phone = mysqli_escape_string($conn, $_POST['phone']);
-  $description = mysqli_escape_string($conn, $_POST['description']);
-  $ekstensi_diperbolehkan    = array('png', 'jpg', 'jpeg');
-  $nama = $_FILES['files']['name'];
-  $x = explode('.', $nama);
-  $ekstensi = strtolower(end($x));
-  $ukuran    = $_FILES['files']['size'];
-  $file_tmp = $_FILES['files']['tmp_name'];
-  if (in_array($ekstensi, $ekstensi_diperbolehkan) === true) {
-    if (move_uploaded_file($file_tmp, 'image/' . $nama) || $ukuran < 844070) {
-      $inserting_data = mysqli_query($conn, "INSERT INTO tb_boat VALUES ('','$name','$id_user','$nama','$description','$phone','1')");
-      if ($inserting_data) {
-        // echo "Sukses";
-        echo "<script type='text/javascript'>alert('Data Succes');window.location.href='boat.php';</script>";
-      } else {
-        // echo "Gagal";
-        echo "<script type='text/javascript'>alert('Data Failed');window.location.href='boat.php';</script>";
-      }
-    } else {
-      // echo "Kurang";
-      echo "<script type='text/javascript'>alert('Data Failed');window.location.href='boat.php';</script>";
-    }
-  } else {
-    echo "<script type='text/javascript'>alert('Boat Failed');window.location.href='boat.php';</script>";
-  }
-}
 ?>
 <!DOCTYPE html>
 <html>
@@ -44,7 +16,7 @@ if (isset($_POST['submit'])) {
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Partner | Dashboard Boat</title>
+  <title>Admin | Dashboard Boat</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -67,6 +39,13 @@ if (isset($_POST['submit'])) {
   <link rel="stylesheet" href="../../plugins/summernote/summernote-bs4.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+  <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+  <style media="screen">
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -85,7 +64,7 @@ if (isset($_POST['submit'])) {
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="../../partner/">Home</a></li>
+                <li class="breadcrumb-item"><a href="../">Home</a></li>
                 <li class="breadcrumb-item active">Boat</li>
               </ol>
             </div><!-- /.col -->
@@ -96,11 +75,128 @@ if (isset($_POST['submit'])) {
       <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
-          <!-- Main row -->
-          <div class="row">
-
-          </div>
-          <!-- /.row (main row) -->
+          <?php
+          if (isset($_GET['getboat'])) {
+            $id_user = $_GET['getboat'];
+            $select = mysqli_query($conn, "SELECT tb_boat.* FROM tb_boat JOIN tb_user ON tb_user.`id` = tb_boat.`id_user` WHERE tb_user.`id`='$id_user'");
+            $select_name = mysqli_query($conn, "SELECT * FROM tb_user WHERE id = '$id_user'");
+            $row = mysqli_fetch_assoc($select_name);
+          ?>
+            <h5 class="m-0 text-dark">Partner Name : <?php echo $row['name']; ?></h5>
+            <br>
+            <div class="dataTables_wrapper">
+              <table id="example" class="text-center table table-striped display nowrap" style="width:100%">
+                <thead>
+                  <tr class="bg-dark text-white">
+                    <th>No</th>
+                    <th>Nama</th>
+                    <th>Deskripsi</th>
+                    <th>Phone</th>
+                    <th>Status</th>
+                    <th>Option</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                  $i = 1;
+                  while ($row = mysqli_fetch_assoc($select)) {
+                  ?>
+                    <tr>
+                      <td><?php echo $i++; ?></td>
+                      <td><?php echo $row['name']; ?></td>
+                      <td><?php echo $row['desc']; ?></td>
+                      <td><?php echo $row['phone']; ?></td>
+                      <td>
+                        <?php if ($row['status'] == '1') {
+                        ?>
+                          <input type="checkbox" class="toggle" name="toggle" id="toggle" value="<?php echo $row['id']; ?>" data-toggle="toggle" data-off="Disabled" data-on="Enabled">
+                        <?php
+                        } ?>
+                        <?php if ($row['status'] == '2') {
+                        ?>
+                          <input type="checkbox" class="toggle" name="toggle" id="toggle" value="<?php echo $row['id']; ?>" data-toggle="toggle" data-off="Disabled" data-on="Enabled" checked>
+                        <?php
+                        } ?>
+                      </td>
+                      <td><a href="boat.php?getroom=<?php echo $row['id'] ?>">Check Boat</a></td>
+                    </tr>
+                  <?php } ?>
+                </tbody>
+              </table>
+            </div>
+          <?php
+          } elseif (isset($_GET['getroom'])) {
+            $room = $_GET['getroom'];
+            $result = mysqli_query($conn, "SELECT tb_boat.*, tb_det_boat.* FROM tb_boat
+                                            JOIN tb_det_boat ON tb_det_boat.`id_boat` = tb_boat.`id` WHERE tb_boat.`id` = '$room';");
+            $boat = mysqli_query($conn, "SELECT * FROM tb_boat WHERE id = $room;");
+            $row = mysqli_fetch_assoc($boat);
+          ?>
+            <h5 class="m-0 text-dark">Boat Name : <?php echo $row['name']; ?></h5>
+            <br>
+            <div class="dataTables_wrapper">
+              <table id="example" class="text-center table table-striped display nowrap" style="width:100%">
+                <thead>
+                  <tr class="bg-dark text-white">
+                    <th>No</th>
+                    <th>Nama Boat</th>
+                    <th>Quota</th>
+                    <th>Phone</th>
+                    <th>Price</th>
+                    <th>Deskripsi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                  $i = 1;
+                  while ($row = mysqli_fetch_assoc($result)) {
+                  ?>
+                    <tr>
+                      <td><?php echo $i++; ?></td>
+                      <td><?php echo $row['name']; ?></td>
+                      <td><?php echo $row['quota']; ?></td>
+                      <td><?php echo $row['price']; ?></td>
+                      <td><?php echo $row['phone']; ?></td>
+                      <td><?php echo $row['desc']; ?></td>
+                    </tr>
+                  <?php } ?>
+                </tbody>
+              </table>
+            </div>
+          <?php
+          } else {
+            $result = mysqli_query($conn, "SELECT tb_user.`id`,tb_user.`name`,tb_user.`role`,tb_user.email FROM tb_user JOIN tb_boat ON tb_user.`id` = tb_boat.`id_user` WHERE tb_user.`role` = 'partner' GROUP BY `name`");
+          ?>
+            <div class="dataTables_wrapper">
+              <table id="example" class="text-center table table-striped display nowrap" style="width:100%">
+                <thead>
+                  <tr class="bg-dark text-white">
+                    <th>No</th>
+                    <th>Nama</th>
+                    <th>Role</th>
+                    <th>Email</th>
+                    <th>Option</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                  $i = 1;
+                  while ($row = mysqli_fetch_assoc($result)) {
+                  ?>
+                    <tr>
+                      <td><?php echo $i++; ?></td>
+                      <td><?php echo $row['name']; ?></td>
+                      <td><?php echo $row['role']; ?></td>
+                      <td><?php echo $row['email']; ?></td>
+                      <td><a href="boat.php?getboat=<?php echo $row['id'] ?>">Check boat</a></td>
+                    </tr>
+                  <?php } ?>
+                </tbody>
+              </table>
+            </div>
+          <?php
+          }
+          ?>
         </div><!-- /.container-fluid -->
       </section>
       <!-- /.content -->
@@ -113,12 +209,6 @@ if (isset($_POST['submit'])) {
         <b>Version</b> 3.0.0-rc.3
       </div>
     </footer>
-
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-      <!-- Control sidebar content goes here -->
-    </aside>
-    <!-- /.control-sidebar -->
   </div>
   <!-- ./wrapper -->
 
@@ -156,16 +246,50 @@ if (isset($_POST['submit'])) {
   <script src="../../dist/js/pages/dashboard.js"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="../../dist/js/demo.js"></script>
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#example').DataTable({
+        "scrollY": 200,
+        "scrollX": 100
+      });
+    });
+  </script>
+  <script>
+    $('input[name=toggle]').change(function() {
+      var mode = $(this).prop('checked');
+      var id = $(this).val();
+      // console.log(mode, id);
+      $.ajax({
+        type: 'POST',
+        dataType: 'JSON',
+        url: 'checkbox.php',
+        data: {
+          mode: mode,
+          id: id
+        },
+        success: function(data) {
+          // console.log(data, mode, id);
+          var data = eval(data);
+          message = data.message;
+          success = data.success;
+          $("#heading").html(success);
+          $("#body").html(message);
+        }
+      });
+    });
+  </script>
+  <script type="text/javascript">
+    $(".link-logout").click(function() {
+      var r = confirm("Are You Sure To Logout ?");
+      if (r == true) {
+        window.location = "../../proses/logout.php";
+      } else {
+        return false;
+      }
+    });
+  </script>
 </body>
-<script type="text/javascript">
-  $(".link-logout").click(function() {
-    var r = confirm("Are You Sure To Logout ?");
-    if (r == true) {
-      window.location = "../proses/logout.php";
-    } else {
-      return false;
-    }
-  });
-</script>
 
 </html>

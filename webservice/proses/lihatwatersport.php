@@ -1,7 +1,7 @@
-<?php
-include "connect.php";
-$flag = $_GET['flag'];
-?>
+<!-- <?php
+        include "connect.php";
+        $flag = $_GET['flag'];
+        ?>
 <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
         <div class="modal-header">
@@ -45,4 +45,4 @@ $flag = $_GET['flag'];
             </div>
         </form>
     </div>
-</div>
+</div> -->

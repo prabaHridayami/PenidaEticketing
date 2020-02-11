@@ -79,7 +79,10 @@ if ($_SESSION['role'] != "partner" || $_SESSION['role'] == "admin") {
           <div id="ModalEdit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           </div>
           <?php
-          $result = mysqli_query($conn, "SELECT tb_trans_watersport.`id`, tb_trans_watersport.`date`,tb_user.`name`, tb_trans_watersport.`total_price` FROM tb_det_trans_watersport JOIN tb_attraction ON tb_det_trans_watersport.`id_trans_watersport` =  tb_attraction.`id` JOIN tb_watersport ON tb_watersport.`id` = tb_attraction.`id_watersport`JOIN tb_trans_watersport ON tb_trans_watersport.`id` = tb_det_trans_watersport.`id_trans_watersport`JOIN tb_user ON tb_user.`id`=  tb_trans_watersport.`id_user` WHERE tb_watersport.`id_user` = '$id_user' ORDER BY id DESC");
+          $result = mysqli_query($conn, "SELECT tb_trans_watersport.`id`, tb_trans_watersport.`reserve_date`,tb_trans_watersport.qty, tb_trans_watersport.`date`,tb_user.`name`, tb_trans_watersport.`total_price` FROM tb_trans_watersport 
+          JOIN tb_attraction ON tb_trans_watersport.`id_attraction` =  tb_attraction.`id` 
+          JOIN tb_watersport ON tb_watersport.`id` = tb_attraction.`id_watersport`            
+          JOIN tb_user ON tb_user.`id`= tb_trans_watersport.`id_user` WHERE tb_watersport.`id_user` = '$id_user' ORDER BY id DESC");
           ?>
           <div class="dataTables_wrapper">
             <table id="example" class="text-center table table-striped display nowrap" style="width:100%">
@@ -87,9 +90,10 @@ if ($_SESSION['role'] != "partner" || $_SESSION['role'] == "admin") {
                 <tr class="bg-dark text-white">
                   <th>No</th>
                   <th>Nama Pelanggan</th>
+                  <th>Reserve Date</th>
                   <th>Date</th>
                   <th>Total Harga</th>
-                  <th>Option</th>
+                  <th>Qty</th>
                 </tr>
               </thead>
               <tbody>
@@ -100,9 +104,11 @@ if ($_SESSION['role'] != "partner" || $_SESSION['role'] == "admin") {
                   <tr>
                     <td><?php echo $i++; ?></td>
                     <td><?php echo $row['name']; ?></td>
+                    <td><?php echo $row['reserve_date']; ?></td>
                     <td><?php echo $row['date']; ?></td>
                     <td><?php echo $row['total_price']; ?></td>
-                    <td><a href="#" class="open_modal" id="<?php echo $row['id'] ?>">View Atraction</a></td>
+                    <td><?php echo $row['qty']; ?></td>
+                    <!-- <td><a href="#" class="open_modal" id="<?php echo $row['id'] ?>">View Atraction</a></td> -->
                   </tr>
                 <?php } ?>
               </tbody>
@@ -171,7 +177,7 @@ if ($_SESSION['role'] != "partner" || $_SESSION['role'] == "admin") {
       });
     });
   </script>
-  <script type="text/javascript">
+  <!-- <script type="text/javascript">
     $(document).ready(function() {
       $(".open_modal").click(function(e) {
         var m = $(this).attr("id");
@@ -191,7 +197,7 @@ if ($_SESSION['role'] != "partner" || $_SESSION['role'] == "admin") {
         });
       });
     });
-  </script>
+  </script> -->
   <script type="text/javascript">
     $(".link-logout").click(function() {
       var r = confirm("Are You Sure To Logout ?");

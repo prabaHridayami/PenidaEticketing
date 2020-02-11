@@ -2,7 +2,6 @@
 session_start();
 $id_user = $_SESSION['id'];
 include_once '../../proses/connect.php';
-
 if (!isset($_SESSION['id'])) {
   header("Location:../index.php");
 }
@@ -10,34 +9,6 @@ if ($_SESSION['role'] != "admin" || $_SESSION['role'] == "partner") {
   header("Location:../index.php");
 }
 
-if (isset($_POST['submit'])) {
-  $name = mysqli_escape_string($conn, $_POST['name']);
-  $phone = mysqli_escape_string($conn, $_POST['phone']);
-  $address = mysqli_escape_string($conn, $_POST['address']);
-  $ekstensi_diperbolehkan    = array('png', 'jpg', 'jpeg');
-  $nama = $_FILES['files']['name'];
-  $x = explode('.', $nama);
-  $ekstensi = strtolower(end($x));
-  $ukuran    = $_FILES['files']['size'];
-  $file_tmp = $_FILES['files']['tmp_name'];
-  if (in_array($ekstensi, $ekstensi_diperbolehkan) === true) {
-    if (move_uploaded_file($file_tmp, 'image/' . $nama) || $ukuran < 844070) {
-      $inserting_data = mysqli_query($conn, "INSERT INTO tb_watersport VALUES ('','$name','$id_user','$address','$phone','$nama','1')");
-      if ($inserting_data) {
-        // echo "Sukses";
-        echo "<script type='text/javascript'>alert('Data Succes');window.location.href='watersport.php';</script>";
-      } else {
-        // echo "Gagal";
-        echo "<script type='text/javascript'>alert('Data Failed');window.location.href='watersport.php';</script>";
-      }
-    } else {
-      // echo "Kurang";
-      echo "<script type='text/javascript'>alert('Data Failed');window.location.href='watersport.php';</script>";
-    }
-  } else {
-    echo "<script type='text/javascript'>alert('Watersport Failed');window.location.href='watersport.php';</script>";
-  }
-}
 ?>
 <!DOCTYPE html>
 <html>
@@ -45,7 +16,7 @@ if (isset($_POST['submit'])) {
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Partner | Dashboard Watersport</title>
+  <title>Admin | Dashboard Watersport</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -68,6 +39,13 @@ if (isset($_POST['submit'])) {
   <link rel="stylesheet" href="../../plugins/summernote/summernote-bs4.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+  <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+  <style media="screen">
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -82,11 +60,11 @@ if (isset($_POST['submit'])) {
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0 text-dark">Dashboard Watersport</h1>
+              <h1 class="m-0 text-dark">Dashboard Admin Watersport</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="../../partner/">Home</a></li>
+                <li class="breadcrumb-item"><a href="../">Home</a></li>
                 <li class="breadcrumb-item active">Watersport</li>
               </ol>
             </div><!-- /.col -->
@@ -97,80 +75,125 @@ if (isset($_POST['submit'])) {
       <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
-          <button type="button" class="btn btn-success my-2" data-toggle="modal" data-target="#exampleModalCenter">
-            Request Watersport
-          </button>
-          <form action="watersport.php" method="post" enctype="multipart/form-data">
-            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Request Watersport</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <div class="row">
-                      <div class="col-6">
-                        <label for="">Watersport Name</label>
-                        <input class="form-control" type="text" name="name" id="" placeholder="Watersport Name">
-                      </div>
-                      <div class="col-6">
-                        <label for="">Phone</label>
-                        <input class="form-control" type="tel" name="phone" id="" placeholder="Phone Number">
-                      </div>
-                    </div>
-                    <div class="">
-                      <label for="">Address</label>
-                      <textarea class="form-control" name="address" id="" cols="10" rows="5" placeholder="Address"></textarea>
-                    </div>
-                    <div><label for=""></label></div>
-                    <div class="col-lg">
-                      <input type="file" class="custom-file-input" name="files" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" multiple>
-                      <label class="custom-file-label" for="inputGroupFile01">Choose Image</label>
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <input type="submit" name="submit" name="submit" class="btn btn-primary" value="Save changes">
-                    <!-- <button type="button" name="submit" class="btn btn-primary">Save changes</button> -->
-                  </div>
-                </div>
-              </div>
+          <?php
+          if (isset($_GET['getwatersport'])) {
+            $id_user = $_GET['getwatersport'];
+            $select = mysqli_query($conn, "SELECT tb_watersport.* FROM tb_watersport JOIN tb_user ON tb_user.`id` = tb_watersport.`id_user` WHERE tb_user.`id`='$id_user'");
+            $select_name = mysqli_query($conn, "SELECT * FROM tb_user WHERE id = '$id_user'");
+            $row = mysqli_fetch_assoc($select_name);
+          ?>
+            <h5 class="m-0 text-dark">Partner Name : <?php echo $row['name']; ?></h5>
+            <br>
+            <div class="dataTables_wrapper">
+              <table id="example" class="text-center table table-striped display nowrap" style="width:100%">
+                <thead>
+                  <tr class="bg-dark text-white">
+                    <th>No</th>
+                    <th>Nama</th>
+                    <th>Alamat</th>
+                    <th>Phone</th>
+                    <th>Status</th>
+                    <th>Option</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                  $i = 1;
+                  while ($row = mysqli_fetch_assoc($select)) {
+                  ?>
+                    <tr>
+                      <td><?php echo $i++; ?></td>
+                      <td><?php echo $row['name']; ?></td>
+                      <td><?php echo $row['address']; ?></td>
+                      <td><?php echo $row['phone']; ?></td>
+                      <td>
+                        <?php if ($row['status'] == '1') {
+                        ?>
+                          <input type="checkbox" class="toggle" name="toggle" id="toggle" value="<?php echo $row['id']; ?>" data-toggle="toggle" data-off="Disabled" data-on="Enabled">
+                        <?php
+                        } ?>
+                        <?php if ($row['status'] == '2') {
+                        ?>
+                          <input type="checkbox" class="toggle" name="toggle" id="toggle" value="<?php echo $row['id']; ?>" data-toggle="toggle" data-off="Disabled" data-on="Enabled" checked>
+                        <?php
+                        } ?>
+                      </td>
+                      <td><a href="watersport.php?getattraction=<?php echo $row['id'] ?>">Check Attraction</a></td>
+                    </tr>
+                  <?php } ?>
+                </tbody>
+              </table>
             </div>
-          </form>
-          <div class="row">
-            <?php
-            $selecthotel = mysqli_query($conn, "SELECT * FROM tb_watersport WHERE id_user = $id_user AND status = '2'");
-            if (mysqli_num_rows($selecthotel) > 0) {
-              while ($fetch = mysqli_fetch_assoc($selecthotel)) { ?>
-                <div class="col-lg-3 col-6">
-                  <div class="small-box bg-danger">
-                    <div class="inner">
-                      <h3><?php echo $fetch['name'] ?></h3>
-                      <p><?php echo $fetch['phone'] ?></p>
-                    </div>
-                    <div class="icon">
-                      <i class="nav-icon fas fa-swimmer"></i>
-                    </div>
-                    <a href="getwatersport.php?id=<?php echo $fetch['id'] ?>" class="small-box-footer">Add Watersport <i class="fas fa-arrow-circle-right"></i></a>
-                  </div>
-                </div>
-              <?php
-              } ?>
-          </div>
-        <?php
-            } else {
-              echo "<div class='col-lg-12 alert alert-danger' align='center' role='alert'>Watersport Tidak Tersedia</div>";
-            }
-        ?>
-        <!-- /.row -->
-        <!-- Main row -->
-        <div class="row">
-
-        </div>
-        <!-- /.row (main row) -->
+          <?php
+          } elseif (isset($_GET['getattraction'])) {
+            $packages = $_GET['getattraction'];
+            $result = mysqli_query($conn, "SELECT tb_attraction.*, tb_attraction.name AS 'NAMAKENDARAAN', tb_watersport.* FROM tb_attraction 
+                                      JOIN tb_watersport ON tb_watersport.`id` = tb_attraction.`id_watersport`
+                                      WHERE tb_watersport.`id` = '$packages';");
+            $hotel = mysqli_query($conn, "SELECT * FROM tb_watersport WHERE id = $packages;");
+            $row = mysqli_fetch_assoc($hotel);
+          ?>
+            <h5 class="m-0 text-dark">Watersport Name : <?php echo $row['name']; ?></h5>
+            <br>
+            <div class="dataTables_wrapper">
+              <table id="example" class="text-center table table-striped display nowrap" style="width:100%">
+                <thead>
+                  <tr class="bg-dark text-white">
+                    <th>No</th>
+                    <th>Nama Attraction</th>
+                    <th>Price</th>
+                    <th>Deskripsi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                  $i = 1;
+                  while ($row = mysqli_fetch_assoc($result)) {
+                  ?>
+                    <tr>
+                      <td><?php echo $i++; ?></td>
+                      <td><?php echo $row['NAMAKENDARAAN']; ?></td>
+                      <td><?php echo $row['price']; ?></td>
+                      <td><?php echo $row['desc']; ?></td>
+                    </tr>
+                  <?php } ?>
+                </tbody>
+              </table>
+            </div>
+          <?php
+          } else {
+            $result = mysqli_query($conn, "SELECT tb_user.`id`,tb_user.`name`,tb_user.`role`,tb_user.email FROM tb_user JOIN tb_watersport ON tb_user.`id` = tb_watersport.`id_user` WHERE tb_user.`role` = 'partner' GROUP BY `name`");
+          ?>
+            <div class="dataTables_wrapper">
+              <table id="example" class="text-center table table-striped display nowrap" style="width:100%">
+                <thead>
+                  <tr class="bg-dark text-white">
+                    <th>No</th>
+                    <th>Nama</th>
+                    <th>Role</th>
+                    <th>Email</th>
+                    <th>Option</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                  $i = 1;
+                  while ($row = mysqli_fetch_assoc($result)) {
+                  ?>
+                    <tr>
+                      <td><?php echo $i++; ?></td>
+                      <td><?php echo $row['name']; ?></td>
+                      <td><?php echo $row['role']; ?></td>
+                      <td><?php echo $row['email']; ?></td>
+                      <td><a href="watersport.php?getwatersport=<?php echo $row['id'] ?>">Check Watersport</a></td>
+                    </tr>
+                  <?php } ?>
+                </tbody>
+              </table>
+            </div>
+          <?php
+          }
+          ?>
         </div><!-- /.container-fluid -->
       </section>
       <!-- /.content -->
@@ -183,12 +206,6 @@ if (isset($_POST['submit'])) {
         <b>Version</b> 3.0.0-rc.3
       </div>
     </footer>
-
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-      <!-- Control sidebar content goes here -->
-    </aside>
-    <!-- /.control-sidebar -->
   </div>
   <!-- ./wrapper -->
 
@@ -226,11 +243,45 @@ if (isset($_POST['submit'])) {
   <script src="../../dist/js/pages/dashboard.js"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="../../dist/js/demo.js"></script>
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#example').DataTable({
+        "scrollY": 200,
+        "scrollX": 100
+      });
+    });
+  </script>
+  <script>
+    $('input[name=toggle]').change(function() {
+      var mode = $(this).prop('checked');
+      var id = $(this).val();
+      // console.log(mode, id);
+      $.ajax({
+        type: 'POST',
+        dataType: 'JSON',
+        url: 'checkbox.php',
+        data: {
+          mode: mode,
+          id: id
+        },
+        success: function(data) {
+          // console.log(data, mode, id);
+          var data = eval(data);
+          message = data.message;
+          success = data.success;
+          $("#heading").html(success);
+          $("#body").html(message);
+        }
+      });
+    });
+  </script>
   <script type="text/javascript">
     $(".link-logout").click(function() {
       var r = confirm("Are You Sure To Logout ?");
       if (r == true) {
-        window.location = "../proses/logout.php";
+        window.location = "../../proses/logout.php";
       } else {
         return false;
       }

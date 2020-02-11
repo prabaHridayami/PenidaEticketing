@@ -125,6 +125,45 @@ if ($_SESSION['role'] != "admin" || $_SESSION['role'] == "partner") {
               </table>
             </div>
           <?php
+          } elseif (isset($_GET['getroom'])) {
+            $room = $_GET['getroom'];
+            $result = mysqli_query($conn, "SELECT tb_room.*,tb_room.name AS 'ROOMNAME', tb_category_room.* FROM tb_room
+                                            JOIN tb_category_room ON tb_category_room.`id` = tb_room.`id_category` WHERE tb_category_room.`id_hotel` = '$room';");
+            $hotel = mysqli_query($conn, "SELECT * FROM tb_hotel WHERE id = $room;");
+            $row = mysqli_fetch_assoc($hotel);
+          ?>
+            <h5 class="m-0 text-dark">Hotel Name : <?php echo $row['name']; ?></h5>
+            <br>
+            <div class="dataTables_wrapper">
+              <table id="example" class="text-center table table-striped display nowrap" style="width:100%">
+                <thead>
+                  <tr class="bg-dark text-white">
+                    <th>No</th>
+                    <th>Nama Kamar</th>
+                    <th>Category</th>
+                    <th>Guest</th>
+                    <th>Price</th>
+                    <th>Deskripsi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                  $i = 1;
+                  while ($row = mysqli_fetch_assoc($result)) {
+                  ?>
+                    <tr>
+                      <td><?php echo $i++; ?></td>
+                      <td><?php echo $row['ROOMNAME']; ?></td>
+                      <td><?php echo $row['name']; ?></td>
+                      <td><?php echo $row['guest']; ?></td>
+                      <td><?php echo $row['price']; ?></td>
+                      <td><?php echo $row['desc']; ?></td>
+                    </tr>
+                  <?php } ?>
+                </tbody>
+              </table>
+            </div>
+          <?php
           } else {
             $result = mysqli_query($conn, "SELECT tb_user.`id`,tb_user.`name`,tb_user.`role`,tb_user.email FROM tb_user JOIN tb_hotel ON tb_user.`id` = tb_hotel.`id_user` WHERE tb_user.`role` = 'partner' GROUP BY `name`");
           ?>
@@ -245,7 +284,7 @@ if ($_SESSION['role'] != "admin" || $_SESSION['role'] == "partner") {
     $(".link-logout").click(function() {
       var r = confirm("Are You Sure To Logout ?");
       if (r == true) {
-        window.location = "../proses/logout.php";
+        window.location = "../../proses/logout.php";
       } else {
         return false;
       }
