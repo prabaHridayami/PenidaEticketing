@@ -66,7 +66,7 @@ if (isset($_SESSION['user'])) {
         </div>
       </form>
       <a href="#">I forgot my password</a><br>
-      <a href="register.php" class="text-center">Register a new membership</a>
+      <!-- <a href="register.php" class="text-center">Register a new membership</a> -->
     </div>
   </div>
   <!-- jQuery 3 -->

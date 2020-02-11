@@ -2,7 +2,6 @@
 include "connect.php";
 $id_hotel = $_GET['id'];
 $flag = $_GET['flag'];
-var_dump($id_hotel, $flag);
 $modal = mysqli_query($conn, "SELECT * FROM tb_room WHERE id = '$flag'");
 $r = mysqli_fetch_array($modal);
 $category = mysqli_query($conn, "SELECT * FROM tb_category_room WHERE id_hotel = $id_hotel");
@@ -20,8 +19,15 @@ $category = mysqli_query($conn, "SELECT * FROM tb_category_room WHERE id_hotel =
                 <div class="mb-3">
                     <label for="">Room</label>
                     <input class="form-control" type="hidden" name="id" id="" value="<?php echo $r['id']; ?>" required="true">
-                    <input class="form-control" type="hidden" name="id_hotel" id="" value="<?php echo $id_hotel; ?>" required="true">
-                    <input class="form-control" type="text" name="room" id="" value="<?php echo $r['name']; ?>" required="true">
+                    <!-- <input class="form-control" type="hidden" name="id_hotel" id="" value="<?php echo $id_hotel; ?>" required="true"> -->
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <input class="form-control" type="text" name="room" id="" value="<?php echo $r['name']; ?>" required="true">
+                        </div>
+                        <div class="col-lg-6">
+                            <input class="form-control" type="number" name="guest" id="" value="<?php echo $r['guest']; ?>" required="true">
+                        </div>
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label for="">Room Category</label>

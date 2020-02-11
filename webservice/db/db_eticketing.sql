@@ -1,8 +1,9 @@
 /*
 SQLyog Ultimate v12.09 (64 bit)
-MySQL - 10.4.6-MariaDB : Database - db_eticketing
+MySQL - 10.4.6-MariaDB : Database - ulakanvi_eticketing
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -12,9 +13,9 @@ MySQL - 10.4.6-MariaDB : Database - db_eticketing
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`db_eticketing` /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`ulakanvi_eticketing` /*!40100 DEFAULT CHARACTER SET latin1 */;
 
-USE `db_eticketing`;
+USE `ulakanvi_eticketing`;
 
 /*Table structure for table `tb_attraction` */
 
@@ -30,11 +31,11 @@ CREATE TABLE `tb_attraction` (
   PRIMARY KEY (`id`),
   KEY `id_watersport` (`id_watersport`),
   CONSTRAINT `tb_attraction_ibfk_1` FOREIGN KEY (`id_watersport`) REFERENCES `tb_watersport` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_attraction` */
 
-insert  into `tb_attraction`(`id`,`name`,`price`,`id_watersport`,`desc`,`image`) values (1,'Eka',0,1,'Krisna Putra','PNG'),(2,'Eka Krisna',0,1,'Eka Krisna','3gp');
+insert  into `tb_attraction`(`id`,`name`,`price`,`id_watersport`,`desc`,`image`) values (1,'Eka',100000,1,'Krisna Putra ','images.png'),(8,'Banana Boat',200000,2,'Halo','Pas Photo_190426_0001.jpg');
 
 /*Table structure for table `tb_boat` */
 
@@ -47,14 +48,15 @@ CREATE TABLE `tb_boat` (
   `image` varchar(200) DEFAULT NULL,
   `desc` varchar(200) DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL,
+  `status` enum('1','2') DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_user` (`id_user`),
   CONSTRAINT `tb_boat_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `tb_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_boat` */
 
-insert  into `tb_boat`(`id`,`name`,`id_user`,`image`,`desc`,`phone`) values (1,'Cantik',1,'Halooo','Apa Kabar','01209381031');
+insert  into `tb_boat`(`id`,`name`,`id_user`,`image`,`desc`,`phone`,`status`) values (1,'Cantik',10,'Halooo','Apa Kabar','01209381031','2'),(2,'Genteng',10,'Halooo','Baik Saja','89089079090','2'),(3,'Jelek',11,'Halooo','Bagaimana Denganmu ?','08984337749','2'),(5,'Eka',10,'maxresdefault.jpg','Jalan Nangka Selatan','08984337749','1');
 
 /*Table structure for table `tb_category_room` */
 
@@ -69,11 +71,11 @@ CREATE TABLE `tb_category_room` (
   PRIMARY KEY (`id`),
   KEY `id_hotel` (`id_hotel`),
   CONSTRAINT `tb_category_room_ibfk_1` FOREIGN KEY (`id_hotel`) REFERENCES `tb_hotel` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_category_room` */
 
-insert  into `tb_category_room`(`id`,`name`,`price`,`id_hotel`,`desc`) values (1,'Deluxe',100000,1,'EKA'),(2,'VVIP',200000,1,'Bacot'),(4,'Primer',2000000,2,'Halo');
+insert  into `tb_category_room`(`id`,`name`,`price`,`id_hotel`,`desc`) values (2,'VVIP',200000,3,'   Bacot Banget   '),(4,'Primer',2000000,2,'Halo'),(5,'Primer Sakura',400000,1,'Halo');
 
 /*Table structure for table `tb_det_boat` */
 
@@ -89,9 +91,11 @@ CREATE TABLE `tb_det_boat` (
   PRIMARY KEY (`id`),
   KEY `id_boat` (`id_boat`),
   CONSTRAINT `tb_det_boat_ibfk_1` FOREIGN KEY (`id_boat`) REFERENCES `tb_boat` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_det_boat` */
+
+insert  into `tb_det_boat`(`id`,`id_boat`,`quota`,`price`,`image`,`desc`) values (5,1,20,500000,'lambang1.png',' Halo\r\n '),(6,2,30,500000,'Unud.png','Ganteng'),(7,3,20,100000,'download.png','Haloo');
 
 /*Table structure for table `tb_det_package` */
 
@@ -106,9 +110,11 @@ CREATE TABLE `tb_det_package` (
   KEY `id_tour_package` (`id_tour_package`),
   CONSTRAINT `tb_det_package_ibfk_1` FOREIGN KEY (`id_temple`) REFERENCES `tb_temple` (`id`),
   CONSTRAINT `tb_det_package_ibfk_2` FOREIGN KEY (`id_tour_package`) REFERENCES `tb_tour_package` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_det_package` */
+
+insert  into `tb_det_package`(`id`,`id_temple`,`id_tour_package`) values (17,12,4);
 
 /*Table structure for table `tb_det_trans_watersport` */
 
@@ -126,9 +132,11 @@ CREATE TABLE `tb_det_trans_watersport` (
   KEY `id_attraction` (`id_attraction`),
   CONSTRAINT `tb_det_trans_watersport_ibfk_1` FOREIGN KEY (`id_trans_watersport`) REFERENCES `tb_trans_watersport` (`id`),
   CONSTRAINT `tb_det_trans_watersport_ibfk_2` FOREIGN KEY (`id_attraction`) REFERENCES `tb_attraction` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_det_trans_watersport` */
+
+insert  into `tb_det_trans_watersport`(`id`,`id_attraction`,`price`,`reserve_date`,`qty`,`id_trans_watersport`) values (1,8,20000,'2020-01-03',4,1),(2,8,20000,'2020-01-03',4,1);
 
 /*Table structure for table `tb_hotel` */
 
@@ -140,15 +148,18 @@ CREATE TABLE `tb_hotel` (
   `name` varchar(200) DEFAULT NULL,
   `address` varchar(200) DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL,
+  `check_out` time DEFAULT NULL,
+  `check_in` time DEFAULT NULL,
   `image` varchar(200) DEFAULT NULL,
+  `status` enum('1','2') DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_user` (`id_user`),
   CONSTRAINT `tb_hotel_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `tb_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_hotel` */
 
-insert  into `tb_hotel`(`id`,`id_user`,`name`,`address`,`phone`,`image`) values (1,10,'Hotel Kaswari','Jalan Arjuna','089812938193','aksnd'),(2,10,'Hotal Kapal','Jalan Surga','098193891','PNG');
+insert  into `tb_hotel`(`id`,`id_user`,`name`,`address`,`phone`,`check_out`,`check_in`,`image`,`status`) values (1,11,'Hotel Kaswari','Jalan Arjuna','089812938193','13:00:00','16:00:00','aksnd','2'),(2,10,'Hotal Kapal','Jalan Surga','098193891','13:00:00','17:00:00','PNG','2'),(3,10,'Primer','Jalan Antasura','+628984337749','13:00:00','20:00:00','maxresdefault.jpg','1');
 
 /*Table structure for table `tb_rent_vehicle` */
 
@@ -162,6 +173,7 @@ CREATE TABLE `tb_rent_vehicle` (
   `desc` varchar(200) DEFAULT NULL,
   `image` varchar(200) DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL,
+  `status` enum('1','2') DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_user` (`id_user`),
   CONSTRAINT `tb_rent_vehicle_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `tb_user` (`id`)
@@ -169,7 +181,7 @@ CREATE TABLE `tb_rent_vehicle` (
 
 /*Data for the table `tb_rent_vehicle` */
 
-insert  into `tb_rent_vehicle`(`id`,`id_user`,`name`,`address`,`desc`,`image`,`phone`) values (1,1,'Eka Rent Car','Jalan Nangka','halo','Qwerty','089854127318');
+insert  into `tb_rent_vehicle`(`id`,`id_user`,`name`,`address`,`desc`,`image`,`phone`,`status`) values (1,10,'Eka Rent Car','Jalan Nangka','halo','Qwerty','089854127318','2');
 
 /*Table structure for table `tb_room` */
 
@@ -186,7 +198,7 @@ CREATE TABLE `tb_room` (
 
 /*Data for the table `tb_room` */
 
-insert  into `tb_room`(`id`,`name`,`id_category`) values (14,'Primer 1',4),(18,'Ninja',2),(19,'Ninja Warior',2),(20,'Kaswari',1);
+insert  into `tb_room`(`id`,`name`,`id_category`) values (14,'Primer 1',4),(18,'Ninja',2),(19,'Ninja Warior',2);
 
 /*Table structure for table `tb_schedule` */
 
@@ -201,9 +213,11 @@ CREATE TABLE `tb_schedule` (
   PRIMARY KEY (`id`),
   KEY `id_det_boat` (`id_det_boat`),
   CONSTRAINT `tb_schedule_ibfk_1` FOREIGN KEY (`id_det_boat`) REFERENCES `tb_det_boat` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_schedule` */
+
+insert  into `tb_schedule`(`id`,`pickup_loc`,`dropup_loc`,`time`,`id_det_boat`) values (2,'Klungkung','Nusa Penida','00:08:00',5),(3,'Sanur','Nusa Penida','00:08:00',7),(6,'Lombok','Klungkung','08:00:00',6);
 
 /*Table structure for table `tb_temple` */
 
@@ -216,9 +230,11 @@ CREATE TABLE `tb_temple` (
   `desc` varchar(200) DEFAULT NULL,
   `image` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_temple` */
+
+insert  into `tb_temple`(`id`,`name`,`location`,`desc`,`image`) values (10,'Uluwatu Bersatu','Uluwatu','Uluwatu ','lambang1.png'),(12,'Besakih','Besakih','Besakih','images.png');
 
 /*Table structure for table `tb_tour` */
 
@@ -230,14 +246,15 @@ CREATE TABLE `tb_tour` (
   `id_user` bigint(20) unsigned NOT NULL,
   `address` varchar(200) DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL,
+  `status` enum('1','2') DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_user` (`id_user`),
   CONSTRAINT `tb_tour_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `tb_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_tour` */
 
-insert  into `tb_tour`(`id`,`name`,`id_user`,`address`,`phone`) values (1,'Eka Tour',1,'Halo','0898433774');
+insert  into `tb_tour`(`id`,`name`,`id_user`,`address`,`phone`,`status`) values (1,'Eka Tour',10,'Halo','0898433774','2'),(2,'namabelakang',10,'Kaswari Bersatu','+628984337749','1');
 
 /*Table structure for table `tb_tour_package` */
 
@@ -254,9 +271,11 @@ CREATE TABLE `tb_tour_package` (
   PRIMARY KEY (`id`),
   KEY `id_tour` (`id_tour`),
   CONSTRAINT `tb_tour_package_ibfk_1` FOREIGN KEY (`id_tour`) REFERENCES `tb_tour` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_tour_package` */
+
+insert  into `tb_tour_package`(`id`,`name`,`price`,`id_tour`,`max_qty`,`desc`,`image`) values (4,'Primer Naruto',1200000,1,25,'  Primer Sakura  ','Unud.png');
 
 /*Table structure for table `tb_trans_boat` */
 
@@ -271,14 +290,17 @@ CREATE TABLE `tb_trans_boat` (
   `qty` int(11) unsigned DEFAULT NULL,
   `total_price` double DEFAULT NULL,
   `id_user` bigint(20) unsigned NOT NULL,
+  `status` enum('prossed','success') DEFAULT 'prossed',
   PRIMARY KEY (`id`),
   KEY `schedule` (`schedule`),
   KEY `id_user` (`id_user`),
   CONSTRAINT `tb_trans_boat_ibfk_1` FOREIGN KEY (`schedule`) REFERENCES `tb_schedule` (`id`),
   CONSTRAINT `tb_trans_boat_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `tb_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_trans_boat` */
+
+insert  into `tb_trans_boat`(`id`,`depart_date`,`return_date`,`reserve_date`,`schedule`,`qty`,`total_price`,`id_user`,`status`) values (3,'2020-01-03','2020-01-03','2020-01-03 19:29:14',3,5,250000,2,'prossed'),(6,'2020-01-03','2020-01-03','2020-01-03 19:29:14',3,5,250000,2,'prossed');
 
 /*Table structure for table `tb_trans_hotel` */
 
@@ -292,14 +314,17 @@ CREATE TABLE `tb_trans_hotel` (
   `reserve_date` datetime DEFAULT NULL,
   `total_price` double DEFAULT NULL,
   `id_user` bigint(20) unsigned NOT NULL,
+  `status` enum('proceed','success') DEFAULT 'proceed',
   PRIMARY KEY (`id`),
   KEY `id_user` (`id_user`),
   KEY `id_room` (`id_room`),
   CONSTRAINT `tb_trans_hotel_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `tb_user` (`id`),
   CONSTRAINT `tb_trans_hotel_ibfk_2` FOREIGN KEY (`id_room`) REFERENCES `tb_room` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_trans_hotel` */
+
+insert  into `tb_trans_hotel`(`id`,`id_room`,`check_in`,`check_out`,`reserve_date`,`total_price`,`id_user`,`status`) values (2,14,'2020-01-03','2020-01-03','2020-01-03 14:55:29',2000000,1,'proceed'),(10,14,'2020-01-03','2020-01-03','2020-01-03 14:55:29',200000,1,NULL),(11,14,'2020-01-03','2020-01-03','2020-01-03 14:55:29',200000,2,NULL),(12,14,'2020-01-03','2020-01-03','2020-01-03 14:55:29',200000,2,NULL),(13,14,'2020-01-03','2020-01-03','2020-01-03 14:55:29',200000,2,NULL),(14,14,'2020-01-03','2020-01-03','2020-01-03 14:55:29',200000,1,NULL),(15,14,'2020-01-03','2020-01-03','2020-01-03 14:55:29',200000,1,NULL),(16,14,'2020-01-03','2020-01-03','2020-01-03 14:55:29',200000,1,NULL);
 
 /*Table structure for table `tb_trans_rent` */
 
@@ -318,9 +343,11 @@ CREATE TABLE `tb_trans_rent` (
   KEY `id_vehicle` (`id_vehicle`),
   CONSTRAINT `tb_trans_rent_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `tb_user` (`id`),
   CONSTRAINT `tb_trans_rent_ibfk_2` FOREIGN KEY (`id_vehicle`) REFERENCES `tb_vehicle` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_trans_rent` */
+
+insert  into `tb_trans_rent`(`id`,`id_user`,`take`,`return`,`total_price`,`id_vehicle`,`trans_date`) values (1,6,'2020-01-03 22:14:49','2020-01-04 22:14:51',800000,5,'2020-01-03 22:15:10');
 
 /*Table structure for table `tb_trans_tour` */
 
@@ -339,9 +366,11 @@ CREATE TABLE `tb_trans_tour` (
   KEY `id_tour_package` (`id_tour_package`),
   CONSTRAINT `tb_trans_tour_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `tb_user` (`id`),
   CONSTRAINT `tb_trans_tour_ibfk_2` FOREIGN KEY (`id_tour_package`) REFERENCES `tb_tour_package` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_trans_tour` */
+
+insert  into `tb_trans_tour`(`id`,`tour_date`,`total_price`,`id_user`,`id_tour_package`,`qty`,`reserve_date`) values (1,'2020-01-03',5000000,5,4,25,'2020-01-03 21:35:37');
 
 /*Table structure for table `tb_trans_watersport` */
 
@@ -355,9 +384,11 @@ CREATE TABLE `tb_trans_watersport` (
   PRIMARY KEY (`id`),
   KEY `id_user` (`id_user`),
   CONSTRAINT `tb_trans_watersport_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `tb_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_trans_watersport` */
+
+insert  into `tb_trans_watersport`(`id`,`date`,`total_price`,`id_user`) values (1,'2020-01-03',50000,7);
 
 /*Table structure for table `tb_user` */
 
@@ -390,15 +421,17 @@ CREATE TABLE `tb_vehicle` (
   `plat` varchar(20) DEFAULT NULL,
   `category` enum('motor','mobil') DEFAULT NULL,
   `price` double DEFAULT NULL,
-  `seat` enum('2','5','8') DEFAULT NULL,
+  `seat` int(4) DEFAULT NULL,
   `id_rent_vehicle` bigint(20) unsigned NOT NULL,
   `desc` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_rent_vehicle` (`id_rent_vehicle`),
   CONSTRAINT `tb_vehicle_ibfk_1` FOREIGN KEY (`id_rent_vehicle`) REFERENCES `tb_rent_vehicle` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_vehicle` */
+
+insert  into `tb_vehicle`(`id`,`name`,`plat`,`category`,`price`,`seat`,`id_rent_vehicle`,`desc`) values (5,'BRIO','DK802LL','mobil',800000,5,1,'Halo');
 
 /*Table structure for table `tb_watersport` */
 
@@ -411,14 +444,15 @@ CREATE TABLE `tb_watersport` (
   `address` varchar(200) DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL,
   `image` varchar(200) DEFAULT NULL,
+  `status` enum('1','2') DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_user` (`id_user`),
   CONSTRAINT `tb_watersport_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `tb_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_watersport` */
 
-insert  into `tb_watersport`(`id`,`name`,`id_user`,`address`,`phone`,`image`) values (1,'Eka Watersport',1,'Jalan Nangka Selatan','08984337749','HALO');
+insert  into `tb_watersport`(`id`,`name`,`id_user`,`address`,`phone`,`image`,`status`) values (1,'Eka Watersport',10,'Jalan Nangka Selatan','08984337749','HALO','2'),(2,'Praba Watersport',11,'Jalan Belimbing','0898123123','Hai','2'),(3,'Primer',10,'Jalan Nangka','+628984337749','maxresdefault.jpg','1');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

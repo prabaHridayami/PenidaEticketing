@@ -46,19 +46,10 @@ if (isset($_GET['apicall'])) {
 				if ($stmt->execute()) {
 					$last = $conn->insert_id;
 					// $stmt->bind_result($id_room, $check_in, $check_out, $reserve_date, $total_price, $id_user);
-					$user = array(
-						'id' => $last,
-						'id_room' => $id_room,
-						'check_in' => $check_in,
-						'check_out' => $check_out,
-						'reserve_date' => $reserve_date,
-						'total_price' => $total_price,
-						'id_user' => $id_user
-					);
 					$stmt->close();
 					$response['error'] = false;
 					$response['message'] = 'Transaksi Success';
-					$response['user'] = $user;
+					$response['payment'] = $last;
 				} else {
 					$response['error'] = false;
 					$response['message'] = 'Invalid !!';
@@ -159,6 +150,7 @@ if (isset($_GET['apicall'])) {
 					} else {
 						$response['error'] = false;
 						$response['message'] = 'No room left';
+						$response['hotel'] = null;
 					}
 				} else {
 					$response['error'] = false;
@@ -171,8 +163,8 @@ if (isset($_GET['apicall'])) {
 				$id_hotel = $_POST['id'];
 				$check_out = $_POST['check_in'];
 				$check_in = $_POST['check_out'];
-
-				$stmt = $conn->prepare("SELECT tb_category_room.`id`,tb_category_room.`name`,tb_category_room.`price`,tb_room.`id`,tb_room.`name`
+				$tot_room = $_POST['tot_room'];
+				$stmt = $conn->prepare("SELECT tb_category_room.`id`,tb_category_room.`name`,tb_category_room.`price`,tb_category_room.`desc`,COUNT(tb_category_room.`id`)
 					   FROM tb_room
 					   INNER JOIN tb_category_room ON tb_category_room.`id` = tb_room.`id_category`
 					   INNER JOIN tb_hotel ON tb_category_room.`id` = tb_hotel.id
@@ -181,26 +173,63 @@ if (isset($_GET['apicall'])) {
 					   FROM tb_room 
 					   INNER JOIN tb_trans_hotel ON tb_room.`id` = tb_trans_hotel.`id_room`
 					   WHERE tb_trans_hotel.`check_in` <= ? AND tb_trans_hotel.`check_out`>= ?)
-					   GROUP BY tb_room.`id`
+					   GROUP BY tb_category_room.`id`
 					   ORDER BY tb_category_room.`price` ASC;
 					   ");
 				$stmt->bind_param("sss", $id_hotel, $check_in, $check_out);
 				$stmt->execute();
 				$stmt->store_result();
 				if ($stmt->num_rows > 0) {
-					$stmt->bind_result($id_cat, $category, $price, $id_room, $room_name);
+					$stmt->bind_result($id_cat, $category, $price, $desc, $num_room);
 					while ($stmt->fetch()) {
-						$room[] = array(
-							'id_cat' => $id_cat,
-							'category' => $category,
-							'price' => $price,
-							'id_room' => $id_room,
-							'room_name' => $room_name,
-						);
+						if ($num_room >= $tot_room) {
+							$room[] = array(
+								'id_cat' => $id_cat,
+								'category' => $category,
+								'price' => $price,
+								'desc' => $desc,
+								'num_room' => $num_room,
+							);
+						}
 					}
 					$response['error'] = false;
 					$response['message'] = 'Successfull';
 					$response['room'] = $room;
+				} else {
+					$response['error'] = false;
+					$response['message'] = 'Invalid !!';
+				}
+			}
+			break;
+		case 'getRoomId':
+			if (isTheseParametersAvailable(array('id'))) {
+				$id_cat = $_POST['id'];
+				$check_out = $_POST['check_in'];
+				$check_in = $_POST['check_out'];
+				$stmt = $conn->prepare("SELECT tb_room.`id`
+						FROM tb_room
+						INNER JOIN tb_category_room ON tb_category_room.`id` = tb_room.`id_category`
+						WHERE tb_category_room.`id`=? AND tb_room.`id` NOT IN
+					   ( SELECT tb_room.`id` 
+					   FROM tb_room 
+					   INNER JOIN tb_trans_hotel ON tb_room.`id` = tb_trans_hotel.`id_room`
+					   WHERE tb_trans_hotel.`check_in` <= ? AND tb_trans_hotel.`check_out`>= ?)
+						ORDER BY tb_room.`id` ASC
+						");
+				$stmt->bind_param("sss", $id_cat, $check_in, $check_out);
+				$stmt->execute();
+				$stmt->store_result();
+				if ($stmt->num_rows > 0) {
+					$stmt->bind_result($id_room);
+					while ($stmt->fetch()) {
+
+						$room[] = ($id_room);
+
+						// $response['error'] = false;
+						// $response['message'] = 'Successfull';
+
+					}
+					$response['id_room'] = $room;
 				} else {
 					$response['error'] = false;
 					$response['message'] = 'Invalid !!';
@@ -241,9 +270,51 @@ if (isset($_GET['apicall'])) {
 				$response['error'] = false;
 				$response['message'] = 'Invalid !!';
 			}
-
 			break;
-
+		case 'proofHotel':
+			if (isset($_POST['id_transaksi']) and isset($_FILES['image']['name'])) {
+				$upload_path = 'transaksi/';
+				$server_ip = gethostbyname(gethostname());
+				// $upload_url = 'http://' . $server_ip . '/webservice/admin/boat/' . $upload_path;
+				$upload_url = '../admin/hotel/' . $upload_path;
+				$id_transaksi = $_POST['id_transaksi'];
+				$nama = uniqid('uploaded-', true) . '.' . strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+				$tmp_image = $_FILES['image']['tmp_name'];
+				$fileinfo = pathinfo($_FILES['image']['name']);
+				$extension = $fileinfo['extension'];
+				$file_url = $upload_url . $nama;
+				// $file_path = 'webservice/admin/boat/' . $upload_path . $nama;
+				// var_dump(move_uploaded_file($tmp_image, $file_url));
+				// die();
+				try {
+					//saving the file 
+					if (move_uploaded_file($tmp_image, $file_url)) {
+						$sql = "UPDATE tb_trans_hotel SET proof = '$file_url' WHERE id = '$id_transaksi';";
+						//adding the path and name to database 
+						if (mysqli_query($conn, $sql)) {
+							//filling response array with values 
+							$response['error'] = false;
+							$response['url'] = $file_url;
+							$response['name'] = $nama;
+							$response['message'] = 'Success To Upload Image';
+						}
+					} else {
+						$response['error'] = true;
+						$response['message'] = 'Failed To Upload Image';
+					}
+				} catch (Exception $e) {
+					$response['error'] = true;
+					$response['message'] = $e->getMessage();
+				}
+				//displaying the response 
+				echo json_encode($response);
+				//closing the connection 
+				mysqli_close($conn);
+			} else {
+				$response['error'] = true;
+				$response['message'] = 'Please choose a file';
+			}
+			break;
 		default:
 			$response['error'] = true;
 			$response['message'] = 'Invalid Operation Called';

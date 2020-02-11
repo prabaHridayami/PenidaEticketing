@@ -13,36 +13,36 @@ if (!isset($_SESSION['id'])) {
 if ($_SESSION['role'] != "partner" || $_SESSION['role'] == "admin") {
   header("Location:../../index.php");
 }
-
 if (isset($_POST['submit'])) {
-  $room = mysqli_real_escape_string($conn, $_POST['room']);
-  $category = mysqli_real_escape_string($conn, $_POST['category']);
-  if (!$room || !$category) {
-    header("location:gethotel.php?id=$id_hotel&pesan=kosong");
+  $room = mysqli_escape_string($conn, $_POST['room']);
+  $guest = mysqli_escape_string($conn, $_POST['guest']);
+  $category = mysqli_escape_string($conn, $_POST['category']);
+  if (!$room || !$guest || !$category) {
+    echo "<script type='text/javascript'>alert('Data Succes');window.location.href='gethotel.php?id=$id_hotel';</script>";
   } else {
-    $insertroom = mysqli_query($conn, "INSERT INTO tb_room VALUES ('','$room','$category')");
-    if ($insertroom) {
-      header("location:gethotel.php?id=$id_hotel&pesan=sukses");
+    $inserting_data = mysqli_query($conn, "INSERT INTO tb_room VALUES ('','$room','$category','$guest')");
+    if ($inserting_data) {
+      // echo "Sukses";
+      echo "<script type='text/javascript'>alert('Data Succes');window.location.href='gethotel.php?id=$id_hotel';</script>";
     } else {
-      header("location:gethotel.php?id=$id_hotel&pesan=gagal");
+      // echo "Gagal";
+      echo "<script type='text/javascript'>alert('Data Failed');window.location.href='gethotel.php?id=$id_hotel';</script>";
     }
   }
 }
 
 if (isset($_POST['update'])) {
-  $id = mysqli_real_escape_string($conn, $_POST['id']);
-  // $id_hotel = mysqli_real_escape_string($conn, $_POST['id_hotel']);
-  $room = mysqli_real_escape_string($conn, $_POST['room']);
-  $category = mysqli_real_escape_string($conn, $_POST['category']);
-  if (!$room || !$category || !$id) {
-    echo "<script type='text/javascript'>alert('Data Still Empty');window.location.href='gethotel.php?id=$id_hotel';</script>";
+  $id = mysqli_escape_string($conn, $_POST['id']);
+  $room = mysqli_escape_string($conn, $_POST['room']);
+  $guest = mysqli_escape_string($conn, $_POST['guest']);
+  $category = mysqli_escape_string($conn, $_POST['category']);
+  $inserting_data = mysqli_query($conn, "UPDATE tb_room SET `name` = '$room', guest = '$guest', `id_category` = '$category' WHERE id ='$id'");
+  if ($inserting_data) {
+    // echo "Sukses";
+    echo "<script type='text/javascript'>alert('Update Data Succes');window.location.href='gethotel.php?id=$id_hotel';</script>";
   } else {
-    $updateroom = mysqli_query($conn, "UPDATE tb_room SET `name` = '$room', id_category = '$category' WHERE id = '$id'");
-    if ($updateroom) {
-      echo "<script type='text/javascript'>alert('Update Data Succes');window.location.href='gethotel.php?id=$id_hotel';</script>";
-    } else {
-      echo "<script type='text/javascript'>alert('Update Data Failed');window.location.href='gethotel.php?id=$id_hotel';</script>";
-    }
+    // echo "Gagal";
+    echo "<script type='text/javascript'>alert('Update Data Failed');window.location.href='gethotel.php?id=$id_hotel';</script>";
   }
 }
 
@@ -50,10 +50,12 @@ if (isset($_GET['id']) && isset($_GET['option']) && isset($_GET['id_room'])) :
   if ($_GET['option'] == 'delete') {
     $flag = $_GET['id_room'];
     $deleteUser = mysqli_query($conn, "DELETE FROM tb_room WHERE id = '$flag'");
+    // var_dump($deleteUser, $flag);
+    // die();
     if ($deleteUser) {
       echo "<script type='text/javascript'>alert('Succes Delete Room !!');window.location.href='gethotel.php?id=$id_hotel';</script>";
     } else {
-      echo "<script type='text/javascript'>alert('Failed To Delete Room !!');window.location.href='gethotel.php?id=$id_hotel';</script>";
+      echo "<script type='text/javascript'>alert('Failed To Delete Room !! Please Check Transaksi !!!');window.location.href='gethotel.php?id=$id_hotel';</script>";
     }
   }
 endif;
@@ -126,9 +128,12 @@ endif;
           <div id="ModalEdit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 
           </div>
-          <button type="button" class="btn btn-success my-2" data-toggle="modal" data-target="#exampleModalCenter">
-            Add Room
-          </button>
+          <div class="row">
+            <button type="button" class="btn btn-success my-2" data-toggle="modal" data-target="#exampleModalCenter">
+              Add Room
+            </button>
+            <a class="btn btn-info my-2" href="category.php">Category</a>
+          </div>
           <form action="gethotel.php?id=<?php echo $id_hotel ?>" method="post" enctype="multipart/form-data">
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered" role="document">
@@ -151,9 +156,15 @@ endif;
                       }
                     }
                     ?>
-                    <div class="">
-                      <label for="">Room Name</label>
-                      <input class="form-control" type="text" name="room" id="" placeholder="Title">
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <label for="">Room Name</label>
+                        <input class="form-control" type="text" name="room" id="" placeholder="Name Room">
+                      </div>
+                      <div class="col-lg-6">
+                        <label for="">Room Guest</label>
+                        <input class="form-control" type="number" name="guest" id="" placeholder="Guest">
+                      </div>
                     </div>
                     <div>
                       <label for=""></label>
@@ -180,7 +191,7 @@ endif;
             </div>
           </form>
           <?php
-          $result = mysqli_query($conn, "SELECT tb_room.`id` AS 'Id Room', tb_category_room.`id`, tb_room.`name` AS 'Nama Kamar', tb_category_room.`name` AS 'Nama Category', price, `desc` FROM tb_room INNER JOIN tb_category_room ON tb_room.id_category = tb_category_room.id WHERE tb_category_room.id_hotel = $id_hotel");
+          $result = mysqli_query($conn, "SELECT tb_room.`id` AS 'Id Room', tb_category_room.`id`, tb_room.`name` AS 'Nama Kamar', tb_category_room.`name` AS 'Nama Category', price, `desc`, guest FROM tb_room INNER JOIN tb_category_room ON tb_room.id_category = tb_category_room.id WHERE tb_category_room.id_hotel = $id_hotel");
           ?>
           <div class="dataTables_wrapper">
             <table id="example" class="text-center table table-striped display nowrap" style="width:100%">
@@ -189,6 +200,7 @@ endif;
                   <th>No</th>
                   <th>Nama Kamar</th>
                   <th>Category</th>
+                  <th>Guest</th>
                   <th>Harga</th>
                   <th>Deskripsi</th>
                   <th>Option</th>
@@ -203,6 +215,7 @@ endif;
                     <td><?php echo $i++; ?></td>
                     <td><?php echo $row['Nama Kamar']; ?></td>
                     <td><?php echo $row['Nama Category']; ?></td>
+                    <td><?php echo $row['guest']; ?></td>
                     <td><?php echo $row['price']; ?></td>
                     <td><?php echo $row['desc']; ?></td>
                     <td><a href="#" class="open_modal" id="<?php echo $row['Id Room'] ?>">Edit</a> | <a href="#" class="link-delete" data-id="<?php echo $row['Id Room'] ?>">Delete</a></td>
@@ -302,6 +315,16 @@ endif;
           }
         });
       });
+    });
+  </script>
+  <script type="text/javascript">
+    $(".link-logout").click(function() {
+      var r = confirm("Are You Sure To Logout ?");
+      if (r == true) {
+        window.location = "../proses/logout.php";
+      } else {
+        return false;
+      }
     });
   </script>
 </body>

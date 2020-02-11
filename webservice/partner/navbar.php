@@ -50,7 +50,7 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../../proses/logout.php">
+                <a class="nav-link link-logout" href="#">
                     <i class="fas fa-sign-out-alt"></i>
                 </a>
             </li>
@@ -65,7 +65,6 @@
             <img src="../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
             <span class="brand-text font-weight-light">E-Booking</span>
         </a>
-
         <!-- Sidebar -->
         <div class="sidebar">
             <!-- Sidebar user panel (optional) -->
@@ -74,13 +73,13 @@
                     <img src="../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="#" class="d-block"><?php echo $row['name']; ?></a>
+                    <a href="../partner/index.php?id_user=<?php echo $row['id']; ?>" class="d-block"><?php echo $row['name']; ?></a>
                 </div>
             </div>
 
             <!-- Sidebar Menu -->
             <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">                 
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-hotel"></i>
@@ -103,19 +102,13 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="hotel/category.php" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Category</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
                                 <a href="hotel/transaksi.php" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Transaksi</p>
                                 </a>
                             </li>
                         </ul>
-                    </li>                    
+                    </li>
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-ship"></i>
@@ -126,25 +119,25 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="./index.html" class="nav-link">
+                                <a href="boat/boat.php" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Boat</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="./index2.html" class="nav-link">
+                                <a href="boat/pelanggan.php" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Pelanggan</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="./index2.html" class="nav-link">
+                                <a href="boat/transaksi.php" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Transaksi</p>
                                 </a>
                             </li>
                         </ul>
-                    </li>                    
+                    </li>
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-swimmer"></i>
@@ -155,25 +148,25 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="./index.html" class="nav-link">
+                                <a href="watersport/watersport.php" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Watersport</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="./index2.html" class="nav-link">
+                                <a href="watersport/pelanggan.php" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Pelanggan</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="./index2.html" class="nav-link">
+                                <a href="watersport/transaksi.php" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Transaksi</p>
                                 </a>
                             </li>
                         </ul>
-                    </li>                    
+                    </li>
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-globe-americas"></i>
@@ -184,25 +177,25 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="./index.html" class="nav-link">
+                                <a href="tour/tour.php" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Tour</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="./index2.html" class="nav-link">
+                                <a href="tour/pelanggan.php" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Pelanggan</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="./index2.html" class="nav-link">
+                                <a href="tour/transaksi.php" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Transaksi</p>
                                 </a>
                             </li>
                         </ul>
-                    </li>                    
+                    </li>
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-car"></i>
@@ -213,19 +206,19 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="./index.html" class="nav-link">
+                                <a href="vehicle/vehicle.php" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Vehicle</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="./index2.html" class="nav-link">
+                                <a href="vehicle/pelanggan.php" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Pelanggan</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="./index2.html" class="nav-link">
+                                <a href="vehicle/transaksi.php" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Transaksi</p>
                                 </a>

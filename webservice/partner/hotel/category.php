@@ -16,7 +16,6 @@ if (isset($_POST['submit'])) {
   $price = mysqli_real_escape_string($conn, $_POST['price']);
   $desc = mysqli_real_escape_string($conn, $_POST['desc']);
   $category = mysqli_real_escape_string($conn, $_POST['category']);
-  var_dump($name, $price, $desc, $category);
   if (!$name || !$price || !$desc || !$category) {
     header("location:category.php?pesan=kosong");
   } else {
@@ -26,6 +25,20 @@ if (isset($_POST['submit'])) {
     } else {
       header("location:category.php?pesan=gagal");
     }
+  }
+}
+
+if (isset($_POST['update'])) {
+  $id = mysqli_escape_string($conn, $_POST['id']);
+  $name = mysqli_escape_string($conn, $_POST['name']);
+  $price = mysqli_escape_string($conn, $_POST['price']);
+  $hotel = mysqli_escape_string($conn, $_POST['hotel']);
+  $deskripsi = mysqli_escape_string($conn, $_POST['deskripsi']);
+  $inserting_data = mysqli_query($conn, "UPDATE tb_category_room SET `name` = '$name', id_hotel = '$hotel', `desc` = '$deskripsi', price = '$price'WHERE id ='$id'");
+  if ($inserting_data) {
+    echo "<script type='text/javascript'>alert('Update Data Succes');window.location.href='category.php';</script>";
+  } else {
+    echo "<script type='text/javascript'>alert('Update Data Failed');window.location.href='category.php';</script>";
   }
 }
 
@@ -40,7 +53,7 @@ if (isset($_GET['option']) && isset($_GET['id'])) :
       if ($deleteUser) {
         echo "<script type='text/javascript'>alert('Succes Delete Category !!');window.location.href='category.php';</script>";
       } else {
-        echo "<script type='text/javascript'>alert('Failed To Delete Category Or Delete Room First !!');window.location.href='category.php';</script>";
+        echo "<script type='text/javascript'>alert('Delete Room First !!');window.location.href='category.php';</script>";
       }
     } else {
       echo "<script type='text/javascript'>alert('Category Not Available !!');window.location.href='category.php';</script>";
@@ -113,6 +126,9 @@ endif;
       <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
+          <div id="ModalEdit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+          </div>
           <button type="button" class="btn btn-success my-2" data-toggle="modal" data-target="#exampleModalCenter">
             Add Category
           </button>
@@ -281,6 +297,37 @@ endif;
         "scrollY": 200,
         "scrollX": 100
       });
+    });
+  </script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $(".open_modal").click(function(e) {
+        var m = $(this).attr("id");
+        $.ajax({
+          url: "../../proses/editcategory.php?id_user=<?php echo $id_user ?>",
+          type: "GET",
+          data: {
+            flag: m,
+          },
+          success: function(ajaxData) {
+            console.log(ajaxData);
+            $("#ModalEdit").html(ajaxData);
+            $("#ModalEdit").modal('show', {
+              backdrop: 'true'
+            });
+          }
+        });
+      });
+    });
+  </script>
+  <script type="text/javascript">
+    $(".link-logout").click(function() {
+      var r = confirm("Are You Sure To Logout ?");
+      if (r == true) {
+        window.location = "../proses/logout.php";
+      } else {
+        return false;
+      }
     });
   </script>
 </body>
