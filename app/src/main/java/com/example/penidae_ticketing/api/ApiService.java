@@ -8,6 +8,11 @@ import com.example.penidae_ticketing.model.Payment;
 import com.example.penidae_ticketing.model.Room;
 import com.example.penidae_ticketing.model.Schedule;
 import com.example.penidae_ticketing.model.TourPack;
+import com.example.penidae_ticketing.model.TransBoat;
+import com.example.penidae_ticketing.model.TransHotel;
+import com.example.penidae_ticketing.model.TransTour;
+import com.example.penidae_ticketing.model.TransVehicle;
+import com.example.penidae_ticketing.model.TransWatersport;
 import com.example.penidae_ticketing.model.Vehicle;
 import com.example.penidae_ticketing.model.VehicleOwner;
 import com.example.penidae_ticketing.model.Watersport;
@@ -134,5 +139,25 @@ public interface ApiService {
                           @Field("id_tour_package") Integer id_tour_package,
                           @Field("qty") Integer qty,
                           @Field("reserve_date") String reserve_date);
+
+    @FormUrlEncoded
+    @POST("boat.php?apicall=getTransBoat")
+    Call<TransBoat>getTransBoat(@Field("id_user") Integer id_user);
+
+    @FormUrlEncoded
+    @POST("hotel.php?apicall=getTransHotel")
+    Call<TransHotel>getTransHotel(@Field("id_user") Integer id_user);
+
+    @FormUrlEncoded
+    @POST("vehicle.php?apicall=getTransVehicle")
+    Call<TransVehicle>getTransVehicle(@Field("id_user") Integer id_user);
+
+    @FormUrlEncoded
+    @POST("watersport.php?apicall=getTransWatersport")
+    Call<TransWatersport>getTransWatersport(@Field("id_user") Integer id_user);
+
+    @FormUrlEncoded
+    @POST("tour.php?apicall=getTransTour")
+    Call<TransTour>getTransTour(@Field("id_user") Integer id_user);
 
 }

@@ -27,6 +27,8 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
             return new VehicleFragment();
         }else if (i == 3){
             return new WatersportFragment();
+        }else if (i == 4){
+            return new TourFragment();
         }else {
             return new TourFragment();
         }

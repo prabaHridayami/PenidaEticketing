@@ -12,25 +12,29 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Tour.TourMainActivity"
+        <activity android:name=".Reciept.RecieptActivity"></activity>
+        <activity
+            android:name=".Tour.TourMainActivity"
             android:label="Tour"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppThemeActionBar"></activity>
+            android:theme="@style/AppThemeActionBar" />
         <activity
             android:name=".Vehicle.ListRentalActivity"
             android:label="List Rental"
             android:theme="@style/AppThemeActionBar" />
-        <activity android:name=".WatersportPayment.WatersportPaymentActivity"
+        <activity
+            android:name=".WatersportPayment.WatersportPaymentActivity"
             android:label="Watersport Payment"
-            android:theme="@style/AppThemeActionBar"/>
+            android:theme="@style/AppThemeActionBar" />
         <activity android:name=".WatersportDetail.AttractionCartActivity" />
         <activity
             android:name=".WatersportDetail.AttqtyActivity"
             android:label="Ticket Quantity"
             android:theme="@style/AppThemeActionBar" />
-        <activity android:name=".WatersportDetail.AttractionListActivity"
+        <activity
+            android:name=".WatersportDetail.AttractionListActivity"
             android:label="Attraction List"
-            android:theme="@style/AppThemeActionBar"/>
+            android:theme="@style/AppThemeActionBar" />
         <activity
             android:name=".VehiclePayment.VehiclePaymentActivity"
             android:label="Rental Payment"
