@@ -3,6 +3,7 @@ package com.example.penidae_ticketing.Helper;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.penidae_ticketing.model.Auth;
 import com.example.penidae_ticketing.model.User;
 
 public class PreferenceHelper {

@@ -44,7 +44,11 @@ public class VehiclePresenter {
             @Override
             public void onResponse(Call<VehicleOwner> call, Response<VehicleOwner> response) {
                 if (response.isSuccessful()){
-                    view.onSuccess(response.body().getOwner());
+                    if (response.body().getMessage().equals("Successfull")) {
+                        view.onSuccess(response.body().getOwner());
+                    }else{
+                        view.onSuccessNull(response.body().getMessage());
+                    }
                 }
                 else {
                     view.onError();

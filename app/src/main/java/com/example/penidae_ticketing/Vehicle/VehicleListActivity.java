@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +17,8 @@ import com.example.penidae_ticketing.model.OwnerItem;
 import com.example.penidae_ticketing.model.VehicleItem;
 
 import java.util.List;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class VehicleListActivity extends AppCompatActivity implements VehicleView, VehicleAdapter.OnClickListener   {
     public static final String KEY_VEHICLE="ownerItem";
@@ -112,12 +115,18 @@ public class VehicleListActivity extends AppCompatActivity implements VehicleVie
     }
 
     @Override
-    public void onError() {
+    public void onSuccessNull(String message) {
 
     }
 
     @Override
-    public void onFailure(Throwable t) {
+    public void onError() {
+        Toast.makeText(this, "Failure", Toast.LENGTH_SHORT).show();
+    }
 
+    @Override
+    public void onFailure(Throwable t) {
+        Log.d(TAG, "onFailure: "+t);
+        Toast.makeText(this, "Error : "+t, Toast.LENGTH_SHORT).show();
     }
 }

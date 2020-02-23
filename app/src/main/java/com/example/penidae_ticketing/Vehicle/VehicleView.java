@@ -10,6 +10,7 @@ public interface VehicleView {
     void hideLoading();
     void onSuccess(List<OwnerItem> ownerItems);
     void onSuccessV(List<VehicleItem> vehicleItems);
+    void onSuccessNull(String message);
     void onError();
     void onFailure(Throwable t);
 }

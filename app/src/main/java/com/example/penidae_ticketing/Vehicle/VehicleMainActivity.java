@@ -28,13 +28,13 @@ import java.util.Locale;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
-public class VehicleMainActivity extends AppCompatActivity implements VehicleView, View.OnClickListener, RentalListAdapter.OnClickListener {
+public class VehicleMainActivity extends AppCompatActivity implements View.OnClickListener {
     final Calendar myCalendar = Calendar.getInstance();
     private SimpleDateFormat dateFormat;
-    private RecyclerView recycleVehicle;
-    private RentalListAdapter adapter;
-    private VehiclePresenter vehiclePresenter;
-    List<OwnerItem> ownerItems;
+//    private RecyclerView recycleVehicle;
+//    private RentalListAdapter adapter;
+//    private VehiclePresenter vehiclePresenter;
+//    List<OwnerItem> ownerItems;
 
     EditText et_pickup, et_return;
     RadioGroup r_vehicle;
@@ -47,7 +47,7 @@ public class VehicleMainActivity extends AppCompatActivity implements VehicleVie
         setContentView(R.layout.activity_vehicle_main);
         getSupportActionBar().setElevation(0);
 
-        recycleVehicle = findViewById(R.id.rv_vehicle);
+//        recycleVehicle = findViewById(R.id.rv_vehicle);
         et_pickup = findViewById(R.id.et_pickup);
         et_return =findViewById(R.id.et_return);
         r_vehicle =findViewById(R.id.r_vehicle);
@@ -64,8 +64,8 @@ public class VehicleMainActivity extends AppCompatActivity implements VehicleVie
         et_return.setOnClickListener(this);
         search.setOnClickListener(this);
 
-        vehiclePresenter=new VehiclePresenter(this, ApiClient.getService());
-        vehiclePresenter.getOwner();
+//        vehiclePresenter=new VehiclePresenter(this, ApiClient.getService());
+//        vehiclePresenter.getOwner();
 
     }
 
@@ -104,43 +104,48 @@ public class VehicleMainActivity extends AppCompatActivity implements VehicleVie
         }
     }
 
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
-    @Override
-    public void onSuccess(List<OwnerItem> ownerItems) {
-        this.ownerItems=ownerItems;
-        adapter=new RentalListAdapter(this,ownerItems);
-        adapter.setOnClickListener(this);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
-        recycleVehicle.setLayoutManager(layoutManager);
-        recycleVehicle.setAdapter(adapter);
-        Toast.makeText(this, "sukses", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onSuccessV(List<VehicleItem> vehicleItems) {
-
-    }
-
-    @Override
-    public void onError() {
-        Toast.makeText(this, "Failure", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onFailure(Throwable t) {
-        Log.d(TAG, "onFailure: "+t);
-        Toast.makeText(this, "Error : "+t, Toast.LENGTH_SHORT).show();
-    }
+//    @Override
+//    public void showLoading() {
+//
+//    }
+//
+//    @Override
+//    public void hideLoading() {
+//
+//    }
+//
+//    @Override
+//    public void onSuccess(List<OwnerItem> ownerItems) {
+//        this.ownerItems=ownerItems;
+//        adapter=new RentalListAdapter(this,ownerItems);
+//        adapter.setOnClickListener(this);
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+//        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+//        recycleVehicle.setLayoutManager(layoutManager);
+//        recycleVehicle.setAdapter(adapter);
+//        Toast.makeText(this, "sukses", Toast.LENGTH_SHORT).show();
+//    }
+//
+//    @Override
+//    public void onSuccessV(List<VehicleItem> vehicleItems) {
+//
+//    }
+//
+//    @Override
+//    public void onSuccessNull(String message) {
+//
+//    }
+//
+//    @Override
+//    public void onError() {
+//        Toast.makeText(this, "Failure", Toast.LENGTH_SHORT).show();
+//    }
+//
+//    @Override
+//    public void onFailure(Throwable t) {
+//        Log.d(TAG, "onFailure: "+t);
+//        Toast.makeText(this, "Error : "+t, Toast.LENGTH_SHORT).show();
+//    }
 
     private void datePickerDialog(){
         final DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
@@ -180,13 +185,13 @@ public class VehicleMainActivity extends AppCompatActivity implements VehicleVie
                 myCalendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
-    @Override
-    public void onClick(int position) {
-        OwnerItem ownerItem=ownerItems.get(position);
-        Bundle bundle=new Bundle();
-        bundle.putParcelable(VehicleDetailActivity.KEY_VEHICLE,ownerItem);
-        Intent intent=new Intent(this,VehicleDetailActivity.class);
-        intent.putExtras(bundle);
-        startActivity(intent);
-    }
+//    @Override
+//    public void onClick(int position) {
+//        OwnerItem ownerItem=ownerItems.get(position);
+//        Bundle bundle=new Bundle();
+//        bundle.putParcelable(VehicleDetailActivity.KEY_VEHICLE,ownerItem);
+//        Intent intent=new Intent(this,VehicleDetailActivity.class);
+//        intent.putExtras(bundle);
+//        startActivity(intent);
+//    }
 }

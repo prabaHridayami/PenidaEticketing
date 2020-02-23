@@ -10,6 +10,7 @@ public interface TourView {
     void hideLoading();
     void onSuccess(List<TourPackageItem> tourPackageItems);
     void onSuccessPay(Integer payment);
+    void onSuccessNull(String message);
     void onError();
     void onFailure(Throwable t);
 }

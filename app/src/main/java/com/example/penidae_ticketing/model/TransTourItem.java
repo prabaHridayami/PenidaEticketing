@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class TransTourItem{
 
+	@SerializedName("proof")
+	private String proof;
+
 	@SerializedName("image")
 	private String image;
 
@@ -36,6 +39,14 @@ public class TransTourItem{
 
 	@SerializedName("status")
 	private String status;
+
+	public String getProof() {
+		return proof;
+	}
+
+	public void setProof(String proof) {
+		this.proof = proof;
+	}
 
 	public void setImage(String image){
 		this.image = image;
@@ -128,8 +139,9 @@ public class TransTourItem{
 	@Override
  	public String toString(){
 		return 
-			"TransTourItem{" + 
-			"image = '" + image + '\'' + 
+			"TransTourItem{" +
+			"proof = '" + proof + '\'' +
+			"image = '" + image + '\'' +
 			",total_price = '" + totalPrice + '\'' + 
 			",qty = '" + qty + '\'' + 
 			",name = '" + name + '\'' + 

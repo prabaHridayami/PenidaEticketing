@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,6 +21,7 @@ import androidx.fragment.app.Fragment;
 public class AccountFragment extends Fragment {
     View v;
     Button btn_logout;
+    ImageButton btn_edit;
     TextView tv_name, tv_username, tv_email, tv_phone;
     ImageView iv_image, iv_profile;
     PreferenceHelper preferenceHelper;
@@ -30,6 +32,7 @@ public class AccountFragment extends Fragment {
         v = inflater.inflate(R.layout.fragment_account,container,false);
 
         btn_logout = v.findViewById(R.id.btn_logout);
+        btn_edit = v.findViewById(R.id.btn_edit);
         tv_name = v.findViewById(R.id.tv_name);
         tv_username = v.findViewById(R.id.tv_username);
         tv_email = v.findViewById(R.id.tv_email);
@@ -50,6 +53,14 @@ public class AccountFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
                 getActivity().finish();
+            }
+        });
+
+        btn_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), EditProfileActivity.class);
+                startActivity(intent);
             }
         });
 

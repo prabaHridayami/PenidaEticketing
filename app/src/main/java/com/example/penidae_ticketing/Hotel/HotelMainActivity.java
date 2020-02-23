@@ -29,13 +29,12 @@ import java.util.Locale;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
-public class HotelMainActivity extends AppCompatActivity implements View.OnClickListener, HotelView, HotelAdapter.OnClickListener {
+public class HotelMainActivity extends AppCompatActivity implements View.OnClickListener {
     final Calendar myCalendar = Calendar.getInstance();
-    private RecyclerView recyclerHotel;
-    private HotelAdapter adapter;
-    private HotelPresenter hotelPresenter;
+//    private RecyclerView recyclerHotel;
+//    private HotelPresenter hotelPresenter;
     private SimpleDateFormat dateFormat;
-    List<HotelItem> hotelItems;
+//    List<HotelItem> hotelItems;
 
     EditText et_checkin, et_checkout, et_guest, et_room;
     Button btn_search;
@@ -46,7 +45,7 @@ public class HotelMainActivity extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_hotel_main);
         getSupportActionBar().setElevation(0);
 
-        recyclerHotel = findViewById(R.id.rv_boat);
+//        recyclerHotel = findViewById(R.id.rv_boat);
         btn_search = findViewById(R.id.btn_search);
         et_checkin = findViewById(R.id.et_checkin);
         et_checkout = findViewById(R.id.et_checkout);
@@ -67,8 +66,8 @@ public class HotelMainActivity extends AppCompatActivity implements View.OnClick
         et_room.setOnClickListener(this);
         btn_search.setOnClickListener(this);
 
-        hotelPresenter=new HotelPresenter(this, ApiClient.getService());
-        hotelPresenter.getHotel();
+//        hotelPresenter=new HotelPresenter(this, ApiClient.getService());
+//        hotelPresenter.getHotel();
     }
 
 
@@ -195,48 +194,48 @@ public class HotelMainActivity extends AppCompatActivity implements View.OnClick
         builder.show();
     }
 
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
-
-    @Override
-    public void onSuccess(List<HotelItem> hotelItems, String message) {
-        this.hotelItems=hotelItems;
-        adapter=new HotelAdapter(this,hotelItems);
-        adapter.setOnClickListener(this);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
-        recyclerHotel.setLayoutManager(layoutManager);
-        recyclerHotel.setAdapter(adapter);
-        Toast.makeText(this, "sukses", Toast.LENGTH_SHORT).show();
-    }
-
-
-    @Override
-    public void onError() {
-        Toast.makeText(this, "Failure", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onFailure(Throwable t) {
-    Log.d(TAG, "onFailure: "+t);
-    Toast.makeText(this, "Error : "+t, Toast.LENGTH_SHORT).show();
-}
-
-    @Override
-    public void onClick(int position) {
-        HotelItem hotelItem=hotelItems.get(position);
-        Bundle bundle=new Bundle();
-//        bundle.putParcelable(HotelDetailActivity.KEY_HOTEL,hotelItem);
-        Intent intent=new Intent(this,HotelDetailActivity.class);
-        intent.putExtras(bundle);
-        startActivity(intent);
-    }
+//    @Override
+//    public void showLoading() {
+//
+//    }
+//
+//    @Override
+//    public void hideLoading() {
+//
+//    }
+//
+//
+//    @Override
+//    public void onSuccess(List<HotelItem> hotelItems, String message) {
+//        this.hotelItems=hotelItems;
+//        adapter=new HotelAdapter(this,hotelItems);
+//        adapter.setOnClickListener(this);
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+//        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+//        recyclerHotel.setLayoutManager(layoutManager);
+//        recyclerHotel.setAdapter(adapter);
+//        Toast.makeText(this, "sukses", Toast.LENGTH_SHORT).show();
+//    }
+//
+//
+//    @Override
+//    public void onError() {
+//        Toast.makeText(this, "Failure", Toast.LENGTH_SHORT).show();
+//    }
+//
+//    @Override
+//    public void onFailure(Throwable t) {
+//    Log.d(TAG, "onFailure: "+t);
+//    Toast.makeText(this, "Error : "+t, Toast.LENGTH_SHORT).show();
+//}
+//
+//    @Override
+//    public void onClick(int position) {
+//        HotelItem hotelItem=hotelItems.get(position);
+//        Bundle bundle=new Bundle();
+////        bundle.putParcelable(HotelDetailActivity.KEY_HOTEL,hotelItem);
+//        Intent intent=new Intent(this,HotelDetailActivity.class);
+//        intent.putExtras(bundle);
+//        startActivity(intent);
+//    }
 }

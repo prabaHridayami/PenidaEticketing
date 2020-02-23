@@ -24,7 +24,12 @@ public class TourPresenter {
             @Override
             public void onResponse(Call<TourPack> call, Response<TourPack> response) {
                 if (response.isSuccessful()){
-                    view.onSuccess(response.body().getTourPackage());
+                    if (response.body().getMessage().equals("Successfull")){
+                        view.onSuccess(response.body().getTourPackage());
+                    }else{
+                        view.onSuccessNull(response.body().getMessage());
+                    }
+
                 }
                 else {
                     view.onError();

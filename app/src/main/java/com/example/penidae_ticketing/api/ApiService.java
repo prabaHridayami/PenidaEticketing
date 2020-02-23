@@ -13,14 +13,19 @@ import com.example.penidae_ticketing.model.TransHotel;
 import com.example.penidae_ticketing.model.TransTour;
 import com.example.penidae_ticketing.model.TransVehicle;
 import com.example.penidae_ticketing.model.TransWatersport;
+import com.example.penidae_ticketing.model.Upload;
 import com.example.penidae_ticketing.model.Vehicle;
 import com.example.penidae_ticketing.model.VehicleOwner;
 import com.example.penidae_ticketing.model.Watersport;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 public interface ApiService {
 
@@ -35,6 +40,15 @@ public interface ApiService {
                        @Field("email") String email,
                        @Field("password") String password,
                        @Field("phone") String phone);
+
+    @FormUrlEncoded
+    @POST("api.php?apicall=editprofile")
+    Call<Auth>edit(@Field("name") String name,
+                   @Field("username") String username,
+                   @Field("updated_at") String updated_at,
+                   @Field("phone") String phone,
+                   @Field("email") String email,
+                   @Field("id") Integer id);
 
     @POST("hotel.php?apicall=allhotel")
     Call<Hotel>allhotel();
@@ -159,5 +173,25 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("tour.php?apicall=getTransTour")
     Call<TransTour>getTransTour(@Field("id_user") Integer id_user);
+
+    @Multipart
+    @POST("boat.php?apicall=proofBoat")
+    Call<Upload>uploadBoat(@Part MultipartBody.Part image, @Part("id_transaksi") RequestBody id_transaksi);
+
+    @Multipart
+    @POST("hotel.php?apicall=proofHotel")
+    Call<Upload>uploadHotel(@Part MultipartBody.Part image, @Part("id_transaksi") RequestBody id_transaksi);
+
+    @Multipart
+    @POST("vehicle.php?apicall=proofVehicle")
+    Call<Upload>uploadVehicle(@Part MultipartBody.Part image, @Part("id_transaksi") RequestBody id_transaksi);
+
+    @Multipart
+    @POST("watersport.php?apicall=proofWatersport")
+    Call<Upload>uploadWatersport(@Part MultipartBody.Part image, @Part("id_transaksi") RequestBody id_transaksi);
+
+    @Multipart
+    @POST("tour.php?apicall=proofTour")
+    Call<Upload>uploadTour(@Part MultipartBody.Part image, @Part("id_transaksi") RequestBody id_transaksi);
 
 }

@@ -1,5 +1,6 @@
 package com.example.penidae_ticketing.book_fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 
 import com.example.penidae_ticketing.Helper.PreferenceHelper;
 import com.example.penidae_ticketing.R;
+import com.example.penidae_ticketing.ReceiptActivity.UploadActivity;
 import com.example.penidae_ticketing.api.ApiClient;
 import com.example.penidae_ticketing.model.TransBoatItem;
 import com.example.penidae_ticketing.model.TransHotelItem;
@@ -112,6 +114,9 @@ public class BoatFragment extends Fragment implements BookView, TransBoatAdapter
     @Override
     public void onClick(int position) {
         TransBoatItem transBoatItem = transBoatItems.get(position);
-        Toast.makeText(getContext(),Integer.toString(transBoatItem.getIdTrans()),Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(getContext(), UploadActivity.class);
+        intent.putExtra("menu","boat");
+        intent.putExtra("id",transBoatItem.getIdTrans());
+        startActivity(intent);
     }
 }

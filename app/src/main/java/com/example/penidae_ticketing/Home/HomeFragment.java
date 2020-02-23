@@ -32,7 +32,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
-public class HomeFragment extends Fragment implements HotelAdapter.OnClickListener, View.OnClickListener, HomeView{
+public class HomeFragment extends Fragment implements View.OnClickListener{
 
     private ImageView imageRun;
     private Handler handler;
@@ -71,8 +71,8 @@ public class HomeFragment extends Fragment implements HotelAdapter.OnClickListen
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        homePresenter=new HomePresenter(this, ApiClient.getService());
-        homePresenter.getHotel();
+//        homePresenter=new HomePresenter(this, ApiClient.getService());
+//        homePresenter.getHotel();
     }
 
 
@@ -98,48 +98,48 @@ public class HomeFragment extends Fragment implements HotelAdapter.OnClickListen
 
     }
 
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
-    @Override
-    public void onSuccess(List<HotelItem> hotelItems) {
-        this.hotelItems=hotelItems;
-        adapter=new HotelAdapter(getContext(),hotelItems);
-        adapter.setOnClickListener(this);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
-        recyclerHotel.setLayoutManager(layoutManager);
-        recyclerHotel.setAdapter(adapter);
-        Toast.makeText(getContext(), "sukses", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onError() {
-        Toast.makeText(getContext(), "Failure", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onFailure(Throwable t) {
-        Log.d(TAG, "onFailure: "+t);
-        Toast.makeText(getContext(), "Error : "+t, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onClick(int position) {
-        HotelItem hotelItem=hotelItems.get(position);
-        Bundle bundle=new Bundle();
-//        bundle.putParcelable(HotelDetailActivity.KEY_HOTEL,hotelItem);
-        Intent intent=new Intent(getContext(),HotelDetailActivity.class);
-        intent.putExtras(bundle);
-        startActivity(intent);
-    }
+//    @Override
+//    public void showLoading() {
+//
+//    }
+//
+//    @Override
+//    public void hideLoading() {
+//
+//    }
+//
+//    @Override
+//    public void onSuccess(List<HotelItem> hotelItems) {
+//        this.hotelItems=hotelItems;
+//        adapter=new HotelAdapter(getContext(),hotelItems);
+//        adapter.setOnClickListener(this);
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+//        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+//        recyclerHotel.setLayoutManager(layoutManager);
+//        recyclerHotel.setAdapter(adapter);
+//        Toast.makeText(getContext(), "sukses", Toast.LENGTH_SHORT).show();
+//    }
+//
+//    @Override
+//    public void onError() {
+//        Toast.makeText(getContext(), "Failure", Toast.LENGTH_SHORT).show();
+//    }
+//
+//    @Override
+//    public void onFailure(Throwable t) {
+//        Log.d(TAG, "onFailure: "+t);
+//        Toast.makeText(getContext(), "Error : "+t, Toast.LENGTH_SHORT).show();
+//    }
+//
+//    @Override
+//    public void onClick(int position) {
+//        HotelItem hotelItem=hotelItems.get(position);
+//        Bundle bundle=new Bundle();
+////        bundle.putParcelable(HotelDetailActivity.KEY_HOTEL,hotelItem);
+//        Intent intent=new Intent(getContext(),HotelDetailActivity.class);
+//        intent.putExtras(bundle);
+//        startActivity(intent);
+//    }
 
     @Override
     public void onClick(View v) {

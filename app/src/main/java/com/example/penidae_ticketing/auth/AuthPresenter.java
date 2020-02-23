@@ -66,5 +66,24 @@ public class AuthPresenter {
             }
         });
     }
+    public void edit(String name, String username, String updated_at,String phone,String email, Integer id){
+        view.showLoading();
+        service.edit(name,username,updated_at,phone,email,id).enqueue(new Callback<Auth>() {
+            @Override
+            public void onResponse(Call<Auth> call, Response<Auth> response) {
+                if (response.isSuccessful()){
+                    view.onSuccess(response.body().getUser());
+                }else {
+                    view.onError();
+                }
+            }
 
+            @Override
+            public void onFailure(Call<Auth> call, Throwable t) {
+                view.onFailure(t);
+                Log.d(TAG, "onFailure: "+t);
+                view.hideLoading();
+            }
+        });
+    }
 }

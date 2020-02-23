@@ -117,6 +117,11 @@ public class TourDetailActivity extends AppCompatActivity implements TourView {
     }
 
     @Override
+    public void onSuccessNull(String message) {
+
+    }
+
+    @Override
     public void onError() {
         Toast.makeText(this, "Failure", Toast.LENGTH_SHORT).show();
     }
