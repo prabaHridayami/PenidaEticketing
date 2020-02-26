@@ -1,5 +1,6 @@
 <?php
 session_start();
+$id_user = $_SESSION['id'];
 if (!isset($_SESSION['id'])) {
   header("Location:../index.php");
 }
@@ -171,13 +172,80 @@ if (isset($_POST['submit'])) {
         <!-- Main content -->
         <section class="content">
           <div class="container-fluid">
-            <!-- Small boxes (Stat box) -->
+            <?php
+            $queryboat = mysqli_query($conn, "SELECT tb_user.`id`,tb_user.`name`,tb_user.`role`,tb_user.email FROM tb_user JOIN tb_boat ON tb_user.`id` = tb_boat.`id_user` WHERE tb_user.`role` = 'partner' GROUP BY `name`");
+            $jumlahboat = mysqli_num_rows($queryboat);
+            $queryhotel = mysqli_query($conn, "SELECT tb_user.`id`,tb_user.`name`,tb_user.`role`,tb_user.email FROM tb_user JOIN tb_hotel ON tb_user.`id` = tb_hotel.`id_user` WHERE tb_user.`role` = 'partner' GROUP BY `name`");
+            $jumlahhotel = mysqli_num_rows($queryhotel);
+            $querytour = mysqli_query($conn, "SELECT tb_user.`id`,tb_user.`name`,tb_user.`role`,tb_user.email FROM tb_user JOIN tb_tour ON tb_user.`id` = tb_tour.`id_user` WHERE tb_user.`role` = 'partner' GROUP BY `name`");
+            $jumlahtour = mysqli_num_rows($querytour);
+            $queryvehicle = mysqli_query($conn, "SELECT tb_user.`id`,tb_user.`name`,tb_user.`role`,tb_user.email FROM tb_user JOIN tb_rent_vehicle ON tb_user.`id` = tb_rent_vehicle.`id_user` WHERE tb_user.`role` = 'partner' GROUP BY `name`");
+            $jumlahvehicle = mysqli_num_rows($queryvehicle);
+            $querywatersport = mysqli_query($conn, "SELECT tb_user.`id`,tb_user.`name`,tb_user.`role`,tb_user.email FROM tb_user JOIN tb_watersport ON tb_user.`id` = tb_watersport.`id_user` WHERE tb_user.`role` = 'partner' GROUP BY `name`");
+            $jumlahwatersport = mysqli_num_rows($querywatersport);
+            ?>
             <div class="row">
+              <div class="col-md-2 col-lg-3">
+                <div class="small-box bg-warning">
+                  <div class="inner">
+                    <h3>Boat</h3>
+                    <p>Jumlah Partner : <?php echo $jumlahboat; ?></p>
+                  </div>
+                  <div class="icon">
+                    <i class="nav-icon fas fa-ship"></i>
+                  </div>
+                  <a href="../admin/boat/boat.php" class="small-box-footer">Boat <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+              </div>
               <!-- ./col -->
-            </div>
-            <!-- /.row -->
-            <!-- Main row -->
-            <div class="row">
+              <div class="col-md-2 col-lg-3">
+                <div class="small-box bg-info">
+                  <div class="inner">
+                    <h3>Hotel</h3>
+                    <p>Jumlah Partner : <?php echo $jumlahhotel; ?></p>
+                  </div>
+                  <div class="icon">
+                    <i class="nav-icon fas fa-hotel"></i>
+                  </div>
+                  <a href="../admin/hotel/hotel.php" class="small-box-footer">Hotel<i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+              </div>
+              <div class="col-md-2 col-lg-3">
+                <div class="small-box bg-primary">
+                  <div class="inner">
+                    <h3>Tour</h3>
+                    <p>Jumlah Partner : <?php echo $jumlahtour; ?></p>
+                  </div>
+                  <div class="icon">
+                    <i class="nav-icon fas fa-bus"></i>
+                  </div>
+                  <a href="../admin/tour/tour.php" class="small-box-footer">Tour<i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+              </div>
+              <div class="col-md-2 col-lg-3">
+                <div class="small-box bg-warning">
+                  <div class="inner">
+                    <h3>Vehicle</h3>
+                    <p>Jumlah Partner : <?php echo $jumlahvehicle; ?></p>
+                  </div>
+                  <div class="icon">
+                    <i class="nav-icon fas fa-car"></i>
+                  </div>
+                  <a href="../admin/vehicle/vehicle.php" class="small-box-footer">Vehicle<i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+              </div>
+              <div class="col-md-2 col-lg-3">
+                <div class="small-box bg-danger">
+                  <div class="inner">
+                    <h3>Watersport</h3>
+                    <p>Jumlah Partner : <?php echo $jumlahwatersport; ?></p>
+                  </div>
+                  <div class="icon">
+                    <i class="nav-icon fas fa-swimmer"></i>
+                  </div>
+                  <a href="../admin/watersport/watersport.php" class="small-box-footer">Watersport <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+              </div>
             </div>
             <!-- /.row (main row) -->
           </div><!-- /.container-fluid -->

@@ -4,7 +4,6 @@
     $select = mysqli_query($conn, "SELECT * FROM tb_user WHERE id = $id");
     $row = mysqli_fetch_assoc($select);
     ?>
-
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
         <!-- Left navbar links -->
@@ -19,7 +18,6 @@
           <a href="#" class="nav-link">Contact</a>
         </li> -->
         </ul>
-
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
             <!-- Notifications Dropdown Menu -->
@@ -57,15 +55,13 @@
         </ul>
     </nav>
     <!-- /.navbar -->
-
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
-        <a href="#" class="brand-link">
+        <a href="../admin" class="brand-link">
             <img src="../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
             <span class="brand-text font-weight-light">E-Booking</span>
         </a>
-
         <!-- Sidebar -->
         <div class="sidebar">
             <!-- Sidebar user panel (optional) -->
@@ -77,7 +73,6 @@
                     <a href="../admin/index.php?id_user=<?php echo $row['id']; ?>" class="d-block"><?php echo $row['name']; ?></a>
                 </div>
             </div>
-
             <!-- Sidebar Menu -->
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -94,18 +89,6 @@
                                 <a href="hotel/hotel.php" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Hotel</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="hotel/pelanggan.php" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Pelanggan</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="hotel/transaksi.php" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Transaksi</p>
                                 </a>
                             </li>
                         </ul>
@@ -125,18 +108,6 @@
                                     <p>Boat</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="boat/pelanggan.php" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Pelanggan</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="boat/transaksi.php" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Transaksi</p>
-                                </a>
-                            </li>
                         </ul>
                     </li>
                     <li class="nav-item has-treeview">
@@ -152,18 +123,6 @@
                                 <a href="watersport/watersport.php" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Watersport</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="watersport/pelanggan.php" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Pelanggan</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="watersport/transaksi.php" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Transaksi</p>
                                 </a>
                             </li>
                         </ul>
@@ -183,18 +142,6 @@
                                     <p>Tour</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="tour/pelanggan.php" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Pelanggan</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="tour/transaksi.php" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Transaksi</p>
-                                </a>
-                            </li>
                         </ul>
                     </li>
                     <li class="nav-item has-treeview">
@@ -210,18 +157,6 @@
                                 <a href="vehicle/vehicle.php" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Vehicle</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="vehicle/pelanggan.php" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Pelanggan</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="vehicle/transaksi.php" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Transaksi</p>
                                 </a>
                             </li>
                         </ul>

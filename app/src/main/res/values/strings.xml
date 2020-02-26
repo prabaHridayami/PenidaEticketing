@@ -1,8 +1,0 @@
-<resources>
-    <string name="app_name">Penida E-Ticketing</string>
-    <string name="boat">Boat</string>
-    <string name="hotel">Hotel</string>
-    <string name="vehicle">Vehicle</string>
-    <string name="watersport">Watersport</string>
-    <string name="tour">Tour</string>
-</resources>
