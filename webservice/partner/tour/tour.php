@@ -123,13 +123,13 @@ if (isset($_POST['submit'])) {
             if (mysqli_num_rows($selecthotel) > 0) {
               while ($fetch = mysqli_fetch_assoc($selecthotel)) { ?>
                 <div class="col-lg-3 col-6">
-                  <div class="small-box bg-warning">
+                  <div class="small-box bg-primary">
                     <div class="inner">
                       <h3><?php echo $fetch['name'] ?></h3>
                       <p><?php echo $fetch['phone'] ?></p>
                     </div>
                     <div class="icon">
-                      <i class="nav-icon fas fa-ship"></i>
+                      <i class="nav-icon fas fa-bus"></i>
                     </div>
                     <a href="gettour.php?id=<?php echo $fetch['id'] ?>" class="small-box-footer">Add Package Tour <i class="fas fa-arrow-circle-right"></i></a>
                   </div>

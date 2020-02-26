@@ -1,5 +1,6 @@
 <?php
 session_start();
+$id_user = $_SESSION['id'];
 if (!isset($_SESSION['id'])) {
   header("Location:../index.php");
 }
@@ -172,13 +173,83 @@ if (isset($_POST['submit'])) {
         <!-- Main content -->
         <section class="content">
           <div class="container-fluid">
-            <!-- Small boxes (Stat box) -->
+            <?php
+            $queryhotel = mysqli_query($conn, "SELECT tb_hotel.`name` AS 'Nama Hotel', tb_room.`name` AS 'Nama Kamar',tb_user.`name` AS 'Nama User',tb_trans_hotel.`check_in`,tb_trans_hotel.`check_out`,tb_trans_hotel.`reserve_date`,tb_trans_hotel.`total_price`,tb_trans_hotel.`id`FROM tb_trans_hotel JOIN tb_room ON tb_trans_hotel.id_room = tb_room.id JOIN tb_category_room ON tb_category_room.`id` = tb_room.`id_category`JOIN tb_hotel ON tb_hotel.`id` = tb_category_room.`id_hotel`JOIN tb_user ON tb_trans_hotel.id_user = tb_user.id WHERE tb_hotel.`id_user` = '$id_user' ORDER BY id DESC");
+            $jumlahhotel = mysqli_num_rows($queryhotel);
+            $queryboat = mysqli_query($conn, "SELECT tb_trans_boat.`id`,tb_trans_boat.`depart_date`,tb_trans_boat.`qty`,tb_trans_boat.`reserve_date`, tb_schedule.`pickup_loc`,tb_schedule.`dropup_loc`,tb_schedule.`time`,tb_user.`name`,tb_trans_boat.`total_price`FROM tb_trans_boat JOIN tb_schedule ON tb_trans_boat.schedule = tb_schedule.`id` JOIN tb_det_boat ON tb_det_boat.`id` = tb_schedule.`id_det_boat`JOIN tb_boat ON tb_boat.`id` = tb_det_boat.`id_boat`JOIN tb_user ON tb_trans_boat.id_user = tb_user.id WHERE tb_boat.`id_user` = '$id_user' ORDER BY id DESC");
+            $jumlahboat = mysqli_num_rows($queryboat);
+            $querytour = mysqli_query($conn, "SELECT tb_trans_tour.`id`, tb_trans_tour.id_tour_package, tb_tour_package.`name` AS 'Nama Package', tb_user.`name`, tb_trans_tour.`tour_date`, tb_trans_tour.`total_price`, tb_trans_tour.`reserve_date` FROM tb_trans_tour JOIN tb_tour_package ON tb_trans_tour.`id_tour_package` = tb_tour_package.`id` JOIN tb_user ON tb_trans_tour.`id_user`= tb_user.`id` JOIN tb_tour ON tb_tour.`id` = tb_tour_package.`id_tour`WHERE tb_tour.`id_user` = '$id_user' ORDER BY id DESC");
+            $jumlahtour = mysqli_num_rows($querytour);
+            $queryvehicle = mysqli_query($conn, "SELECT tb_trans_rent.`id`, tb_user.`name` AS 'Penyewa', tb_vehicle.`name` AS 'Mobil Name', tb_rent_vehicle.`name` AS 'Kantor Rent', tb_vehicle.`plat`, tb_trans_rent.`take`, tb_trans_rent.`return`, tb_trans_rent.`trans_date`,tb_trans_rent.`total_price` FROM tb_trans_rent JOIN tb_user ON tb_user.`id` = tb_trans_rent.`id_user` JOIN tb_vehicle ON tb_vehicle.`id` = tb_trans_rent.`id_vehicle` JOIN tb_rent_vehicle ON tb_vehicle.`id_rent_vehicle` = tb_rent_vehicle.`id` WHERE tb_rent_vehicle.`id_user` = '$id_user' ORDER BY tb_trans_rent.id DESC");
+            $jumlahvehicle = mysqli_num_rows($queryvehicle);
+            $querywatersport = mysqli_query($conn, "SELECT tb_trans_watersport.`id`, tb_trans_watersport.`reserve_date`,tb_trans_watersport.qty, tb_trans_watersport.`date`,tb_user.`name`, tb_trans_watersport.`total_price` FROM tb_trans_watersport 
+                  JOIN tb_attraction ON tb_trans_watersport.`id_attraction` =  tb_attraction.`id` 
+                  JOIN tb_watersport ON tb_watersport.`id` = tb_attraction.`id_watersport`            
+                  JOIN tb_user ON tb_user.`id`= tb_trans_watersport.`id_user` WHERE tb_watersport.`id_user` = '$id_user' ORDER BY id DESC");
+            $jumlahwatersport = mysqli_num_rows($querywatersport);
+            ?>
             <div class="row">
+              <div class="col-md-2 col-lg-3">
+                <div class="small-box bg-warning">
+                  <div class="inner">
+                    <h3>Boat</h3>
+                    <p>Jumlah Transaksi : <?php echo $jumlahboat; ?></p>
+                  </div>
+                  <div class="icon">
+                    <i class="nav-icon fas fa-ship"></i>
+                  </div>
+                  <a href="../partner/boat/boat.php" class="small-box-footer">Boat <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+              </div>
               <!-- ./col -->
-            </div>
-            <!-- /.row -->
-            <!-- Main row -->
-            <div class="row">
+              <div class="col-md-2 col-lg-3">
+                <div class="small-box bg-info">
+                  <div class="inner">
+                    <h3>Hotel</h3>
+                    <p>Jumlah Transaksi : <?php echo $jumlahhotel; ?></p>
+                  </div>
+                  <div class="icon">
+                    <i class="nav-icon fas fa-hotel"></i>
+                  </div>
+                  <a href="../partner/hotel/hotel.php" class="small-box-footer">Hotel<i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+              </div>
+              <div class="col-md-2 col-lg-3">
+                <div class="small-box bg-primary">
+                  <div class="inner">
+                    <h3>Tour</h3>
+                    <p>Jumlah Transaksi : <?php echo $jumlahtour; ?></p>
+                  </div>
+                  <div class="icon">
+                    <i class="nav-icon fas fa-bus"></i>
+                  </div>
+                  <a href="../partner/tour/tour.php" class="small-box-footer">Tour<i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+              </div>
+              <div class="col-md-2 col-lg-3">
+                <div class="small-box bg-warning">
+                  <div class="inner">
+                    <h3>Vehicle</h3>
+                    <p>Jumlah Transaksi : <?php echo $jumlahvehicle; ?></p>
+                  </div>
+                  <div class="icon">
+                    <i class="nav-icon fas fa-car"></i>
+                  </div>
+                  <a href="../partner/vehicle/vehicle.php" class="small-box-footer">Vehicle<i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+              </div>
+              <div class="col-md-2 col-lg-3">
+                <div class="small-box bg-danger">
+                  <div class="inner">
+                    <h3>Watersport</h3>
+                    <p>Jumlah Transaksi : <?php echo $jumlahwatersport; ?></p>
+                  </div>
+                  <div class="icon">
+                    <i class="nav-icon fas fa-swimmer"></i>
+                  </div>
+                  <a href="../partner/watersport/watersport.php" class="small-box-footer">Watersport <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+              </div>
             </div>
             <!-- /.row (main row) -->
           </div><!-- /.container-fluid -->

@@ -151,7 +151,7 @@ if (isset($_POST['submit'])) {
                       <p><?php echo $fetch['phone'] ?></p>
                     </div>
                     <div class="icon">
-                      <i class="nav-icon fas fa-ship"></i>
+                      <i class="nav-icon fas fa-car"></i>
                     </div>
                     <a href="getvehicle.php?id=<?php echo $fetch['id'] ?>" class="small-box-footer">Add Boat <i class="fas fa-arrow-circle-right"></i></a>
                   </div>

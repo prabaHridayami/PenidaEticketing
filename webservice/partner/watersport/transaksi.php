@@ -41,6 +41,7 @@ if ($_SESSION['role'] != "partner" || $_SESSION['role'] == "admin") {
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+  <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
   <style media="screen">
     html {
       scroll-behavior: smooth;
@@ -72,14 +73,13 @@ if ($_SESSION['role'] != "partner" || $_SESSION['role'] == "admin") {
         </div><!-- /.container-fluid -->
       </div>
       <!-- /.content-header -->
-
       <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
           <div id="ModalEdit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           </div>
           <?php
-          $result = mysqli_query($conn, "SELECT tb_trans_watersport.`id`, tb_trans_watersport.`reserve_date`,tb_trans_watersport.qty, tb_trans_watersport.`date`,tb_user.`name`, tb_trans_watersport.`total_price` FROM tb_trans_watersport 
+          $result = mysqli_query($conn, "SELECT tb_trans_watersport.`status`,tb_trans_watersport.`proof`,tb_trans_watersport.`id`, tb_trans_watersport.`reserve_date`,tb_trans_watersport.qty, tb_trans_watersport.`date`,tb_user.`name`, tb_trans_watersport.`total_price` FROM tb_trans_watersport 
           JOIN tb_attraction ON tb_trans_watersport.`id_attraction` =  tb_attraction.`id` 
           JOIN tb_watersport ON tb_watersport.`id` = tb_attraction.`id_watersport`            
           JOIN tb_user ON tb_user.`id`= tb_trans_watersport.`id_user` WHERE tb_watersport.`id_user` = '$id_user' ORDER BY id DESC");
@@ -94,6 +94,8 @@ if ($_SESSION['role'] != "partner" || $_SESSION['role'] == "admin") {
                   <th>Date</th>
                   <th>Total Harga</th>
                   <th>Qty</th>
+                  <th>Bukti Pembayaran</th>
+                  <th>Status</th>
                 </tr>
               </thead>
               <tbody>
@@ -108,6 +110,19 @@ if ($_SESSION['role'] != "partner" || $_SESSION['role'] == "admin") {
                     <td><?php echo $row['date']; ?></td>
                     <td><?php echo $row['total_price']; ?></td>
                     <td><?php echo $row['qty']; ?></td>
+                    <td><a href="#" class="pop"><img style="border-radius:8px;" src="../../admin/watersport/transaksi/<?php echo $row['proof']; ?>" width="50" height="50"></a></td>
+                    <td>
+                      <?php if ($row['status'] == 'proceed') {
+                      ?>
+                        <input type="checkbox" class="toggle" name="toggle" id="toggle" value="<?php echo $row['id']; ?>" data-toggle="toggle" data-off="Disabled" data-on="Enabled">
+                      <?php
+                      } ?>
+                      <?php if ($row['status'] == 'success') {
+                      ?>
+                        <input type="checkbox" class="toggle" name="toggle" id="toggle" value="<?php echo $row['id']; ?>" data-toggle="toggle" data-off="Disabled" data-on="Enabled" checked>
+                      <?php
+                      } ?>
+                    </td>
                     <!-- <td><a href="#" class="open_modal" id="<?php echo $row['id'] ?>">View Atraction</a></td> -->
                   </tr>
                 <?php } ?>
@@ -117,6 +132,18 @@ if ($_SESSION['role'] != "partner" || $_SESSION['role'] == "admin") {
         </div><!-- /.container-fluid -->
       </section>
       <!-- /.content -->
+      <!-- MODAL GAMBAR -->
+      <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <img src="" class="imagepreview" style="width: 100%;">
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- MODAL GAMBAR -->
     </div>
     <!-- /.content-wrapper -->
     <footer class="main-footer">
@@ -126,7 +153,6 @@ if ($_SESSION['role'] != "partner" || $_SESSION['role'] == "admin") {
         <b>Version</b> 3.0.0-rc.3
       </div>
     </footer>
-
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
       <!-- Control sidebar content goes here -->
@@ -134,80 +160,92 @@ if ($_SESSION['role'] != "partner" || $_SESSION['role'] == "admin") {
     <!-- /.control-sidebar -->
   </div>
   <!-- ./wrapper -->
-  <!-- jQuery -->
-  <script src="../../plugins/jquery/jquery.min.js"></script>
-  <!-- jQuery UI 1.11.4 -->
-  <script src="../../plugins/jquery-ui/jquery-ui.min.js"></script>
-  <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-  <script>
-    $.widget.bridge('uibutton', $.ui.button)
-  </script>
-  <!-- Bootstrap 4 -->
-  <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- ChartJS -->
-  <script src="../../plugins/chart.js/Chart.min.js"></script>
-  <!-- Sparkline -->
-  <script src="../../plugins/sparklines/sparkline.js"></script>
-  <!-- JQVMap -->
-  <script src="../../plugins/jqvmap/jquery.vmap.min.js"></script>
-  <script src="../../plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
-  <!-- jQuery Knob Chart -->
-  <script src="../../plugins/jquery-knob/jquery.knob.min.js"></script>
-  <!-- daterangepicker -->
-  <script src="../../plugins/moment/moment.min.js"></script>
-  <script src="../../plugins/daterangepicker/daterangepicker.js"></script>
-  <!-- Tempusdominus Bootstrap 4 -->
-  <script src="../../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-  <!-- Summernote -->
-  <script src="../../plugins/summernote/summernote-bs4.min.js"></script>
-  <!-- overlayScrollbars -->
-  <script src="../../plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-  <!-- AdminLTE App -->
-  <script src="../../dist/js/adminlte.js"></script>
-  <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-  <script src="../../dist/js/pages/dashboard.js"></script>
-  <!-- AdminLTE for demo purposes -->
-  <script src="../../dist/js/demo.js"></script>
-  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $('#example').DataTable({
-        "scrollY": 200,
-        "scrollX": 100
-      });
+</body>
+<!-- jQuery -->
+<script src="../../plugins/jquery/jquery.min.js"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="../../plugins/jquery-ui/jquery-ui.min.js"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- ChartJS -->
+<script src="../../plugins/chart.js/Chart.min.js"></script>
+<!-- Sparkline -->
+<script src="../../plugins/sparklines/sparkline.js"></script>
+<!-- JQVMap -->
+<script src="../../plugins/jqvmap/jquery.vmap.min.js"></script>
+<script src="../../plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+<!-- jQuery Knob Chart -->
+<script src="../../plugins/jquery-knob/jquery.knob.min.js"></script>
+<!-- daterangepicker -->
+<script src="../../plugins/moment/moment.min.js"></script>
+<script src="../../plugins/daterangepicker/daterangepicker.js"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="../../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<!-- Summernote -->
+<script src="../../plugins/summernote/summernote-bs4.min.js"></script>
+<!-- overlayScrollbars -->
+<script src="../../plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../../dist/js/adminlte.js"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="../../dist/js/pages/dashboard.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../../dist/js/demo.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example').DataTable({
+      "scrollY": 400,
+      "scrollX": 50
     });
-  </script>
-  <!-- <script type="text/javascript">
-    $(document).ready(function() {
-      $(".open_modal").click(function(e) {
-        var m = $(this).attr("id");
-        $.ajax({
-          url: "../../proses/lihatwatersport.php",
-          type: "GET",
-          data: {
-            flag: m,
-          },
-          success: function(ajaxData) {
-            console.log(ajaxData);
-            $("#ModalEdit").html(ajaxData);
-            $("#ModalEdit").modal('show', {
-              backdrop: 'true'
-            });
-          }
-        });
-      });
-    });
-  </script> -->
-  <script type="text/javascript">
-    $(".link-logout").click(function() {
-      var r = confirm("Are You Sure To Logout ?");
-      if (r == true) {
-        window.location = "../proses/logout.php";
-      } else {
-        return false;
+  });
+</script>
+<script>
+  $('input[name=toggle]').change(function() {
+    var mode = $(this).prop('checked');
+    var id = $(this).val();
+    // console.log(mode, id);
+    $.ajax({
+      type: 'POST',
+      dataType: 'JSON',
+      url: 'checkbox.php',
+      data: {
+        mode: mode,
+        id: id
+      },
+      success: function(data) {
+        // console.log(data, mode, id);
+        var data = eval(data);
+        message = data.message;
+        success = data.success;
+        $("#heading").html(success);
+        $("#body").html(message);
       }
     });
-  </script>
-</body>
+  });
+</script>
+<script type="text/javascript">
+  $(function() {
+    $('.pop').on('click', function() {
+      $('.imagepreview').attr('src', $(this).find('img').attr('src'));
+      $('#imagemodal').modal('show');
+    });
+  });
+</script>
+<script type="text/javascript">
+  $(".link-logout").click(function() {
+    var r = confirm("Are You Sure To Logout ?");
+    if (r == true) {
+      window.location = "../proses/logout.php";
+    } else {
+      return false;
+    }
+  });
+</script>
 
 </html>
