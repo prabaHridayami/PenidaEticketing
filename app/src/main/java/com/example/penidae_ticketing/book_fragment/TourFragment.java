@@ -117,9 +117,14 @@ public class TourFragment extends Fragment implements BookView, TransTourAdapter
     @Override
     public void onClick(int position) {
         TransTourItem transTourItem = transTourItemsList.get(position);
-        Intent intent = new Intent(getContext(), UploadActivity.class);
-        intent.putExtra("menu","tour");
-        intent.putExtra("id",transTourItem.getId());
-        startActivity(intent);
+        if (transTourItem.getStatus().equals("success")){
+            Toast.makeText(getContext(),"Reciept has uploaded",Toast.LENGTH_SHORT).show();
+        }else {
+            Intent intent = new Intent(getContext(), UploadActivity.class);
+            intent.putExtra("menu","tour");
+            intent.putExtra("id",transTourItem.getId());
+            startActivity(intent);
+        }
+
     }
 }

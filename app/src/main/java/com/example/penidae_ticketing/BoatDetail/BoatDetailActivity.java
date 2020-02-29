@@ -106,9 +106,11 @@ public class BoatDetailActivity extends AppCompatActivity implements View.OnClic
         final DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
                 myCalendar.set(Calendar.YEAR,year);
                 myCalendar.set(Calendar.MONTH,month);
                 myCalendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+
                 String myFormat = "yyyy-MM-dd"; //In which you need put here
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
@@ -116,9 +118,11 @@ public class BoatDetailActivity extends AppCompatActivity implements View.OnClic
             }
         };
 
-        new DatePickerDialog(BoatDetailActivity.this, dateSetListener, myCalendar
+        DatePickerDialog  datePickerDialog = new DatePickerDialog(BoatDetailActivity.this, dateSetListener, myCalendar
                 .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                myCalendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+        datePickerDialog.show();
     }
 
     private void guestPickerDialog(){

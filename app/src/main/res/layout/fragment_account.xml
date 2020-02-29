@@ -177,15 +177,15 @@
                     android:text="Logout"
                     android:textAllCaps="false"
                     android:background="@drawable/btn_action"/>
-                <Button
-                    android:id="@+id/btn_passreset"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:padding="8dp"
-                    android:layout_marginLeft="16dp"
-                    android:text="Reset Password"
-                    android:textAllCaps="false"
-                    android:background="@drawable/btn_action"/>
+<!--                <Button-->
+<!--                    android:id="@+id/btn_passreset"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="40dp"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:layout_marginLeft="16dp"-->
+<!--                    android:text="Reset Password"-->
+<!--                    android:textAllCaps="false"-->
+<!--                    android:background="@drawable/btn_action"/>-->
             </LinearLayout>
 
 

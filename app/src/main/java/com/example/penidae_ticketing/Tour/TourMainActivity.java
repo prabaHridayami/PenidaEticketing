@@ -84,9 +84,11 @@ public class TourMainActivity extends AppCompatActivity implements View.OnClickL
             }
         };
 
-        new DatePickerDialog(TourMainActivity.this, dateSetListener, myCalendar
+        DatePickerDialog datePickerDialog = new DatePickerDialog(TourMainActivity.this, dateSetListener, myCalendar
                 .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                myCalendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+        datePickerDialog.show();
     }
 
     private void guestPickerDialog(){

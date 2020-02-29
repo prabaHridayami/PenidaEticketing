@@ -23,6 +23,7 @@ import com.example.penidae_ticketing.model.VehicleItem;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -35,7 +36,7 @@ public class VehicleMainActivity extends AppCompatActivity implements View.OnCli
 //    private RentalListAdapter adapter;
 //    private VehiclePresenter vehiclePresenter;
 //    List<OwnerItem> ownerItems;
-
+    Date pickup;
     EditText et_pickup, et_return;
     RadioGroup r_vehicle;
     RadioButton radioCar, radioBike;
@@ -156,33 +157,41 @@ public class VehicleMainActivity extends AppCompatActivity implements View.OnCli
                 myCalendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
                 String myFormat = "yyyy/MM/dd"; //In which you need put here
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
+                pickup = myCalendar.getTime();
                 et_pickup.setText(sdf.format(myCalendar.getTime()));
+                myCalendar.add(Calendar.DAY_OF_YEAR,1);
+                et_return.setText(sdf.format(myCalendar.getTime()));
+
             }
         };
 
-        new DatePickerDialog(VehicleMainActivity.this, dateSetListener, myCalendar
+        DatePickerDialog datePickerDialog = new DatePickerDialog(VehicleMainActivity.this, dateSetListener, myCalendar
                 .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                myCalendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+        datePickerDialog.show();
     }
 
     private void guestPickerDialog(){
         final DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                myCalendar.setTime(pickup);
+                myCalendar.add(Calendar.DAY_OF_YEAR,1);
                 myCalendar.set(Calendar.YEAR,year);
                 myCalendar.set(Calendar.MONTH,month);
                 myCalendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
                 String myFormat = "yyyy/MM/dd"; //In which you need put here
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
                 et_return.setText(sdf.format(myCalendar.getTime()));
             }
         };
 
-        new DatePickerDialog(VehicleMainActivity.this, dateSetListener, myCalendar
+        DatePickerDialog datePickerDialog = new DatePickerDialog(VehicleMainActivity.this, dateSetListener, myCalendar
                 .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                myCalendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.getDatePicker().setMinDate(myCalendar.getTimeInMillis());
+        datePickerDialog.show();
     }
 
 //    @Override

@@ -24,6 +24,7 @@ import com.example.penidae_ticketing.model.HotelItem;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -34,6 +35,7 @@ public class HotelMainActivity extends AppCompatActivity implements View.OnClick
 //    private RecyclerView recyclerHotel;
 //    private HotelPresenter hotelPresenter;
     private SimpleDateFormat dateFormat;
+    Date checkin;
 //    List<HotelItem> hotelItems;
 
     EditText et_checkin, et_checkout, et_guest, et_room;
@@ -117,20 +119,27 @@ public class HotelMainActivity extends AppCompatActivity implements View.OnClick
                 myCalendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
                 String myFormat = "yyyy-MM-dd"; //In which you need put here
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
+                checkin = myCalendar.getTime();
                 et_checkin.setText(sdf.format(myCalendar.getTime()));
+                myCalendar.add(Calendar.DAY_OF_YEAR,1);
+                et_checkout.setText(sdf.format(myCalendar.getTime()));
             }
         };
 
-        new DatePickerDialog(HotelMainActivity.this, dateSetListener, myCalendar
+        DatePickerDialog datePickerDialog = new DatePickerDialog(HotelMainActivity.this, dateSetListener, myCalendar
                 .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                myCalendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+        datePickerDialog.show();
     }
 
     private void durationPickerDialog(){
         final DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+                myCalendar.setTime(checkin);
+                myCalendar.add(Calendar.DAY_OF_YEAR,2);
                 myCalendar.set(Calendar.YEAR,year);
                 myCalendar.set(Calendar.MONTH,month);
                 myCalendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
@@ -141,9 +150,11 @@ public class HotelMainActivity extends AppCompatActivity implements View.OnClick
             }
         };
 
-        new DatePickerDialog(HotelMainActivity.this, dateSetListener, myCalendar
+        DatePickerDialog datePickerDialog = new DatePickerDialog(HotelMainActivity.this, dateSetListener, myCalendar
                 .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                myCalendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.getDatePicker().setMinDate(myCalendar.getTimeInMillis());
+        datePickerDialog.show();
     }
 
     private void guestPickerDialog(){

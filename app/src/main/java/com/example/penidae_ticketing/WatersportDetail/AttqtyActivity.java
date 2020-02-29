@@ -20,6 +20,7 @@ import com.example.penidae_ticketing.model.WatersportItem;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class AttqtyActivity extends AppCompatActivity implements View.OnClickListener {
@@ -37,7 +38,7 @@ public class AttqtyActivity extends AppCompatActivity implements View.OnClickLis
     final Calendar myCalendar = Calendar.getInstance();
     private SimpleDateFormat dateFormat;
 
-    Integer number = 0;
+    Integer number = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,8 @@ public class AttqtyActivity extends AppCompatActivity implements View.OnClickLis
         playdate = findViewById(R.id.playdate);
 
         tv_number.setText(Integer.toString(number));
+        dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        playdate.setText(""+dateFormat.format(myCalendar.getTime()));
 
         btn_plus.setOnClickListener(this);
         btn_minus.setOnClickListener(this);
@@ -71,8 +74,10 @@ public class AttqtyActivity extends AppCompatActivity implements View.OnClickLis
                 tv_number.setText(Integer.toString(number));
                 break;
             case R.id.minus:
-                number -=1;
-                tv_number.setText(Integer.toString(number));
+                if (number>1){
+                    number -=1;
+                    tv_number.setText(Integer.toString(number));
+                }
                 break;
             case R.id.playdate:
                 datePickerDialog();
@@ -106,8 +111,10 @@ public class AttqtyActivity extends AppCompatActivity implements View.OnClickLis
             }
         };
 
-        new DatePickerDialog(AttqtyActivity.this, dateSetListener, myCalendar
+        DatePickerDialog datePickerDialog = new DatePickerDialog(AttqtyActivity.this, dateSetListener, myCalendar
                 .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                myCalendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+        datePickerDialog.show();
     }
 }

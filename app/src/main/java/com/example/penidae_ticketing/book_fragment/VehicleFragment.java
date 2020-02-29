@@ -110,9 +110,14 @@ public class VehicleFragment extends Fragment implements BookView, TransVehicleA
     @Override
     public void onClick(int position) {
         TransRentItem transRentItem = transRentItemList.get(position);
-        Intent intent = new Intent(getContext(), UploadActivity.class);
-        intent.putExtra("menu","vehicle");
-        intent.putExtra("id",transRentItem.getIdTrans());
-        startActivity(intent);
+        if (transRentItem.getStatus().equals("success")){
+            Toast.makeText(getContext(),"Reciept has uploaded",Toast.LENGTH_SHORT).show();
+        }else{
+            Intent intent = new Intent(getContext(), UploadActivity.class);
+            intent.putExtra("menu","vehicle");
+            intent.putExtra("id",transRentItem.getIdTrans());
+            startActivity(intent);
+        }
+
     }
 }

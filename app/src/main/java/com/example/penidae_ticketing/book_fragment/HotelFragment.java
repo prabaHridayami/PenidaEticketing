@@ -114,9 +114,13 @@ public class HotelFragment extends Fragment implements BookView, TransHotelAdapt
     @Override
     public void onClick(int position) {
         TransHotelItem transHotelItem = transHotelItemList.get(position);
-        Intent intent = new Intent(getContext(), UploadActivity.class);
-        intent.putExtra("menu","hotel");
-        intent.putExtra("id",transHotelItem.getIdTrans());
-        startActivity(intent);
+        if (transHotelItem.getStatus().equals("success")){
+            Toast.makeText(getContext(),"Reciept has uploaded",Toast.LENGTH_SHORT).show();
+        }else{
+            Intent intent = new Intent(getContext(), UploadActivity.class);
+            intent.putExtra("menu","hotel");
+            intent.putExtra("id",transHotelItem.getIdTrans());
+            startActivity(intent);
+        }
     }
 }

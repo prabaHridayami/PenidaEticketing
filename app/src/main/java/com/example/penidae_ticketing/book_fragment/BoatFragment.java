@@ -114,9 +114,13 @@ public class BoatFragment extends Fragment implements BookView, TransBoatAdapter
     @Override
     public void onClick(int position) {
         TransBoatItem transBoatItem = transBoatItems.get(position);
-        Intent intent = new Intent(getContext(), UploadActivity.class);
-        intent.putExtra("menu","boat");
-        intent.putExtra("id",transBoatItem.getIdTrans());
-        startActivity(intent);
+        if (transBoatItem.getStatus().equals("success")){
+            Toast.makeText(getContext(),"Reciept has uploaded",Toast.LENGTH_SHORT).show();
+        }else{
+            Intent intent = new Intent(getContext(), UploadActivity.class);
+            intent.putExtra("menu","boat");
+            intent.putExtra("id",transBoatItem.getIdTrans());
+            startActivity(intent);
+        }
     }
 }
