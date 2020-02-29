@@ -75,256 +75,41 @@ if (isset($_GET['apicall'])) {
 				}
 			}
 			break;
-			// GET ID BOAT
-		case 'getboat':
-			if (isTheseParametersAvailable(array('id'))) {
-				$id_boat = $_POST['id'];
-				$stmt = $conn->prepare("SELECT `name`, id_user, `image`, `desc`, phone FROM tb_boat WHERE id = ?");
-				$stmt->bind_param("s", $id_boat);
-				$stmt->execute();
-				$stmt->store_result();
-				if ($stmt->num_rows > 0) {
-					$stmt->bind_result($id, $name, $image, $desc, $phone);
-					$stmt->fetch();
-					$user = array(
-						'name' => $name,
-						'id_user' => $id,
-						'image' => $image,
-						'desc' => $desc,
-						'phone' => $phone
-					);
-					$response['error'] = false;
-					$response['message'] = 'Successfull';
-					$response['user'] = $user;
-				} else {
-					$response['error'] = false;
-					$response['message'] = 'Invalid !!';
-				}
-			}
-			break;
-			// GET ID HOTEL
-		case 'gethotel':
-			if (isTheseParametersAvailable(array('id'))) {
-				$id_hotel = $_POST['id'];
-				$stmt = $conn->prepare("SELECT `name`, id_user, `image`, `address`, phone FROM tb_hotel WHERE id = ?");
-				$stmt->bind_param("s", $id_hotel);
-				$stmt->execute();
-				$stmt->store_result();
-				if ($stmt->num_rows > 0) {
-					$stmt->bind_result($id, $name, $image, $address, $phone);
-					$stmt->fetch();
-					$user = array(
-						'name' => $name,
-						'id_user' => $id,
-						'image' => $image,
-						'address' => $address,
-						'phone' => $phone
-					);
-					$response['error'] = false;
-					$response['message'] = 'Successfull';
-					$response['user'] = $user;
-				} else {
-					$response['error'] = false;
-					$response['message'] = 'Invalid !!';
-				}
-			}
-			break;
-			// GET ID VEHICLE
-		case 'getvehicle':
-			if (isTheseParametersAvailable(array('id'))) {
-				$id_vehicle = $_POST['id'];
-				$stmt = $conn->prepare("SELECT `name`, id_user, `desc`, `image`, `address`, phone FROM tb_rent_vehicle WHERE id = ?");
-				$stmt->bind_param("s", $id_vehicle);
-				$stmt->execute();
-				$stmt->store_result();
-				if ($stmt->num_rows > 0) {
-					$stmt->bind_result($id, $name, $image, $address, $desc, $phone);
-					$stmt->fetch();
-					$user = array(
-						'name' => $name,
-						'id_user' => $id,
-						'image' => $image,
-						'address' => $address,
-						'desc' => $desc,
-						'phone' => $phone
-					);
-					$response['error'] = false;
-					$response['message'] = 'Successfull';
-					$response['user'] = $user;
-				} else {
-					$response['error'] = false;
-					$response['message'] = 'Invalid !!';
-				}
-			}
-			break;
-			// GET ID WATERSPORT
-		case 'getwatersport':
-			if (isTheseParametersAvailable(array('id'))) {
-				$id_sport = $_POST['id'];
-				$stmt = $conn->prepare("SELECT `name`, id_user, `image`, `address`, phone FROM tb_watersport WHERE id = ?");
-				$stmt->bind_param("s", $id_sport);
-				$stmt->execute();
-				$stmt->store_result();
-				if ($stmt->num_rows > 0) {
-					$stmt->bind_result($id, $name, $image, $address, $phone);
-					$stmt->fetch();
-					$user = array(
-						'id_user' => $id,
-						'name' => $name,
-						'image' => $image,
-						'address' => $address,
-						'phone' => $phone
-					);
-					$response['error'] = false;
-					$response['message'] = 'Successfull';
-					$response['user'] = $user;
-				} else {
-					$response['error'] = false;
-					$response['message'] = 'Invalid !!';
-				}
-			}
-			break;
-			// GET ID TOUR
-		case 'gettour':
-			if (isTheseParametersAvailable(array('id'))) {
-				$id_tour = $_POST['id'];
-				$stmt = $conn->prepare("SELECT `name`, id_user, `address`, phone FROM tb_tour WHERE id = ?");
-				$stmt->bind_param("s", $id_tour);
-				$stmt->execute();
-				$stmt->store_result();
-				if ($stmt->num_rows > 0) {
-					$stmt->bind_result($name, $id, $address, $phone);
-					$stmt->fetch();
-					$user = array(
-						'name' => $name,
-						'id_user' => $id,
-						'address' => $address,
-						'phone' => $phone
-					);
-					$response['error'] = false;
-					$response['message'] = 'Successfull';
-					$response['user'] = $user;
-				} else {
-					$response['error'] = false;
-					$response['message'] = 'Invalid !!';
-				}
-			}
-			break;
-			// GET ID Attraction
-		case 'getAttraction':
-			if (isTheseParametersAvailable(array('id'))) {
-				$id_attraction = $_POST['id'];
-				$stmt = $conn->prepare("SELECT id, `name`, id_watersport, `price`, `desc`, `image` FROM tb_attraction WHERE id_watersport = ?");
-				$stmt->bind_param("s", $id_attraction);
-				$stmt->execute();
-				$stmt->store_result();
-				if ($stmt->num_rows > 0) {
-					$stmt->bind_result($id, $name, $id_watersport, $price, $desc, $image);
-					while ($stmt->fetch()) {
-						$user[] = array(
-							'id' => $id,
-							'name' => $name,
-							'id_watersport' => $id_watersport,
-							'price' => $price,
-							'desc' => $desc,
-							'image' => $image,
-						);
-					}
-					$response['error'] = false;
-					$response['message'] = 'Successfull';
-					$response['user'] = $user;
-				} else {
-					$response['error'] = false;
-					$response['message'] = 'Invalid !!';
-				}
-			}
-			break;
 
-		case 'getAttraction':
-			if (isTheseParametersAvailable(array('id'))) {
-				$id_attraction = $_POST['id'];
-				$stmt = $conn->prepare("SELECT id, `name`, id_watersport, `price`, `desc`, `image` FROM tb_attraction WHERE id_watersport = ?");
-				$stmt->bind_param("s", $id_attraction);
-				$stmt->execute();
-				$stmt->store_result();
-				if ($stmt->num_rows > 0) {
-					$stmt->bind_result($id, $name, $id_watersport, $price, $desc, $image);
-					while ($stmt->fetch()) {
-						$user[] = array(
-							'id' => $id,
-							'name' => $name,
-							'id_watersport' => $id_watersport,
-							'price' => $price,
-							'desc' => $desc,
-							'image' => $image,
-						);
-					}
-					$response['error'] = false;
-					$response['message'] = 'Successfull';
-					$response['user'] = $user;
-				} else {
-					$response['error'] = false;
-					$response['message'] = 'Invalid !!';
-				}
-			}
-			break;
+			case 'editprofile':
+				if (isTheseParametersAvailable(array('name', 'username', 'phone','id'))) {
+					$name = $_POST['name'];
+					$username = $_POST['username'];
+					$phone = $_POST['phone'];
+					$updated_at = $_POST['updated_at'];
+					$email = $_POST['email'];
+					$id_user = $_POST['id'];
 
-			case 'getRoom':
-				if (isTheseParametersAvailable(array('id'))) {
-					$id_hotel = $_POST['id'];
-					$stmt = $conn->prepare("SELECT tb_room.`id`, tb_category_room.`id`, tb_room.`name`, tb_category_room.`name`, price, `desc` FROM tb_room INNER JOIN tb_category_room ON tb_room.id_category = tb_category_room.id WHERE tb_category_room.id_hotel = ?");					
-					$stmt->bind_param("s", $id_hotel);
+					$stmt = $conn->prepare("UPDATE tb_user SET `name` = ?, `username` = ?, `phone` = ?, `updated_at`=? WHERE `id` = ?;");
+					$stmt->bind_param("ssssd", $name, $username,$phone,$updated_at,$id_user);
 					$stmt->execute();
-					$stmt->store_result();
-					if ($stmt->num_rows > 0) {
-						$stmt->bind_result($id_room, $id_cate, $name_room, $name_cate, $price, $desc);
-						while ($stmt->fetch()) {
-							$user[] = array(
-								'id_room' => $id_room,
-								'id_cate' => $id_cate,
-								'name_room' => $name_room,
-								'name_cate' => $name_cate,
-								'price' => $price,
-								'desc' => $desc								
-							);
-						}
+					
+					$user = array(
+						'id'=>$id_user,
+						'name' => $name,
+						'username' => $username,
+						'phone' => $phone,
+						'email' => $email
+					);
+				
+					if ($stmt->affected_rows>0) {
 						$response['error'] = false;
-						$response['message'] = 'Successfull';
+						$response['message'] = 'Edit successfull';
 						$response['user'] = $user;
+						
 					} else {
 						$response['error'] = false;
-						$response['message'] = 'Invalid !!';
+						$response['message'] = 'Nothing to edit';
+						$response['user'] = $user;
 					}
 				}
 				break;
-
-		case 'allhotel':
-			// if (isTheseParametersAvailable(array('id'))) {					
-			$stmt = $conn->prepare("SELECT id, id_user, `name`, `address`, `phone`, `image` FROM tb_hotel");
-			$stmt->execute();
-			$stmt->store_result();
-			if ($stmt->num_rows > 0) {
-				$stmt->bind_result($id, $id_user, $name, $address, $phone, $image);
-				while ($stmt->fetch()) {
-					$hotel[] = array(
-						'id' => $id,
-						'id_user' => $id_user,
-						'name' => $name,
-						'address' => $address,
-						'phone' => $phone,
-						'image' => $image,
-					);
-				}
-				// $response['error'] = false;
-				// $response['message'] = 'Successfull';
-				$response = $hotel;
-			} else {
-				$response['error'] = false;
-				$response['message'] = 'Invalid !!';
-			}
-			// }
-			break;
-			
+				
 
 		default:
 			$response['error'] = true;

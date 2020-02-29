@@ -14,7 +14,7 @@ if (isset($_GET['apicall'])) {
                         'id' => $id,
                         'name' => $name,
                         'id_user' => $id,
-                        'image' => $image,
+                        'image' => "http://192.168.43.79/webservice/partner/vehicle/image/".$image,
                         'address' => $address,
                         'desc' => $desc,
                         'phone' => $phone
@@ -28,7 +28,7 @@ if (isset($_GET['apicall'])) {
                 $response['message'] = 'Invalid !!';
             }
             break;
-
+    
 
         case 'searchRental':
             if (isTheseParametersAvailable(array('pick_up', 'return', 'cat'))) {
@@ -48,14 +48,14 @@ if (isset($_GET['apicall'])) {
                 $stmt->store_result();
                 if ($stmt->num_rows > 0) {
                     $stmt->bind_result($id, $name, $id_user, $address, $desc, $image, $phone);
-                    $rental = [];
+                    $owner = [];
                     while ($stmt->fetch()) {
 
                         $owner[] = array(
                             'id' => $id,
                             'name' => $name,
                             'id_user' => $id,
-                            'image' => $image,
+                            'image' => "http://192.168.43.79/webservice/partner/vehice/image/".$image,
                             'address' => $address,
                             'desc' => $desc,
                             'phone' => $phone
@@ -72,7 +72,7 @@ if (isset($_GET['apicall'])) {
                     }
                 } else {
                     $response['error'] = false;
-                    $response['message'] = 'Invalid !!';
+                    $response['message'] = 'No vehicle left in that date !!';
                 }
             }
             break;
@@ -159,76 +159,151 @@ if (isset($_GET['apicall'])) {
             }
             break;
 
-        case 'TransRent':
-            if (isTheseParametersAvailable(array('id_user', 'take', 'return', 'total_price', 'id_vehicle', 'transdate'))) {
-                $id_user = $_POST['id_user'];
-                $take = $_POST['take'];
-                $return = $_POST['return'];
-                $total_price = $_POST['total_price'];
-                $id_vehicle = $_POST['id_vehicle'];
-                $transdate = $_POST['transdate'];
-
-                $stmt = $conn->prepare("INSERT INTO tb_trans_rent (`id_user`, `take`, `return`, `total_price`, id_vehicle, trans_date) VALUES (?, ?, ?, ?, ?, ?)");
-                // var_dump($stmt);
-                // die();
-                $stmt->bind_param("ssssss", $id_user, $take, $return, $total_price, $id_vehicle, $transdate);
-                if ($stmt->execute()) {
-                    $last = $conn->insert_id;
-                    // $stmt->bind_result($id_room, $check_in, $check_out, $reserve_date, $total_price, $id_user);
-                    $stmt->close();
-                    $response['error'] = false;
-                    $response['message'] = 'Transaksi Success';
-                    $response['payment'] = $last;
-                } else {
-                    $response['error'] = false;
-                    $response['message'] = 'Invalid !!';
-                }
-            }
-            break;
-        case 'proofVehicle':
-            if (isset($_POST['id_transaksi']) and isset($_FILES['image']['name'])) {
-                $upload_path = 'transaksi/';
-                $server_ip = gethostbyname(gethostname());
-                // $upload_url = 'http://' . $server_ip . '/webservice/admin/boat/' . $upload_path;
-                $upload_url = '../admin/vehicle/' . $upload_path;
-                $id_transaksi = $_POST['id_transaksi'];
-                $nama = uniqid('uploaded-', true) . '.' . strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
-                $tmp_image = $_FILES['image']['tmp_name'];
-                $fileinfo = pathinfo($_FILES['image']['name']);
-                $extension = $fileinfo['extension'];
-                $file_url = $upload_url . $nama;
-                $file_path = 'webservice/admin/vehicle/' . $upload_path . $nama;
-                // var_dump(move_uploaded_file($tmp_image, $file_url));
-                // die();
-                try {
-                    //saving the file 
-                    if (move_uploaded_file($tmp_image, $file_url)) {
-                        $sql = "UPDATE tb_trans_rent SET proof = '$file_url' WHERE id = '$id_transaksi';";
-                        //adding the path and name to database 
-                        if (mysqli_query($conn, $sql)) {
-                            //filling response array with values 
-                            $response['error'] = false;
-                            $response['url'] = $file_url;
-                            $response['name'] = $nama;
-                            $response['message'] = 'Success To Upload Image';
-                        }
+            case 'TransRent':
+                if (isTheseParametersAvailable(array('id_user', 'take', 'return', 'total_price', 'id_vehicle', 'transdate'))) {
+                    $id_user = $_POST['id_user'];
+                    $take = $_POST['take'];
+                    $return = $_POST['return'];
+                    $total_price = $_POST['total_price'];
+                    $id_vehicle = $_POST['id_vehicle'];
+                    $transdate = $_POST['transdate'];
+    
+                    $stmt = $conn->prepare("INSERT INTO tb_trans_rent (`id_user`, `take`, `return`, `total_price`, id_vehicle, trans_date) VALUES (?, ?, ?, ?, ?, ?)");
+                    // var_dump($stmt);
+                    // die();
+                    $stmt->bind_param("ssssss", $id_user, $take, $return, $total_price, $id_vehicle, $transdate);
+                    if ($stmt->execute()) {
+                        $last = $conn->insert_id;
+                        // $stmt->bind_result($id_room, $check_in, $check_out, $reserve_date, $total_price, $id_user);
+                        $stmt->close();
+                        $response['error'] = false;
+                        $response['message'] = 'Transaksi Success';
+                        $response['payment'] = $last;
                     } else {
-                        $response['error'] = true;
-                        $response['message'] = 'Failed To Upload Image';
+                        $response['error'] = false;
+                        $response['message'] = 'Invalid !!';
+                        
                     }
-                } catch (Exception $e) {
-                    $response['error'] = true;
-                    $response['message'] = $e->getMessage();
                 }
-                //displaying the response 
-                echo json_encode($response);
-                //closing the connection 
-                mysqli_close($conn);
-            } else {
-                $response['error'] = true;
-                $response['message'] = 'Please choose a file';
-            }
-            break;
+    
+                break;
+                case 'getTransVehicle': if (isTheseParametersAvailable(array('id_user'))) {
+                    $id_user=$_POST['id_user'];
+                    $stmt=$conn->prepare("SELECT tb_rent_vehicle.`id`, 
+                                                tb_rent_vehicle.`name`,
+                                                tb_rent_vehicle.`address`,
+                                                tb_rent_vehicle.`phone`, 
+                                                tb_rent_vehicle.`image`,
+                                                tb_vehicle.`id`, 
+                                                tb_vehicle.`name`, 
+                                                tb_vehicle.`plat`, 
+                                                tb_vehicle.`seat`, 
+                                                tb_vehicle.`price`, 
+                                                tb_vehicle.`desc`,
+                                                tb_trans_rent.`id`, 
+                                                tb_trans_rent.`take`, 
+                                                tb_trans_rent.`return`, 
+                                                tb_trans_rent.`total_price`, 
+                                                tb_trans_rent.`trans_date`, 
+                                                tb_trans_rent.`status`
+                                            FROM tb_trans_rent INNER JOIN tb_vehicle ON tb_trans_rent.`id_vehicle`=tb_vehicle.`id` 
+                                            INNER JOIN tb_rent_vehicle ON tb_rent_vehicle.`id`=tb_vehicle.`id_rent_vehicle`
+                                            WHERE tb_trans_rent.`id_user`=?
+                                            ORDER BY tb_trans_rent.`id` DESC");
+        
+                        $stmt->bind_param("s", $id_user);
+        
+                        if ($stmt->execute()) {
+                            $stmt->bind_result($id, $name, $address, $phone, $image, $id_vehicle, $vehicle_name, $vehicle_plat, $vehicle_seat, $vehicle_price, $vehicle_desc, $id_trans, $take, $return, $total_price, $transdate, $status);
+                            $trans_rent = [];
+                            while ($stmt->fetch()) {
+                                $trans_rent[]=array(
+                                    'id'=> $id,
+                                    'name'=> $name,
+                                    'address'=> $address,
+                                    'phone'=> $phone,
+                                    'image'=> "http://192.168.43.79/webservice/partner/vehicle/image/".$image,
+                                    'id_vehicle'=> $id_vehicle,
+                                    'vehicle_name'=> $vehicle_name,
+                                    'vehicle_plat'=> $vehicle_plat,
+                                    'vehicle_seat'=> $vehicle_seat,
+                                    'vehicle_price'=> $vehicle_price,
+                                    'vehicle_desc'=> $vehicle_desc,
+                                    'id_trans'=> $id_trans,
+                                    'take'=> $take,
+                                    'return'=> $return,
+                                    'total_price'=> $total_price,
+                                    'transdate'=> $transdate,
+                                    'status'=> $status);
+                            }
+        
+                            $stmt->close();
+        
+        
+                            if($trans_rent !=null) {
+                                $response['error']=false;
+                                $response['message']='Transaksi Success';
+                                $response['trans_rent']=$trans_rent;
+                            }
+        
+                            else {
+                                $response['error']=false;
+                                $response['message']='Transaksi Success';
+                                $response['trans_rent']=null;
+                            }
+        
+        
+                        }
+        
+                        else {
+                            $response['error']=false;
+                            $response['message']='Invalid !!';
+                        }
+                    }
+        
+                    break;
+
+                    case 'proofVehicle':
+                        if (isset($_POST['id_transaksi']) and isset($_FILES['image']['name'])) {
+                            $upload_path = 'transaksi/';
+                            $server_ip = gethostbyname(gethostname());
+                            // $upload_url = 'http://' . $server_ip . '/webservice/admin/boat/' . $upload_path;
+                            $upload_url = '../admin/vehicle/' . $upload_path;
+                            $id_transaksi = $_POST['id_transaksi'];
+                            $nama = uniqid('uploaded-', true) . '.' . strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+                            $tmp_image = $_FILES['image']['tmp_name'];
+                            $fileinfo = pathinfo($_FILES['image']['name']);
+                            $extension = $fileinfo['extension'];
+                            $file_url = $upload_url . $nama;
+                            $file_path = 'webservice/admin/vehicle/' . $upload_path . $nama;
+                            // var_dump(move_uploaded_file($tmp_image, $file_url));
+                            // die();
+                            try {
+                                //saving the file 
+                                if (move_uploaded_file($tmp_image, $file_url)) {
+                                    $sql = "UPDATE tb_trans_rent SET proof = '$nama' WHERE id = '$id_transaksi';";
+                                    //adding the path and name to database 
+                                    if (mysqli_query($conn, $sql)) {
+                                        //filling response array with values 
+                                        $response['error'] = false;
+                                        $response['url'] = $file_url;
+                                        $response['name'] = $nama;
+                                        $response['message'] = 'Success To Upload Image';
+                                    }
+                                } else {
+                                    $response['error'] = true;
+                                    $response['message'] = 'Failed To Upload Image';
+                                }
+                            } catch (Exception $e) {
+                                $response['error'] = true;
+                                $response['message'] = $e->getMessage();
+                            }
+                  
+                        } else {
+                            $response['error'] = true;
+                            $response['message'] = 'Please choose a file';
+                        }
+                        break;
 
         default:
             $response['error'] = true;
