@@ -21,12 +21,12 @@ import androidx.recyclerview.widget.RecyclerView;
 public class TransHotelAdapter extends RecyclerView.Adapter<TransHotelAdapter.ViewHolder> {
 
     private Context context;
-    private List<TransHotelItem> transHotelItems ;
+    private List<TransHotelItem> transHotelItemList ;
     private OnClickListener onClickListener;
 
-    public TransHotelAdapter(Context context, List<TransHotelItem>  transHotelItems ) {
+    public TransHotelAdapter(Context context, List<TransHotelItem> transHotelItemList ) {
         this.context = context;
-        this.transHotelItems = transHotelItems;
+        this.transHotelItemList = transHotelItemList;
 
     }
 
@@ -42,13 +42,13 @@ public class TransHotelAdapter extends RecyclerView.Adapter<TransHotelAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int i) {
-        TransHotelItem transHotelItem= transHotelItems.get(i);
+        TransHotelItem transHotelItem= transHotelItemList.get(i);
         holder.bind(transHotelItem);
     }
 
     @Override
     public int getItemCount() {
-        return transHotelItems.size();
+        return transHotelItemList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

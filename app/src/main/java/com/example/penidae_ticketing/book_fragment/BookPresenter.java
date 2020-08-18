@@ -26,7 +26,11 @@ public class BookPresenter {
             @Override
             public void onResponse(Call<TransBoat> call, Response<TransBoat> response) {
                 if (response.isSuccessful()){
-                    view.onSuccessBoat(response.body().getTransBoat());
+                    if(response.body().getTransBoat()!= null) {
+                        view.onSuccessBoat(response.body().getTransBoat());
+                    }else{
+                        view.onEmpty();
+                    }
                 }
                 else {
                     view.onError();
@@ -47,7 +51,11 @@ public class BookPresenter {
             @Override
             public void onResponse(Call<TransHotel> call, Response<TransHotel> response) {
                 if (response.isSuccessful()){
-                    view.onSuccessHotel(response.body().getTransHotel());
+                    if(response.body().getTransHotel()!= null) {
+                        view.onSuccessHotel(response.body().getTransHotel());
+                    }else{
+                        view.onEmpty();
+                    }
                 }
                 else {
                     view.onError();
@@ -68,7 +76,12 @@ public class BookPresenter {
             @Override
             public void onResponse(Call<TransVehicle> call, Response<TransVehicle> response) {
                 if (response.isSuccessful()){
-                    view.onSuccessVehicle(response.body().getTransRent());
+                    if(response.body().getTransRent()!= null) {
+                        view.onSuccessVehicle(response.body().getTransRent());
+                    }else{
+                        view.onEmpty();
+                    }
+
                 }
                 else {
                     view.onError();
@@ -89,7 +102,11 @@ public class BookPresenter {
             @Override
             public void onResponse(Call<TransWatersport> call, Response<TransWatersport> response) {
                 if (response.isSuccessful()){
-                    view.onSuccessWatersport(response.body().getTransWatersport());
+                    if(response.body().getTransWatersport()!= null) {
+                        view.onSuccessWatersport(response.body().getTransWatersport());
+                    }else{
+                        view.onEmpty();
+                    }
                 }
                 else {
                     view.onError();
@@ -110,7 +127,11 @@ public class BookPresenter {
             @Override
             public void onResponse(Call<TransTour> call, Response<TransTour> response) {
                 if (response.isSuccessful()){
-                    view.onSuccessTour(response.body().getTransTour());
+                    if(response.body().getTransTour()!= null) {
+                        view.onSuccessTour(response.body().getTransTour());
+                    }else{
+                        view.onEmpty();
+                    }
                 }
                 else {
                     view.onError();

@@ -76,7 +76,7 @@ public class HotelFragment extends Fragment implements BookView, TransHotelAdapt
     @Override
     public void onSuccessHotel(List<TransHotelItem> transHotelItems) {
         this.transHotelItemList = transHotelItems;
-        adapter=new TransHotelAdapter(getContext(),transHotelItems);
+        adapter= new TransHotelAdapter(getContext(), transHotelItems);
         adapter.setOnClickListener(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -98,6 +98,11 @@ public class HotelFragment extends Fragment implements BookView, TransHotelAdapt
     @Override
     public void onSuccessTour(List<TransTourItem> transTourItems) {
 
+    }
+
+    @Override
+    public void onEmpty() {
+        Toast.makeText(getContext(), "You haven't make any booking yet! ", Toast.LENGTH_SHORT).show();
     }
 
     @Override

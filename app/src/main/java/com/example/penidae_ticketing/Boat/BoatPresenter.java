@@ -22,7 +22,11 @@ public class BoatPresenter {
             @Override
             public void onResponse(Call<Boat> call, Response<Boat> response) {
                 if (response.isSuccessful()){
-                    view.onSuccess(response.body().getBoat());
+                    if(response.body().getMessage()=="Successfull") {
+                        view.onSuccess(response.body().getBoat());
+                    }else{
+                        view.onEmpty("Empty");
+                    }
                 }else {
                     view.onError();
                 }

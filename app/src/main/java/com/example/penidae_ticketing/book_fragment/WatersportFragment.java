@@ -99,6 +99,11 @@ public class WatersportFragment extends Fragment implements BookView, TransWater
     }
 
     @Override
+    public void onEmpty() {
+        Toast.makeText(getContext(), "You haven't make any booking yet! ", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void onError() {
         Toast.makeText(getContext(), "Failure", Toast.LENGTH_SHORT).show();
     }

@@ -16,6 +16,7 @@ public interface BookView {
     void onSuccessVehicle(List<TransRentItem> transRentItems);
     void onSuccessWatersport(List<TransWatersportItem> watersportItems);
     void onSuccessTour(List<TransTourItem> transTourItems);
+    void onEmpty();
     void onError();
     void onFailure(Throwable t);
 

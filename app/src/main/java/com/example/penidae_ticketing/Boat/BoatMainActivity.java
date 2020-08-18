@@ -73,6 +73,11 @@ public class BoatMainActivity extends AppCompatActivity implements BoatView, Boa
     }
 
     @Override
+    public void onEmpty(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void onError() {
         Toast.makeText(this, "Failure", Toast.LENGTH_SHORT).show();
     }

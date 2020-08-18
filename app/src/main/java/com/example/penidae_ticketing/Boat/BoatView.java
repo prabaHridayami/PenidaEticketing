@@ -8,6 +8,7 @@ public interface BoatView {
     void showLoading();
     void hideLoading();
     void onSuccess(List<BoatItem> boatItems);
+    void onEmpty(String message);
     void onError();
     void onFailure(Throwable t);
 }

@@ -24,7 +24,7 @@ public class TransBoatAdapter extends RecyclerView.Adapter<TransBoatAdapter.View
     private List<TransBoatItem> transBoatItems ;
     private OnClickListener onClickListener;
 
-    public TransBoatAdapter(Context context, List<TransBoatItem>  transBoatItems ) {
+    public TransBoatAdapter(Context context, List<TransBoatItem> transBoatItems ) {
         this.context = context;
         this.transBoatItems = transBoatItems;
 

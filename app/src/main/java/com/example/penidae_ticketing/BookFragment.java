@@ -37,7 +37,6 @@ public class BookFragment extends Fragment {
             R.string.vehicle,
             R.string.watersport,
             R.string.tour,
-
     };
 
     private int[] navIcon = {
